@@ -1,0 +1,59 @@
+name: Build Avalonia Project with Velopack
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        platform: [win-x64, linux-x64, osx-x64]
+        configuration: [Debug, Release]
+
+    runs-on: ${{ matrix.platform == 'win-x64' && 'windows-latest' || matrix.platform == 'linux-x64' && 'ubuntu-latest' || matrix.platform == 'osx-x64' && 'macos-latest' }}
+
+    env:
+      Solution_Name: Mirivoice.sln   
+      Project_Path: Mirivoice/Mirivoice.csproj 
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Install .NET 8 SDK
+    - name: Install .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.Solution_Name }}
+
+    # Install Velopack
+    - name: Install Velopack
+      run: dotnet tool install --global Velopack.Cli
+
+    # Build the project for the specified platform
+    - name: Build the project
+      run: dotnet build ${{ env.Project_Path }} --configuration ${{ matrix.configuration }} --runtime ${{ matrix.platform }}
+
+    # Package the project using Velopack
+    - name: Package with Velopack
+      run: |
+        export PATH="$PATH:/home/runner/.dotnet/tools"
+        velopack build --platform=${{ matrix.platform }} --output=./artifacts/${{ matrix.platform }}
+
+    # Upload build artifacts
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.platform }}-build
+        path: ./artifacts/${{ matrix.platform }}
