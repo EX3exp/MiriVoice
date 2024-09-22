@@ -1,59 +1,36 @@
-name: Build Avalonia Project with Velopack
+name: Deploy to GitHub Releases
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+    branches:
+      - main
 jobs:
-
-  build:
-
-    strategy:
-      matrix:
-        platform: [win-x64, linux-x64, osx-x64]
-        configuration: [Debug, Release]
-
-    runs-on: ${{ matrix.platform == 'win-x64' && 'windows-latest' || matrix.platform == 'linux-x64' && 'ubuntu-latest' || matrix.platform == 'osx-x64' && 'macos-latest' }}
-
-    env:
-      Solution_Name: Mirivoice.sln   
-      Project_Path: Mirivoice/Mirivoice.csproj 
-
+  deploy-to-github-releases:
+    runs-on: windows-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Get Version from Project File
+        id: get-version
+        shell: bash
+        run: echo "version=$(grep -oE '<Version>[^<]+' Mirivoice/Mirivoice.csproj | sed 's/<Version>//')" >> $GITHUB_OUTPUT        
+        
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          
+      - name: Publish Application
+        run: 
+          dotnet publish Mirivoice/Mirivoice.csproj -c Release -o publish -r win-x64 --self-contained true 
+          dotnet publish Mirivoice/Mirivoice.csproj -c Release -o publish -r linux-x64 --self-contained true 
+          dotnet publish Mirivoice/Mirivoice.csproj -c Release -o publish -r osx-x64 --self-contained true 
 
-    # Install .NET 8 SDK
-    - name: Install .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-
-    # Restore dependencies
-    - name: Restore dependencies
-      run: dotnet restore ${{ env.Solution_Name }}
-
-    # Install Velopack
-    - name: Install Velopack
-      run: dotnet tool install --global Velopack.Cli
-
-    # Build the project for the specified platform
-    - name: Build the project
-      run: dotnet build ${{ env.Project_Path }} --configuration ${{ matrix.configuration }} --runtime ${{ matrix.platform }}
-
-    # Package the project using Velopack
-    - name: Package with Velopack
-      run: |
-        export PATH="$PATH:/home/runner/.dotnet/tools"
-        velopack build --platform=${{ matrix.platform }} --output=./artifacts/${{ matrix.platform }}
-
-    # Upload build artifacts
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ matrix.platform }}-build
-        path: ./artifacts/${{ matrix.platform }}
+      - name: Create Velopack Release
+        run: |
+          dotnet tool install -g vpk
+          vpk download github --repoUrl https://github.com/EX3exp/MiriVoice
+          vpk pack -u MiriVoice -v ${{ steps.get-version.outputs.version }} -p publish
+          vpk upload github --repoUrl https://github.com/EX3exp/MiriVoice --publish --releaseName "MiriVoice ${{ steps.get-version.outputs.version }}" --tag v${{ steps.get-version.outputs.version }} 
+          
