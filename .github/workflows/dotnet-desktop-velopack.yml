@@ -23,9 +23,9 @@ jobs:
           
       - name: Publish Application
         run: 
-          dotnet publish Mirivoice/Mirivoice.csproj -c Release -o publish -r win-x64 --self-contained true 
-          dotnet publish Mirivoice/Mirivoice.csproj -c Release -o publish -r linux-x64 --self-contained true 
-          dotnet publish Mirivoice/Mirivoice.csproj -c Release -o publish -r osx-x64 --self-contained true 
+          dotnet publish Mirivoice/Mirivoice.csproj -c Release -o publish/win-x64 -r win-x64 --self-contained true
+          dotnet publish Mirivoice/Mirivoice.csproj -c Release -o publish/linux-x64 -r linux-x64 --self-contained true
+          dotnet publish Mirivoice/Mirivoice.csproj -c Release -o publish/osx-x64 -r osx-x64 --self-contained true
 
       - name: Create Velopack Release
         run: |
