@@ -5,14 +5,14 @@
     <LangVersion>latest</LangVersion>
     <ApplicationIcon>Assets\mirivoice-logo.ico</ApplicationIcon>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
+    <Version>0.0.0</Version>
   </PropertyGroup>
   <PropertyGroup>
     <CFBundleName>MiriVoice</CFBundleName>
     <CFBundleDisplayName>MiriVoice</CFBundleDisplayName>
     <CFBundleIdentifier>com.ex3.mirivoice</CFBundleIdentifier>
-    <CFBundleVersion>1.0.0</CFBundleVersion>
-    <CFBundleShortVersionString>1.0.0</CFBundleShortVersionString>
+    <CFBundleVersion>0.0.0</CFBundleVersion>
+    <CFBundleShortVersionString>0.0.0</CFBundleShortVersionString>
     <CFBundlePackageType>APPL</CFBundlePackageType>
     <CFBundleSignature>????</CFBundleSignature>
     <CFBundleExecutable>MiriVoice</CFBundleExecutable>
