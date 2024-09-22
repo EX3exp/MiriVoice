@@ -1,0 +1,69 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="200"
+        x:Class="Mirivoice.MessageWindow" Width="500" Height="150"
+		
+        WindowStartupLocation="CenterScreen"
+        ExtendClientAreaToDecorationsHint="False"
+		Icon="/Assets/mirivoice-logo.ico"
+        Title="MiriVoice">
+	<ScrollViewer MaxHeight="700" VerticalScrollBarVisibility="Auto">
+		<Grid Margin="{Binding $parent.WindowDecorationMargin}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="50"/>
+			</Grid.RowDefinitions>
+
+			<!-- Show simple text -->
+			<TextBlock Margin="20" Grid.Row="0" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Center" Text="{Binding Message}" TextWrapping="Wrap" MaxWidth="560"/>
+
+			<!-- Show text with URL button -->
+			<StackPanel Margin="20" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Name="TextPanel" MaxWidth="560">
+				<StackPanel.Styles>
+					<Style Selector="TextBlock">
+						<Setter Property="TextWrapping" Value="Wrap"/>
+					</Style>
+					<Style Selector="Button">
+						<Setter Property="Foreground" Value="Blue" />
+						<Setter Property="Padding" Value="0" />
+						<Setter Property="Cursor" Value="Hand" />
+						<Setter Property="BorderThickness" Value="0" />
+						<Setter Property="Background" Value="Transparent" />
+						<Setter Property="Template">
+							<ControlTemplate>
+								<ContentPresenter Content="{TemplateBinding Content}">
+									<ContentPresenter.Styles>
+										<Style Selector="TextBlock">
+											<Setter Property="FontSize" Value="15"/>
+											<Setter Property="TextDecorations" Value="Underline"/>
+										</Style>
+									</ContentPresenter.Styles>
+								</ContentPresenter>
+							</ControlTemplate>
+						</Setter>
+					</Style>
+					<Style Selector="Expander">
+						<Setter Property="Margin" Value="0, 20, 0, 0" />
+						<Setter Property="Width" Value="560" />
+						<Setter Property="HorizontalAlignment" Value="Stretch" />
+					</Style>
+				</StackPanel.Styles>
+			</StackPanel>
+
+			<StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" x:Name="Buttons">
+				<StackPanel.Styles>
+					<Style Selector="Button">
+						<Setter Property="Margin" Value="15,0,15,0"/>
+						<Setter Property="MinWidth" Value="100"/>
+						<Setter Property="CornerRadius" Value="25"/>
+						<Setter Property="TextBlock.TextAlignment" Value="Center"/>
+						<Setter Property="FontSize" Value="16"/>
+					</Style>
+				</StackPanel.Styles>
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
+
+</Window>

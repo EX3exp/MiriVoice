@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Mirivoice.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:Mirivoice.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" 
+		xmlns:li="using:LoadingIndicators.Avalonia"
+        x:Class="Mirivoice.Views.MainWindow"
+        Icon="/Assets/mirivoice-logo.ico"
+        Title="{Binding Title}">
+	<Window.KeyBindings>
+		<KeyBinding Gesture="Ctrl + Z" Command="{Binding Undo}" />
+		<KeyBinding Gesture="Ctrl + Y" Command="{Binding Redo}" />
+		<KeyBinding Gesture="Ctrl + O" Command="{Binding OnOpenButtonClicked}" />
+		<KeyBinding Gesture="Ctrl + S" Command="{Binding OnSaveButtonClick}" />
+		<KeyBinding Gesture="Ctrl + Shift + S" Command="{Binding OnSaveAsButtonClick}" />
+		<KeyBinding Gesture="Ctrl + N" Command="{Binding OnNewButtonClick}" />
+	</Window.KeyBindings>
+	<views:MainView />
+
+</Window>

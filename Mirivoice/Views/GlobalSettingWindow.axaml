@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:Mirivoice.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+        x:Class="Mirivoice.GlobalSettingWindow"
+		
+		WindowStartupLocation="CenterScreen"
+        MinWidth="500" MinHeight="600" Width="500" Height="450"
+        Title="{DynamicResource gprefs.title}">
+        
+	<Grid Margin="{Binding $parent.WindowDecorationMargin}">
+		<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+			<StackPanel Margin="33 33 5 5" >
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+					<TextBlock Text="{DynamicResource gprefs.lang} " Foreground="DarkSlateGray"  FontWeight="Bold" FontSize="15" Margin="13 15 15 15" />
+					<ComboBox SelectedIndex="{Binding SelectedLanguageIndex}" FontSize="15" Margin="0 10 10 10" BorderBrush="DarkOliveGreen" Foreground="DarkOliveGreen" Cursor="Hand">
+						<ComboBoxItem Content="{DynamicResource gprefs.lang.en}" />
+						<ComboBoxItem Content="{DynamicResource gprefs.lang.ko}" />
+					</ComboBox>
+					<TextBlock Text="{Binding RebootMessage}" Foreground="BlueViolet" FontSize="13" Margin="13 5 5 5" VerticalAlignment="Center"  MaxWidth="200" TextWrapping="Wrap"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal" Margin="0 60 10 10">
+					<TextBlock Text="{DynamicResource gprefs.clearcacheonquit} " Foreground="DarkSlateGray" FontWeight="Bold" FontSize="15" Margin="13 15 15 15" />
+					<ToggleSwitch IsChecked="{Binding ClearCacheOnQuit}" FontSize="15" Margin="0 10 10 10" Foreground="BlueViolet" Cursor="Hand"/>
+				</StackPanel>
+			</StackPanel>
+
+		</ScrollViewer>
+	</Grid>
+</Window>

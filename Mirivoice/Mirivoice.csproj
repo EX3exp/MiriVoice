@@ -1,0 +1,103 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ApplicationIcon>Assets\mirivoice-logo.ico</ApplicationIcon>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CFBundleName>MiriVoice</CFBundleName>
+    <CFBundleDisplayName>MiriVoice</CFBundleDisplayName>
+    <CFBundleIdentifier>com.ex3.mirivoice</CFBundleIdentifier>
+    <CFBundleVersion>1.0.0</CFBundleVersion>
+    <CFBundleShortVersionString>1.0.0</CFBundleShortVersionString>
+    <CFBundlePackageType>APPL</CFBundlePackageType>
+    <CFBundleSignature>????</CFBundleSignature>
+    <CFBundleExecutable>MiriVoice</CFBundleExecutable>
+    <CFBundleIconFile>mirivoice.icns</CFBundleIconFile>
+    <NSPrincipalClass>NSApplication</NSPrincipalClass>
+    <NSHighResolutionCapable>true</NSHighResolutionCapable>
+    <CFBundleDocumentTypes>
+        <array>
+            <dict>
+                <key>CFBundleTypeName</key>
+                <string>MiriVoice Project File</string>
+                <key>CFBundleTypeExtensions</key>
+                <array>
+                    <string>mrp</string>
+                </array>
+                <key>CFBundleTypeIconFile</key>
+                <string>mirivoice.icns</string>
+                <key>CFBundleTypeRole</key>
+                <string>Editor</string>
+                <key>LSItemContentTypes</key>
+                <array>
+                    <string>com.ex3.mirivoice.mrp</string>
+                </array>
+            </dict>
+        </array>          
+    </CFBundleDocumentTypes>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\mirivoice-logo - 복사.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Mirivoice.Core\Managers\MainManager.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\mirivoice-logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="LoadingIndicators.Avalonia" Version="11.0.11.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.19.2" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="R3Extensions.Avalonia" Version="1.2.8" />
+    <PackageReference Include="ReactiveHistory" Version="0.10.7" />
+    <PackageReference Include="Serilog" Version="4.0.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <PackageReference Include="Velopack" Version="0.0.610" />
+    <PackageReference Include="Velopack.Build" Version="0.0.610">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="VYaml" Version="0.27.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <AvaloniaXaml Update="Views\PhonemeEditView.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\LineBoxView.axaml.cs">
+      <DependentUpon>LineBoxView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PhonemeEditView.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PhonemeEditView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SingleLineEditorView.axaml.cs">
+      <DependentUpon>SingleLineEditorView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

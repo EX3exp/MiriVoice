@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450"
+		Icon="/Assets/mirivoice-logo.ico"
+        x:Class="Mirivoice.DataPreprocessWindow"
+        Title="{DynamicResource menu.tools.voicerMakingSupport.preprocessor}">
+	<StackPanel>
+		<StackPanel Margin="20 10 10 10">
+			<Separator />
+			<TextBlock Text="{DynamicResource menu.tools.voicerMakingSupport.preprocessor}" FontSize="20" FontWeight="Bold" Margin="0 15 5 5"/>
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+				<TextBlock Text="{DynamicResource menu.tools.voicerMakingSupport.preprocessor.langCode}" VerticalAlignment="Center" FontSize="15" Margin="10 5 5 5"/>
+				<ComboBox x:Name="langSelectCombobox" Margin="15 10 5 5" SelectedIndex="0" VerticalAlignment="Center" SelectionChanged="LangChanged">
+					<ComboBoxItem Content="ko" />
+				</ComboBox>
+			</StackPanel>
+			
+			
+		</StackPanel>
+		<Grid>
+			<Border>
+				<ScrollViewer >
+					<StackPanel Margin="25 5 5 5">
+						<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+							<TextBlock Text="{DynamicResource menu.tools.voicerMakingSupport.preprocessor.inputFile}" Margin="13 5 5 5" VerticalAlignment="Center"/>
+							<Button x:Name="fileSelectButton" Cursor="Hand" Content="{DynamicResource menu.tools.voicerMakingSupport.preprocessor.browse}" FontSize="15" Margin="13 5 5 5" VerticalAlignment="Center" Click="OpenTranscriptFile" />
+							<TextBlock x:Name="filePathText" Text="{DynamicResource menu.tools.voicerMakingSupport.preprocessor.noFile}" TextElement.Foreground="DarkOliveGreen" Margin="13 5 5 5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+						</StackPanel>
+						<Button  Cursor="Hand" x:Name="convertButton" Content="{DynamicResource menu.tools.voicerMakingSupport.preprocessor.convert}" IsEnabled="False" Click="SaveTranscriptFile" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TextElement.Foreground="Wheat" FontWeight="DemiBold" Background="DarkOliveGreen" FontSize="18" Width="140" Height="40" Margin="13 10 5 5" VerticalAlignment="Center" />
+					</StackPanel>
+				</ScrollViewer>
+				
+			</Border>
+			
+		</Grid>
+		<StackPanel>
+			<ProgressBar x:Name="progressBar" Value="0" Minimum="0" Maximum="100" Height="20" Margin="13 5 5 5" VerticalAlignment="Center" />
+		</StackPanel>
+	</StackPanel>
+	
+
+
+</Window>

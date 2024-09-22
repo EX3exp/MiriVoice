@@ -1,0 +1,200 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Mirivoice.ViewModels"
+			 xmlns:c="clr-namespace:Mirivoice.App.Controls"
+			 xmlns:views="clr-namespace:Mirivoice.Views"
+			 xmlns:assets="clr-namespace:Mirivoice.Assets"
+			 xmlns:li="using:LoadingIndicators.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="1080" d:DesignHeight="720"
+			 
+             x:Class="Mirivoice.Views.MainView"
+             x:DataType="vm:MainViewModel">
+
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainViewModel />
+	</Design.DataContext>
+
+	
+
+
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="{DynamicResource menu.files.title }">
+				<MenuItem Header="{DynamicResource menu.files.new}" Command="{Binding OnNewButtonClick}" InputGesture="Ctrl+N"/>
+				<Separator/>
+				<MenuItem Header="{DynamicResource menu.files.open}" Command="{Binding OnOpenButtonClick}" InputGesture="Ctrl+O"/>
+				<MenuItem Header="{DynamicResource menu.files.recent}" ItemsSource="{Binding RecentMenuCollection}">
+					
+				</MenuItem>
+				<MenuItem Header="{DynamicResource menu.files.save}" Command="{Binding OnSaveButtonClick}" InputGesture="Ctrl+S"/>
+				<MenuItem Header="{DynamicResource menu.files.saveas}" Command="{Binding OnSaveAsButtonClick}" InputGesture="Ctrl+Shift+S"/>
+				<Separator/>
+				<MenuItem Header="{DynamicResource menu.files.export}">
+					<MenuItem Header="{DynamicResource menu.files.export.perLine}" Command="{Binding OnExportAudioPerLineClick}"></MenuItem>
+					<MenuItem Header="{DynamicResource menu.files.export.merged}" Command="{Binding OnExportAudioMergedClick}"></MenuItem>
+				</MenuItem>
+
+			</MenuItem>
+
+
+
+			<MenuItem Header="{DynamicResource menu.project.title}">
+				<MenuItem Header="{DynamicResource menu.project.undo}" InputGesture="Ctrl+Z" Command="{Binding Undo}"></MenuItem>
+				<MenuItem Header="{DynamicResource menu.project.redo}" InputGesture="Ctrl+Y" Command="{Binding Redo}"></MenuItem>
+				<Separator/>
+				<MenuItem Header="{DynamicResource menu.project.pref}" IsEnabled="False"></MenuItem>
+				<Separator/>
+				<MenuItem Header="{DynamicResource menu.project.clearCache}" Command="{Binding ClearCache}"></MenuItem>
+			</MenuItem>
+
+			<MenuItem Header="{DynamicResource menu.tools.title}">
+				<MenuItem Header="{DynamicResource menu.tools.settings}" Command="{Binding OnGlobalSettingButtonClick}"></MenuItem>
+				<Separator/>
+				<MenuItem Header="{DynamicResource menu.tools.voicers}" Command="{Binding OnVoicersButtonClick}"></MenuItem>
+				<MenuItem Header="{DynamicResource menu.tools.voicerMakingSupport}">
+					<MenuItem Header="{DynamicResource menu.tools.voicerMakingSupport.preprocessor}" Command="{Binding OnDataPreprocessButtonClick}"></MenuItem>
+				</MenuItem>
+			</MenuItem>
+
+			<MenuItem Header="{DynamicResource menu.help.title}">
+				<MenuItem Header="{DynamicResource menu.help.update}"></MenuItem>
+			</MenuItem>
+		</Menu>
+
+
+		<TextBlock/>
+
+		<!-- body -->
+		<Grid RowDefinitions="Auto, *, 236" Focusable="True" >
+			<!--Line editors-->
+			<Grid ColumnDefinitions="38*, 62*" Grid.RowSpan="2" >
+				<Grid RowDefinitions="10*, 50, 20, 60*, 50" ColumnDefinitions="60*, 30*" Grid.Column="0" >
+					<StackPanel Grid.ColumnSpan="2" Grid.Row="0" >
+
+
+						<StackPanel  Margin="13 20 13 30" Grid.ColumnSpan="3" Grid.Row="0" >
+							<TextBlock  Text="{DynamicResource editor.input.mult.defaultVoicerName}" FontSize="15"></TextBlock>
+						</StackPanel>
+
+					</StackPanel>
+					<Grid ColumnDefinitions="Auto, Auto, Auto" Grid.ColumnSpan="2" >
+						<StackPanel Margin="13 45 10 30" Grid.Column="0" Grid.Row="1" >
+							<ComboBox HorizontalContentAlignment="Center" IsHitTestVisible="{Binding MainWindowGetInput}"  ItemsSource="{Binding voicerSelector.Voicers, Mode=TwoWay}"   Cursor="Hand"  SelectedIndex="{Binding voicerSelector.CurrentDefaultVoicerIndex, Mode=TwoWay}" Margin="0 0 0 0" Grid.Column="1" Grid.Row="2" FontSize="15" Height="50" CornerRadius="2" TextBlock.TextTrimming="CharacterEllipsis"  VerticalAlignment="Center" >
+								<ComboBox.ItemTemplate>
+
+									<DataTemplate>
+										<StackPanel  Orientation="Horizontal" Margin="5">
+											<TextBlock Text="{Binding Info.Name}" IsHitTestVisible="{Binding MainWindowGetInput}"  VerticalAlignment="Center" Width="120"/>
+											<ComboBox ItemsSource="{Binding VoicerMetaCollection}" Cursor="Hand"  Width="100" SelectedItem="{Binding CurrentVoicerMeta}" >
+												<ComboBox.ItemTemplate>
+													<DataTemplate>
+														<TextBlock Text="{Binding Style}" />
+													</DataTemplate>
+												</ComboBox.ItemTemplate>
+											</ComboBox>
+										</StackPanel>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
+
+						</StackPanel>
+					</Grid>
+
+					<StackPanel Margin="13 20 13 30" Grid.Row="3" VerticalAlignment="Top">
+						<TextBlock  Text="{DynamicResource editor.input.mult.title}" FontSize="15" Grid.Row="3">
+
+						</TextBlock>
+
+					</StackPanel>
+
+					<Grid Margin="13 20 13 30" Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Top" >
+
+						
+						<TextBox Margin="0 25 0 0" IsHitTestVisible="{Binding MainWindowGetInput}" x:Name="multEditTBox" AcceptsReturn="True" Text="{Binding mTextBoxEditor.CurrentScript, Mode=TwoWay}" IsUndoEnabled="False" TextWrapping="Wrap" MaxHeight="200"  Watermark="{DynamicResource editor.input.mult.desc}" MinHeight="100" FontSize="15"/>
+
+
+
+					</Grid>
+					<StackPanel Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Stretch">
+						<Button Cursor="Hand" IsHitTestVisible="{Binding MainWindowGetInput}" Command="{Binding OnAddBoxesButtonClick}" Content="{DynamicResource editor.input.mult.genLines}" Height="40" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextBlock.TextAlignment="Center" FontSize="16" CornerRadius="25" MinWidth="140" Margin="13 0 13 0"></Button>
+					</StackPanel>
+
+				</Grid>
+
+
+
+				<Panel Grid.Column="2">
+					<Grid RowDefinitions="20*, 80*">
+						<Button IsHitTestVisible="{Binding MainWindowGetInput}" Focusable="False" Cursor="Hand"  Grid.Row="0" Command="{Binding OnAddButtonClick}" Background="LightSlateGray" Width="50" Height="50">
+							<Path Data="{StaticResource add_regular}" Fill="Wheat" Stretch="Fill"/>
+						</Button>
+
+						<ScrollViewer Grid.Row="1"  AllowAutoHide="False" Offset="{Binding LinesViewerOffset}" IsHitTestVisible="{Binding MainWindowGetInput}">
+
+							<ItemsControl x:Name="lineBoxContainer" ItemsSource="{Binding LineBoxCollection}">
+								
+							</ItemsControl>
+
+						</ScrollViewer>
+					</Grid>
+
+
+
+				</Panel>
+
+			</Grid>
+
+			<!--Expressions-->
+
+			<Grid ColumnDefinitions="38*, 62*" Grid.Row="2" >
+				<Grid Grid.Column="0" x:Name="singleEditTBox"  Focusable="True" IsHitTestVisible="{Binding MainWindowGetInput}">
+					<ContentControl Content="{Binding CurrentSingleLineEditor}" 
+                        IsEnabled="{Binding SingleTextBoxEditorEnabled}" />
+				</Grid>
+				<Grid  Grid.Column="1" RowDefinitions="30, 206" ColumnDefinitions="80* 140" Focusable="True" >
+					
+					<ContentControl Content="{Binding CurrentEdit}" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" IsHitTestVisible="{Binding MainWindowGetInput}">
+	
+
+					</ContentControl>
+					<StackPanel  Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+						
+						<ToggleButton Focusable="False" Cursor="Hand"  Grid.Row="0" Command="{Binding OnPlayButtonClick}" Background="DarkOliveGreen" Width="140" Height="70">
+							<Path Data="{StaticResource play_circle_regular}" Fill="Wheat" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</ToggleButton>
+						<Button Focusable="False" Cursor="Hand"  Grid.Row="0" Command="{Binding OnStopButtonClick}" IsEnabled="{Binding StopButtonEnabled}" Background="DarkOliveGreen" Width="140" Height="70">
+							<Path Data="{StaticResource stop_regular}" Fill="Wheat" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Button>
+					</StackPanel>
+					
+					<li:LoadingIndicator IsVisible="{Binding IsArcActive, Mode=TwoWay}" IsActive="{Binding IsArcActive, Mode=TwoWay}" Background="White" Grid.Row="1" Grid.RowSpan="2"  Grid.Column="0" Mode="Ring" SpeedRatio="1.5" />
+					<StackPanel Grid.Row="0" Grid.Column="0">
+						<ComboBox Cursor="Hand" SelectedIndex="{Binding CurrentEditIndex}" Grid.Column="0"  FontSize="15" CornerRadius="2" IsHitTestVisible="{Binding MainWindowGetInput}">
+							<ComboBoxItem>Phoneme</ComboBoxItem>
+							<!--<ComboBoxItem>Pitch</ComboBoxItem>-->
+						</ComboBox>
+					</StackPanel>
+					<StackPanel IsVisible="{Binding IsVisibleProgressbar}"  Background="White" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+						<ProgressBar x:Name="progressBar" Value="{Binding ValueProgressbar}" ProgressTextFormat="{}{0}/{3} ({1:0}%)" Minimum="{Binding MinTaskProgressbar}" Maximum="{Binding MaxTaskProgressbar}" Height="20" Margin="13 5 5 5" VerticalAlignment="Center"  ShowProgressText="True" />
+					</StackPanel>
+				</Grid>
+
+
+
+			</Grid>
+
+
+
+		</Grid>
+
+
+
+
+	</DockPanel>
+
+
+</UserControl>

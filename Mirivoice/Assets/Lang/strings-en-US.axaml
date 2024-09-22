@@ -1,0 +1,91 @@
+<ResourceDictionary
+	xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+	<system:String x:Key="app.yes">Yes</system:String>
+	<system:String x:Key="app.no">No</system:String>
+	<system:String x:Key="app.cancel">Cancel</system:String>
+	<system:String x:Key="app.ok">OK</system:String>
+	<system:String x:Key="app.beforeExit">Current Project File is not saved. Do you want to save? </system:String>
+	<system:String x:Key="app.openproject">Open Project</system:String>
+	<system:String x:Key="app.saveproject">Save Mrp</system:String>
+	<system:String x:Key="app.defprojectname">New Project</system:String>
+	<system:String x:Key="app.Error">Error</system:String>
+
+	
+	<system:String x:Key="updater.title">Update Checker</system:String>
+	<system:String x:Key="updater.description">TTS Platform for everybody</system:String>
+	<system:String x:Key="updater.github">Go to GitHub</system:String>
+	<system:String x:Key="updater.status.available">Mirivoice v{0} is available!</system:String>
+	<system:String x:Key="updater.status.checking">Checking for Updates...</system:String>
+	<system:String x:Key="updater.status.notavailable">(Latest)</system:String>
+	<system:String x:Key="updater.status.unknown">Failed to check for updates. Please check your network connection.</system:String>
+	<system:String x:Key="updater.update">Update</system:String>
+	
+
+	<system:String x:Key="app.update.beforeExit">MiriVoice will be Rebooted after Updated. Current Project File is not saved. Do you want to save?</system:String>
+	
+	<!-- Menu -->
+	<!--files...-->
+	<system:String x:Key="menu.files.title">Files</system:String>
+	
+	<system:String x:Key="menu.files.open">Open...</system:String>
+	<system:String x:Key="menu.files.recent">Recent...</system:String>
+	<system:String x:Key="menu.files.openFailed">An Error occured during open file. Please Check Log file for more informations.</system:String>
+	<system:String x:Key="menu.files.recent.openFailed">Selected Recent file not exists. It seems to be already removed from your disk.</system:String>
+	<system:String x:Key="menu.files.save">Save</system:String>
+	<system:String x:Key="menu.files.saveas">Save As...</system:String>
+	<system:String x:Key="menu.files.new">New</system:String>
+	
+	
+	<system:String x:Key="menu.files.export">Export</system:String>
+	<system:String x:Key="menu.files.export.perLine">Export audios per lines (.wav)</system:String>
+	<system:String x:Key="menu.files.export.merged">Export audio merged (.wav)</system:String>
+	
+	
+	<!--project...-->
+	<system:String x:Key="menu.project.title">Project</system:String>
+	<system:String x:Key="menu.project.undo">Undo</system:String>
+	<system:String x:Key="menu.project.redo">Redo</system:String>
+	<system:String x:Key="menu.project.pref">Project Expressions</system:String>
+	<system:String x:Key="menu.project.clearCache">Clear Cache</system:String>
+	
+	<!--tools...-->
+	<system:String x:Key="menu.tools.title">Tools</system:String>
+	<system:String x:Key="menu.tools.settings">Global Settings</system:String>
+	<system:String x:Key="menu.tools.voicers">Voicers</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport">Voicer Making Support...</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor">Transcription IPA Converter</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.langCode">LangCode</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.inputFile">Input File</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.browse">Browse</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.convert">Convert</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.noFile">No file selected</system:String>
+	
+	<!--help...-->
+	<system:String x:Key="menu.help.title">Help</system:String>
+	<system:String x:Key="menu.help.update">Check Updates</system:String>
+	
+	<!--editor body 1 -->
+	<system:String x:Key="editor.input.mult.title">Lines Input</system:String>
+	<system:String x:Key="editor.input.mult.desc">Input your texts here. You can input multiple Lines by pressing Enter twice. You can change Voicer using [Voicer nickname] (Style). e.g: [MIri] (normal)</system:String>
+	<system:String x:Key="editor.input.mult.placeholder">Input your Lines here... </system:String>
+	<system:String x:Key="editor.input.mult.lineCount">Lines: {0}</system:String>
+	
+	<system:String x:Key="editor.input.mult.defaultVoicerName">Default Voicer</system:String>
+	<system:String x:Key="editor.input.mult.defaultVoicerStyle">Style</system:String>
+
+	<system:String x:Key="editor.input.mult.genLines">Generate Lines</system:String>
+	
+	<!--editor body 2-->
+	<system:String x:Key="editor.lines.title">Lines</system:String>
+	
+	<!--Global Settings-->
+	<system:String x:Key="gprefs.title">Global Settings</system:String>
+	<system:String x:Key="gprefs.lang">UI Language</system:String>
+	<system:String x:Key="gprefs.lang.en">English</system:String>
+	<system:String x:Key="gprefs.lang.ko">한국어</system:String>
+	
+	<system:String x:Key="gprefs.clearcacheonquit">Clear Caches On Quit</system:String>
+</ResourceDictionary>

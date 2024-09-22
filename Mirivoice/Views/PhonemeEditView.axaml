@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Mirivoice.ViewModels"
+             xmlns:model="using:Mirivoice.Mirivoice.Core.Format"
+             xmlns:views="clr-namespace:Mirivoice.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Mirivoice.PhonemeEditView">
+
+	<Border BorderBrush="DarkSlateGray" BorderThickness="1" Background="Gray">
+		<ScrollViewer AllowAutoHide="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+			<!-- ItemsControl for custom layout -->
+			<ItemsControl ItemsSource="{Binding MResultsCollection}">
+				<ItemsControl.ItemsPanel>
+					<!-- Use a horizontal StackPanel to arrange items side by side -->
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="model:MResult">
+						<Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
+							<!-- Parent StackPanel for Word and Phoneme -->
+							<StackPanel>
+								<!-- Word displayed on the first line -->
+								<TextBlock x:Name="WordTextBlock"
+										   TextElement.Foreground="Wheat"
+										   FontSize="22"
+										   MaxLines="1"
+										   LineHeight="48"
+										   Background="DarkOliveGreen"
+                                           Text="{Binding Word}"
+										   TextAlignment="Center" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Stretch"
+                                           MinWidth="62" MinHeight="48"/>
+								<!-- Phoneme displayed on the second line, stretches to match WordTextBlock -->
+								<TextBox Text="{Binding mTextBoxEditor.CurrentScript, Mode=TwoWay}"
+                                         VerticalAlignment="Center" MaxLines="1" TextAlignment="Center" UndoLimit="0" CornerRadius="0"
+                                         HorizontalAlignment="Stretch" FontSize="22" IsEnabled="{Binding IsEditable}"
+                                         MinHeight="48"/>
+							</StackPanel>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
+	</Border>
+</UserControl>

@@ -1,0 +1,93 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:c="clr-namespace:Mirivoice.App.Controls"
+             xmlns:vm="using:Mirivoice.ViewModels"
+			 xmlns:views="clr-namespace:Mirivoice.Views"
+			 xmlns:format="clr-namespace:Mirivoice.Mirivoice.Core.Format"
+			x:Class="Mirivoice.Views.LineBoxView"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="104" Height="104">
+	<Design.DataContext>
+		<vm:LineBoxViewModel/>
+	</Design.DataContext>
+	
+	<Border BorderBrush="Gray" BorderThickness="{Binding BorderThickness}" Margin="{Binding Margin}" >
+		<ToggleButton IsChecked="{Binding IsSelected}" IsHitTestVisible="{Binding CanHitTest}" ClickMode="Press" PointerEntered="OnEntered" Click="OnDragStart" PointerMoved="OnDragging" FontSize="22" Height="104" HorizontalAlignment="Stretch">
+			
+			<Grid ColumnDefinitions="40, 1, 100, 40, 40, 40, 40, *, *, *" RowDefinitions="*, *, *">
+				
+				<StackPanel Margin="0 0 0 0"  Grid.Column="0" Grid.Row="0">
+					<TextBlock Text="{Binding LineNo, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" Width="40" Height="40" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  LineHeight="40"  FontSize="15" Background="DarkOliveGreen" TextElement.Foreground="White"></TextBlock>
+					<TextBlock Grid.Column="0" Width="40" Height="32" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  LineHeight="40"  FontSize="15" Background="Transparent" ></TextBlock>
+					<Border >
+						<TextBlock Text="{Binding LangCode}" Grid.Column="0" Width="40" Height="32" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  LineHeight="40"  FontSize="15" ></TextBlock>
+					</Border>
+
+				</StackPanel>
+
+				<StackPanel Margin="0 0 0 0"  Grid.Column="2" Grid.RowSpan="2" Width="100">
+					<Rectangle Margin="0 0 0 0" Width="100" Height="70" Fill="{Binding Icon}" />
+
+					<ComboBox HorizontalContentAlignment="Left" ItemsSource="{Binding voicerSelector.Voicers, Mode=TwoWay}"   Cursor="Hand"  SelectedIndex="{Binding voicerSelector.CurrentDefaultVoicerIndex, Mode=TwoWay}" Margin="0 0 0 0" Grid.Column="1" Grid.Row="2" FontSize="15" Height="34" Width="100" CornerRadius="2" TextBlock.TextTrimming="CharacterEllipsis"  VerticalAlignment="Center" >						
+					<ComboBox.ItemTemplate>
+						
+								<DataTemplate>
+									<StackPanel  Orientation="Horizontal" Margin="5" >
+										<TextBlock Text="{Binding Info.Name}" VerticalAlignment="Center" Width="100"/>
+										<ComboBox ItemsSource="{Binding VoicerMetaCollection}" Cursor="Hand"  SelectedItem="{Binding CurrentVoicerMeta}"  >
+											<ComboBox.ItemTemplate>
+												<DataTemplate>
+													<TextBlock Text="{Binding Style}" />
+												</DataTemplate>
+											</ComboBox.ItemTemplate>
+										</ComboBox>
+									</StackPanel>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+
+				</StackPanel>
+
+				<StackPanel Margin="0 0 0 0"  Grid.Column="3" Grid.ColumnSpan="6" Grid.Row="0">
+
+					<TextBlock  Text="{Binding voicerSelector.CurrentVoicer.NickAndStyle, Mode=TwoWay}" Height="40" Margin="13 0 0 0" TextAlignment="Left" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  LineHeight="40"  FontSize="15" ></TextBlock>
+
+				</StackPanel>
+
+				<StackPanel Margin="0 3 0 0"  Grid.Column="3" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" >
+
+					<TextBlock Height="64" Margin="13 5 0 0" Text="{Binding LineText, Mode=OneWay}" TextAlignment="Left" TextTrimming="WordEllipsis" xml:space="preserve" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  FontSize="15" ></TextBlock>
+					
+				</StackPanel>
+
+				<!--
+				<StackPanel Margin="0 0 0 0"  Grid.Column="8" Grid.Row="0" Grid.RowSpan="3">
+					<ToggleButton x:Name="lockButton" Click="OnLockButtonClick" Margin="0 0 0 0" Cursor="Hand" Content="" Width="40" Height="40" Background="Gray">
+						<Path Data="{StaticResource lock_regular}"  Fill="Wheat" Stretch="Fill"/>
+					</ToggleButton>
+
+				</StackPanel> -->
+
+				<StackPanel Margin="0 0 0 0"  Grid.Column="8" Grid.Row="0" Grid.RowSpan="3">
+
+					<Button Click="OnDuplicateButtonClick" Margin="0 54.4 10 15" Cursor="Hand" Content="" Width="40" Height="40" Background="LightSlateGray">
+						<Path Data="{StaticResource copy_add_regular}" Fill="Wheat" Stretch="Fill"/>
+					</Button>
+				</StackPanel>
+
+				<StackPanel Margin="0 0 0 0"  Grid.Column="9" Grid.Row="0" Grid.RowSpan="3">
+
+
+					<Button Margin="0 54.4 10 15" Cursor="Hand" Content="" Width="40" Height="40" Background="LightCoral" Click="OnDeleteButtonClick">
+						<Path Data="{StaticResource delete_regular}" Fill="Wheat" Stretch="Fill"/>
+					</Button>
+				</StackPanel>
+
+
+			</Grid>
+		</ToggleButton>
+	</Border>
+	
+	
+</UserControl>
