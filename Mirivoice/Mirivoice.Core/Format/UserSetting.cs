@@ -15,8 +15,9 @@ namespace Mirivoice.Mirivoice.Core.Format
         public Version Version { get; set; } = new Version(1, 0);
         public string Langcode { get; set; } = "en-US"; // ui language
         public bool ClearCacheOnQuit { get; set; } = false;
-        //public bool UseBeta { get; set; } = true;
-        
+        public bool UseBeta { get; set; } = true;
+        public string SkipUpdate { get; set; } = "";
+
         public void Save()
         {
             // save to file

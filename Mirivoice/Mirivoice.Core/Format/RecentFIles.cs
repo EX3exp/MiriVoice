@@ -12,7 +12,6 @@ using Mirivoice.ViewModels;
 using R3;
 using ReactiveUI;
 using Mirivoice.Mirivoice.Core.Format;
-using Mirivoice.ViewModels;
 using Avalonia.Controls;
 
 namespace Mirivoice.Mirivoice.Core.Managers

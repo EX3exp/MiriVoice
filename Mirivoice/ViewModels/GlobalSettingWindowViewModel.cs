@@ -62,6 +62,19 @@ namespace Mirivoice.ViewModels
                 MainManager.Instance.Setting.Save();
             }
         }
+
+        private bool _useBeta;
+        public bool UseBeta
+        {
+            get => _useBeta;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _useBeta, value);
+                OnPropertyChanged(nameof(UseBeta));
+                MainManager.Instance.Setting.UseBeta = value;
+                MainManager.Instance.Setting.Save();
+            }
+        }
         public GlobalSettingWindowViewModel()
         {
         }

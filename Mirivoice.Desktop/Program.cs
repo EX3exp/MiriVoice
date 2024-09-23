@@ -5,7 +5,7 @@ using Mirivoice.Mirivoice.Core;
 using Serilog;
 using System;
 using System.Text;
-using Velopack;
+
 namespace Mirivoice.Desktop;
 
 class Program
@@ -17,7 +17,6 @@ class Program
     [STAThread]
     public static void Main(string[] args) 
     {
-        VelopackApp.Build().Run();
 
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         InitLogging();

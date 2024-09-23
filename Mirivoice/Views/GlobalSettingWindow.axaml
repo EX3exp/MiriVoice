@@ -26,6 +26,10 @@
 					<TextBlock Text="{DynamicResource gprefs.clearcacheonquit} " Foreground="DarkSlateGray" FontWeight="Bold" FontSize="15" Margin="13 15 15 15" />
 					<ToggleSwitch IsChecked="{Binding ClearCacheOnQuit}" FontSize="15" Margin="0 10 10 10" Foreground="BlueViolet" Cursor="Hand"/>
 				</StackPanel>
+				<StackPanel Orientation="Horizontal" Margin="0 10 10 10">
+					<TextBlock Text="{DynamicResource gprefs.usebeta} " Foreground="DarkSlateGray" FontWeight="Bold" FontSize="15" Margin="13 15 15 15" />
+					<ToggleSwitch IsChecked="{Binding UseBeta}" FontSize="15" Margin="0 10 10 10" Foreground="BlueViolet" Cursor="Hand"/>
+				</StackPanel>
 			</StackPanel>
 
 		</ScrollViewer>

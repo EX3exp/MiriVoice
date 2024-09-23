@@ -61,7 +61,7 @@
 			</MenuItem>
 
 			<MenuItem Header="{DynamicResource menu.help.title}">
-				<MenuItem Header="{DynamicResource menu.help.update}"></MenuItem>
+				<MenuItem Header="{DynamicResource menu.help.update}" Command="{Binding OnUpdateCheckButtonClick}"></MenuItem>
 			</MenuItem>
 		</Menu>
 

@@ -20,6 +20,8 @@ using Mirivoice.Mirivoice.Core.Utils;
 using Avalonia.Controls.Shapes;
 using VYaml.Serialization;
 using System.Text;
+using Avalonia.Interactivity;
+using Avalonia.Controls.ApplicationLifetimes;
 namespace Mirivoice.ViewModels
 {
     public class MainViewModel : VoicerSelectingViewModelBase
@@ -423,6 +425,14 @@ namespace Mirivoice.ViewModels
                 .VoicerMetaCollection.IndexOf(voicerSelector.Voicers[voicerSelector.CurrentDefaultVoicerIndex].CurrentVoicerMeta);
             
             MainManager.Instance.cmd.ExecuteCommand(AddLineBoxesCommand);
+        }
+
+        public void OnUpdateCheckButtonClick()
+        {
+            var dialog = new AppUpdaterWindow(mainWindow);
+            dialog.viewModel.CloseApplication =
+                () => (Application.Current?.ApplicationLifetime as IControlledApplicationLifetime)?.Shutdown();
+            dialog.ShowDialog(mainWindow);
         }
 
         public async void OnNewButtonClick()
