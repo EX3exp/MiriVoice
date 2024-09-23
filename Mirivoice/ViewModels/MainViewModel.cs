@@ -36,7 +36,7 @@ namespace Mirivoice.ViewModels
 
 
         Mrp initMrp;
-        Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+        Version version = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version;
 
         private bool _mainWindowGetInput = true;
         public bool MainWindowGetInput
@@ -356,8 +356,9 @@ namespace Mirivoice.ViewModels
                 OnPropertyChanged(nameof(isPlaying));
             }
         }
-        public async void OnPlayButtonClick()
+        public void OnPlayButtonClick()
         {
+            
             StopButtonEnabled = true;
             if (!isPlaying)
             {

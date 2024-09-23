@@ -79,11 +79,6 @@ namespace Mirivoice.Commands
                 }
             }
 
-            foreach (var result in results)
-            {
-                //Log.Information("MultipleEditScriptParser parsed: {result}", result);
-                //Log.Debug($"'{result}'");
-            }
 
             MainManager.Instance.DefaultVoicerIndex = DefaultVoicerOriginal;
             MainManager.Instance.DefaultMetaIndex = DefaultVoicerMetaOriginal;

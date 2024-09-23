@@ -125,7 +125,7 @@ namespace Mirivoice.Views
         double lastY;
         
 
-        bool ShouldPhonemizeWhenSelected = false;
+        public bool ShouldPhonemizeWhenSelected = false;
 
         SingleLineEditorView singleLineEditorView;
         public ObservableCollection<MResult> MResultsCollection { get; set; } = new ObservableCollection<MResult>();
@@ -149,7 +149,6 @@ namespace Mirivoice.Views
 
             this.v = v;
 
-            ShouldPhonemize = false;
             DeActivatePhonemizer = true;
 
             if (line != string.Empty)
@@ -194,8 +193,6 @@ namespace Mirivoice.Views
             targetIndex = -1;
 
             string line = viewModel.LineText;
-
-            this.v = v;
 
             ShouldPhonemize = false;
             DeActivatePhonemizer = true;
@@ -265,8 +262,17 @@ namespace Mirivoice.Views
             {
                 ShouldPhonemizeWhenSelected = false;
             }
-
-            singleLineEditorView = new SingleLineEditorView(this);
+            if (mLinePrototype.PhonemeEdit.Length > 0)
+            {
+                // if phonemeEdit is not empty, use phonemeEdit's results
+                singleLineEditorView = new SingleLineEditorView(this, false);
+            }
+            else
+            {
+                // if phonemeEdit is empty, use newly phonemized one
+                singleLineEditorView = new SingleLineEditorView(this);
+            }
+            
         }
         // Commands
         public MCommand DelLineBoxCommand { get; set; }
@@ -491,8 +497,8 @@ namespace Mirivoice.Views
                 {
                     
                     v.CurrentSingleLineEditor = singleLineEditorView;
-                    //Log.Debug("CurrentLineBox: {0}", v.CurrentLineBox);
-                    //Log.Debug("CurrentSingleLineTextBox: {0}", v.CurrentSingleLineEditor);
+                    Log.Debug("CurrentLineBox: {0}", v.CurrentLineBox);
+                    Log.Debug("CurrentSingleLineTextBox: {0}", v.CurrentSingleLineEditor);
 
                     ShouldPhonemize = true;
                     

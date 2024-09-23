@@ -7,7 +7,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" 
 		xmlns:li="using:LoadingIndicators.Avalonia"
         x:Class="Mirivoice.Views.MainWindow"
-        Icon="/Assets/mirivoice-logo.ico"
+        Icon="/Assets/mirivoice-logo.ico" 
         Title="{Binding Title}">
 	<Window.KeyBindings>
 		<KeyBinding Gesture="Ctrl + Z" Command="{Binding Undo}" />

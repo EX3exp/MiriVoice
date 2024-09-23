@@ -18,14 +18,9 @@ namespace Mirivoice.Commands
 
             var lineBox = new LineBoxView(v); 
             int LineNoToBeAdded = v.LineBoxCollection.Count + 1;
-
-            foreach (var lineB in v.LineBoxCollection)
-            {
-                lineB.DeActivatePhonemizer = true; // prevent freezing
-            }
-
-            lineBox.DeActivatePhonemizer = true ;
+        
             lineBox.viewModel.SetLineNo(LineNoToBeAdded);
+            lineBox.ShouldPhonemizeWhenSelected = true;
 
             v.LineBoxCollection.Add(lineBox);
             LineBoxIndexLastAdded = v.LineBoxCollection.Count - 1;

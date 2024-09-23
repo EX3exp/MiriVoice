@@ -109,7 +109,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                 IPAPhonemes.Clear();
                 bool divideWord = false;
                 var wordTasks = variatedWords
-                    .Select(async (word, index) =>
+                    .Select(async (word, index) => await Task.Run(()=>
                     {
                         string phoneme = string.Join("", ToPhonemes(word, out _));
                         if (words.Length != variatedWords.Length)
@@ -154,7 +154,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                         divideWord = true;
 
 
-                    });
+                    }));
 
                 await Task.WhenAll(wordTasks);
 
@@ -226,9 +226,9 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
             
             //Log.Information("Phonemize: {sentence}", sentence);
 
-            int unitWidth = 64;
-            int unitHeight = 48;
-            int wordBorderWidth = 1;
+            //int unitWidth = 64;
+            //int unitHeight = 48;
+            //int wordBorderWidth = 1;
             bool editable = true;
 
             
@@ -242,7 +242,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
 
                 bool divideWord = false;
                 var wordTasks = variatedWords
-                    .Select(async (word, index)=>
+                    .Select(async (word, index) => 
                     {
 
                         string phoneme = string.Join("", ToPhonemes(word, out editable));
@@ -299,7 +299,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
 
                 bool divideWord = false;
                 var phonemeTasks = l.MResultsCollection
-                    .Select(async (mResult, index) =>
+                    .Select(async (mResult, index) => await Task.Run(() =>
                     {
 
                             string phoneme = mResult.mTextBoxEditor.CurrentScript;
@@ -324,7 +324,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                         divideWord = true;
 
 
-                    });
+                    }));
 
                 await Task.WhenAll(phonemeTasks);
                 if (l != null)

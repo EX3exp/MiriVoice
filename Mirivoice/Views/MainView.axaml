@@ -128,7 +128,7 @@
 
 
 				<Panel Grid.Column="2">
-					<Grid RowDefinitions="20*, 80*">
+					<Grid RowDefinitions="20*, 80*" >
 						<Button IsHitTestVisible="{Binding MainWindowGetInput}" Focusable="False" Cursor="Hand"  Grid.Row="0" Command="{Binding OnAddButtonClick}" Background="LightSlateGray" Width="50" Height="50">
 							<Path Data="{StaticResource add_regular}" Fill="Wheat" Stretch="Fill"/>
 						</Button>
