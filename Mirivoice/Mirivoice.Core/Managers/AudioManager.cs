@@ -162,7 +162,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 else
                 {
                     // export mixdown
-                    string exportPath = Path.Combine(DirPath, $"{fileName}"); // no suffix, because file extension is already included
+                    string exportPath = Path.Combine(DirPath, $"{fileName}.wav"); 
                     exportPath = SetSuffixToUnique(exportPath, 1);
                     using (var outputWaveFile = new WaveFileWriter(exportPath, new WaveFormat(48000, 1))) 
                     {
