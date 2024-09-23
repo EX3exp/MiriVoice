@@ -34,7 +34,10 @@ namespace Mirivoice.ViewModels
             MimeTypes = new[] { "MiriVoiceProject/*" }
         };
 
-
+        public static FilePickerFileType MiriVoiceExportAudio { get; } = new("Wav File")
+        {
+            Patterns = new[] { "*.wav" }
+        };
         Mrp initMrp;
         Version version = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version;
 
@@ -387,15 +390,87 @@ namespace Mirivoice.ViewModels
                 Log.Information("Pause Button Clicked");
             }
         }
-
-        public void OnExportAudioPerLineClick()
+        IStorageFolder LastExportPath;
+        public async void OnExportAudioPerLineClick()
         {
+            if (LineBoxCollection.Count == 0)
+            {
+                return;
+            }
+
+            var topLevel = TopLevel.GetTopLevel(mainWindow);
+            if (LastExportPath is null)
+            {
+                LastExportPath = topLevel.StorageProvider.TryGetWellKnownFolderAsync(WellKnownFolder.Downloads).Result;
+            }
+            var directory = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+            {
+                Title = (string)mainWindow.FindResource("menu.files.export.perLine.desc"),
+                AllowMultiple = false,
+                SuggestedStartLocation = LastExportPath,
+                SuggestedFileName = LastExportPath.Path.LocalPath
+
+            });
+
             
+
+            if (directory.Count > 0)
+            {
+                if (directory[0] is null)
+                {
+                    return;
+                }
+                string path = directory[0].Path.LocalPath;
+                if (path == string.Empty) 
+                {
+                    path = LastExportPath.Path.LocalPath;
+                }
+                try
+                {
+                    Log.Information($"Exporting audio per line to {path}");
+                    string filename = CurrentProjectPath.Split(System.IO.Path.PathSeparator).Last();
+                    MainManager.Instance.AudioM.PlayAllCacheFiles(1, true, true, System.IO.Path.GetFileNameWithoutExtension(filename) , path);
+                    LastExportPath = directory[0];
+                }
+                catch (Exception e)
+                {
+                    Log.Error($"[Failed to export audio per line]{e.ToString}: {e.Message} \n>> traceback: \n\t{e.StackTrace}");
+                    var res = await ShowConfirmWindow("menu.files.export.failed");
+                }
+            }
+
+           
         }
 
-        public void OnExportAudioMergedClick()
+        public async void OnExportAudioMergedClick()
         {
+            if (LineBoxCollection.Count == 0)
+            {
+                return;
+            }
+            var topLevel = TopLevel.GetTopLevel(mainWindow);
+            var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+            {
+                Title = (string)mainWindow.FindResource("menu.files.export.merged.desc"),
+                DefaultExtension = "wav",
+                ShowOverwritePrompt = true,
+                FileTypeChoices = new[] { MiriVoiceExportAudio },
+                SuggestedFileName = System.IO.Path.GetFileNameWithoutExtension(CurrentProjectPath) + ".wav"
+            });
 
+            if (file is not null)
+            {
+                string path = file.Path.LocalPath;
+                try
+                {
+                    MainManager.Instance.AudioM.PlayAllCacheFiles(1, true, false, System.IO.Path.GetFileNameWithoutExtension(path), System.IO.Path.GetDirectoryName(path) );
+                }
+                catch (Exception e)
+                {
+                    Log.Error($"[Failed to export audio merged]{e.ToString}: {e.Message} \n>> traceback: \n\t{e.StackTrace}");
+                    var res = await ShowConfirmWindow("menu.files.export.failed");
+                }
+            }
         }
 
         public void OnGlobalSettingButtonClick()

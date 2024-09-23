@@ -40,7 +40,12 @@
 	
 	<system:String x:Key="menu.files.export">Export</system:String>
 	<system:String x:Key="menu.files.export.perLine">Export audios per lines (.wav)</system:String>
+	<system:String x:Key="menu.files.export.failed">
+		An Error occured during export.
+		Please Check Log file for more informations.</system:String>
+	<system:String x:Key="menu.files.export.perLine.desc">Select Directory to export</system:String>
 	<system:String x:Key="menu.files.export.merged">Export audio merged (.wav)</system:String>
+	<system:String x:Key="menu.files.export.merged.desc">Set Filename to export</system:String>
 	
 	
 	<!--project...-->

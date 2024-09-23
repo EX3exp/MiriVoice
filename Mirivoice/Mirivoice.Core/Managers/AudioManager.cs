@@ -45,6 +45,21 @@ namespace Mirivoice.Mirivoice.Core.Managers
             return cacheFilePath;
         }
 
+        string SetSuffixToUnique(string filepath, int suffix)
+        {
+            if (File.Exists(filepath))
+            {
+                string dirPath = Path.GetDirectoryName(filepath);
+                string changedPath = Path.Combine(dirPath, Path.GetFileNameWithoutExtension(filepath) + $"({suffix})" + Path.GetExtension(filepath));
+                if (File.Exists(changedPath))
+                {
+                    return SetSuffixToUnique(filepath, suffix + 1); // recursive call
+                }
+                else return changedPath;
+            }
+            else return filepath;
+        }
+
         List<string> GetAllCacheFiles()
         {
             return Directory.GetFiles(MainManager.Instance.PathM.CachePath, "*.wav").ToList();
@@ -53,7 +68,15 @@ namespace Mirivoice.Mirivoice.Core.Managers
         private double OffsetBeforePlay;
         private int offset = 0;
         private int currentLine;
-        public async void PlayAllCacheFiles(int startIndex)
+        /// <summary>
+        /// Note that startIndex is same as lineNo (starts from 1, not 0)
+        /// </summary>
+        /// <param name="startIndex"></param>
+        /// <param name="exportOnlyAndDoNotPlay"></param>
+        /// <param name="exportPerTrack"></param>
+        /// <param name="fileName"></param>
+        /// <param name="DirPath"></param>
+        public async void PlayAllCacheFiles(int startIndex, bool exportOnlyAndDoNotPlay=false, bool exportPerTrack=true, string fileName="", string DirPath="")
         {
             if ( _waveOut != null && _waveOut.PlaybackState == PlaybackState.Paused)
             {
@@ -61,21 +84,21 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 return;
             }
             List<string> caches = new List<string>();
-            ObservableCollection<LineBoxView> lineBoxViews = v.LineBoxCollection;
+
             int index = 0;
             v.SingleTextBoxEditorEnabled = false;
             v.CurrentEdit.IsEnabled = false;
             var tasks = new List<Task>();
             
             caches.Clear();
-            for (int i = startIndex - 1; i < lineBoxViews.Count; ++i)
+            for (int i = startIndex - 1; i < v.LineBoxCollection.Count; ++i)
             {
-                caches.Add(lineBoxViews[i].CurrentCacheName);
+                caches.Add(v.LineBoxCollection[i].CurrentCacheName);
             }
-
-            for (int i = 0; i < lineBoxViews.Count; ++i)
+            v.MainWindowGetInput = false;
+            for (int i = 0; i < v.LineBoxCollection.Count; ++i)
             {
-                LineBoxView l = lineBoxViews[i];
+                LineBoxView l = v.LineBoxCollection[i];
 
                 if (i < startIndex - 1)
                 {
@@ -85,7 +108,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
                 if (i == startIndex - 1)
                 {
-                    l.v.StartProgress(0, lineBoxViews.Count - startIndex + 1, "Inference");
+                    l.v.StartProgress(0, v.LineBoxCollection.Count - startIndex + 1, "Inference");
                 }
 
                 Log.Debug($"[Generating Cache]");
@@ -103,15 +126,74 @@ namespace Mirivoice.Mirivoice.Core.Managers
             await Task.WhenAll(tasks);
 
             // Finalize progress
-            if (lineBoxViews.Count - 1 >= startIndex - 1)
+            if (v.LineBoxCollection.Count - 1 >= startIndex - 1)
             {
-                lineBoxViews[lineBoxViews.Count - 1].v.EndProgress();
+                v.LineBoxCollection[v.LineBoxCollection.Count - 1].v.EndProgress();
             }
 
-            
+            if (exportOnlyAndDoNotPlay)
+            {
+                
+                Log.Information("Exporting cache files.");
+                if (exportPerTrack)
+                {
+                    // export per track
+                    int no = 1;
+                    foreach (string cacheName in caches)
+                    {
+                        string exportPath = Path.Combine(DirPath, $"{no}_{fileName}.wav");
+                      
+                        exportPath = SetSuffixToUnique(exportPath, 1);
+                        Log.Debug($"Exporting {cacheName} to {exportPath}");
+                        // resample to 48000kHz 
+                        using (var reader = new AudioFileReader(cacheName))
+                        {
+                            using (var resampler = new MediaFoundationResampler(reader, new WaveFormat(48000, reader.WaveFormat.Channels)))
+                            {
+                                resampler.ResamplerQuality = 60;
+                                
+                                WaveFileWriter.CreateWaveFile(exportPath, resampler);
+                            }
+                        }
+                        no++;
+                    }
+                    
+                }
+                else
+                {
+                    // export mixdown
+                    string exportPath = Path.Combine(DirPath, $"{fileName}"); // no suffix, because file extension is already included
+                    exportPath = SetSuffixToUnique(exportPath, 1);
+                    using (var outputWaveFile = new WaveFileWriter(exportPath, new WaveFormat(48000, 1))) 
+                    {
+                        foreach (string cacheName in caches)
+                        {
+                            using (var reader = new AudioFileReader(cacheName))
+                            {
+                                // resample to 48000kHz
+                                using (var resampler = new MediaFoundationResampler(reader, new WaveFormat(48000, reader.WaveFormat.Channels)))
+                                {
+                                    resampler.ResamplerQuality = 60;
+                                    byte[] buffer = new byte[8192];
+                                    int read;
+                                    while ((read = resampler
+                                        .Read(buffer, 0, buffer.Length)) > 0)
+                                    {
+                                        outputWaveFile.Write(buffer, 0, read);
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+                v.MainWindowGetInput = true;
+                return;
+            }
+
             foreach (string cacheName in caches)
             {
-                Log.Debug($"[Playing Cache] {cacheName}");
+                //Log.Debug($"[Playing Cache] {cacheName}");
                 var reader = new AudioFileReader(cacheName);
                 _audioReaders.Add(reader);
 
@@ -124,7 +206,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
             SelectedBtnIndexBeforePlay = startIndex - 1;
             v.LinesViewerOffset = new Avalonia.Vector(0, 104 * (startIndex - 1));
             currentLine = startIndex - 1;
-            v.MainWindowGetInput = false;
+            
             PlayNextFile();
         }
 

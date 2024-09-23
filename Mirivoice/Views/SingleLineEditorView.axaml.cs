@@ -38,17 +38,17 @@ public partial class SingleLineEditorView : UserControl
                 string textChanged = textBox.Text;
                 if (l is null)
                 {
-                    Log.Debug("LineBoxView is null");
+                    //Log.Debug("LineBoxView is null");
                     return;
                 }
                 if (l.viewModel.LineText == textBox.Text)
                 {
-                    Log.Debug($"No need to phonemize ---- SingleLineTBox '{textBox.Text}' // linePreview '{l.viewModel.LineText}' "); ;
+                    //Log.Debug($"No need to phonemize ---- SingleLineTBox '{textBox.Text}' // linePreview '{l.viewModel.LineText}' "); ;
                     l.DeActivatePhonemizer = true; // no need to phonemize
                 }
                 else
                 {
-                    Log.Debug($"SingleLineTBox '{textBox.Text}' // linePreview '{l.viewModel.LineText}' "); ;
+                    //Log.Debug($"SingleLineTBox '{textBox.Text}' // linePreview '{l.viewModel.LineText}' "); ;
                     l.viewModel.LineText = textChanged;
                     l.DeActivatePhonemizer = false;
                     if (FirstUpdate)

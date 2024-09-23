@@ -69,7 +69,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
             {
                 Files.RemoveAt(10);
             }
-
+            Files.Reverse();
             Save();
             UpdateUI(v);
         }
