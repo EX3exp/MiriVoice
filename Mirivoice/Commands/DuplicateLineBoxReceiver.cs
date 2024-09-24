@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Mirivoice.ViewModels;
 using Mirivoice.Views;
+using System;
 
 namespace Mirivoice.Commands
 {
@@ -16,16 +17,15 @@ namespace Mirivoice.Commands
         public override void DoAction()
         {
 
-            var lineBox = new LineBoxView(l); 
-            int LineNoToBeAdded = l.v.LineBoxCollection.IndexOf(l) + 1;
+            var lineBox = new LineBoxView(l);
+            int LineNoToBeAdded = Int32.Parse(l.viewModel.LineNo);
 
-            lineBox.FindControl<TextBlock>("lineNumber").Text = LineNoToBeAdded.ToString();
-            
-            
+            lineBox.viewModel.SetLineNo(LineNoToBeAdded + 1);
+
             l.v.LineBoxCollection.Insert(LineNoToBeAdded, lineBox);
             LineBoxIndexLastAdded = LineNoToBeAdded;
 
-            
+            RefreshLineNos();
 
         }
 
@@ -36,9 +36,18 @@ namespace Mirivoice.Commands
 
             l.v.LineBoxCollection.RemoveAt(LineBoxIndexLastAdded);
             LineBoxIndexLastAdded -= 1;
-
+            RefreshLineNos();
         }
 
+        void RefreshLineNos()
+        {
+            int index = 0;
+            foreach (LineBoxView lineBox in l.v.LineBoxCollection)
+            {
+                lineBox.viewModel.SetLineNo(index + 1);
+                ++index;
+            }
 
+        }
     }
 }

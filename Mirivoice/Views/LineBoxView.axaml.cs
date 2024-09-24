@@ -175,11 +175,15 @@ namespace Mirivoice.Views
         public LineBoxView(LineBoxView l)
         {
             this.v = l.v;
-            InitializeComponent();
+            int voicerIndex = l.viewModel.voicerSelector.CurrentDefaultVoicerIndex;
+            int metaIndex = l.viewModel.voicerSelector.CurrentVoicer.CurrentVoicerMeta.SpeakerId;
+
+            InitializeComponent(voicerIndex, metaIndex);
             viewModel.LineText = l.viewModel.LineText;
             IPAText = l.IPAText;
             _currentCacheName = MainManager.Instance.AudioM.GetUniqueCachePath();
 
+            
             //lockButton = this.FindControl<ToggleButton>("lockButton");
             SetCommands(v);
 
@@ -677,7 +681,8 @@ namespace Mirivoice.Views
         {
             AvaloniaXamlLoader.Load(this);
             this.DataContext = viewModel = new LineBoxViewModel(voicerIndex, metaIndex);
-            
+
+
         }
 
     }

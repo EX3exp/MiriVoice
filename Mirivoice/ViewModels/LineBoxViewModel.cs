@@ -152,6 +152,20 @@ namespace Mirivoice.ViewModels
                 };
 
             }
+            else
+            {
+                var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
+                var assets = AssetLoader.Open(uri);
+
+                using (var stream = assets)
+                {
+                    var bitmap = new Bitmap(stream);
+                    Icon = new ImageBrush(bitmap)
+                    {
+                        Stretch = Stretch.UniformToFill
+                    };
+                }
+            }
         }
         public LineBoxViewModel(): base(true)
         {
@@ -162,18 +176,39 @@ namespace Mirivoice.ViewModels
             _borderThickness = OriginalThickness;
             _borderColor = OriginalBorderColor;
             Margin = OriginalMargin;
-            var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
-            var assets = AssetLoader.Open(uri);
-
-            using (var stream = assets)
+            VoicerInfo vInfo = voicerSelector.CurrentVoicer.Info;
+            Voicer voicer = voicerSelector.CurrentVoicer;
+            if (vInfo.Icon != null && vInfo.Icon != string.Empty)
             {
-                var bitmap = new Bitmap(stream);
-                Icon = new ImageBrush(bitmap)
+                string voicerIconPath = Path.Combine(voicer.RootPath,
+                vInfo.Icon.Replace('/', Path.DirectorySeparatorChar));
+                if (!File.Exists(voicerIconPath))
                 {
-                    Stretch = Stretch.UniformToFill
+                    return;
+                }
+
+                Icon
+                = new ImageBrush(new Bitmap(voicerIconPath))
+                {
+                    Stretch = Stretch.UniformToFill,
                 };
+
             }
-            
+            else
+            {
+                var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
+                var assets = AssetLoader.Open(uri);
+
+                using (var stream = assets)
+                {
+                    var bitmap = new Bitmap(stream);
+                    Icon = new ImageBrush(bitmap)
+                    {
+                        Stretch = Stretch.UniformToFill
+                    };
+                }
+            }
+
         }
 
         public LineBoxViewModel(int voicerIndex, int metaIndex) : base(voicerIndex, true)
@@ -183,16 +218,37 @@ namespace Mirivoice.ViewModels
             _borderThickness = OriginalThickness;
             _borderColor = OriginalBorderColor;
             Margin = OriginalMargin;
-            var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
-            var assets = AssetLoader.Open(uri);
-
-            using (var stream = assets)
+            VoicerInfo vInfo = voicerSelector.CurrentVoicer.Info;
+            Voicer voicer = voicerSelector.CurrentVoicer;
+            if (vInfo.Icon != null && vInfo.Icon != string.Empty)
             {
-                var bitmap = new Bitmap(stream);
-                Icon = new ImageBrush(bitmap)
+                string voicerIconPath = Path.Combine(voicer.RootPath,
+                vInfo.Icon.Replace('/', Path.DirectorySeparatorChar));
+                if (!File.Exists(voicerIconPath))
                 {
-                    Stretch = Stretch.UniformToFill
+                    return;
+                }
+
+                Icon
+                = new ImageBrush(new Bitmap(voicerIconPath))
+                {
+                    Stretch = Stretch.UniformToFill,
                 };
+
+            }
+            else
+            {
+                var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
+                var assets = AssetLoader.Open(uri);
+
+                using (var stream = assets)
+                {
+                    var bitmap = new Bitmap(stream);
+                    Icon = new ImageBrush(bitmap)
+                    {
+                        Stretch = Stretch.UniformToFill
+                    };
+                }
             }
 
         }

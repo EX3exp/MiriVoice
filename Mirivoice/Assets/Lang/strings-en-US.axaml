@@ -113,4 +113,8 @@
 	
 	<system:String x:Key="gprefs.clearcacheonquit">Clear Caches On Quit</system:String>
 	<system:String x:Key="gprefs.usebeta">Use Beta Version</system:String>
+	
+	<!-- Voicers -->
+	<system:String x:Key="voicers.title">Voicers</system:String>
+	<system:String x:Key="voicers.voicer">Voicer</system:String>
 </ResourceDictionary>
