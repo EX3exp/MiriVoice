@@ -301,8 +301,10 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
         public void ClearCache()
         {
+            StopAudio();
             foreach (var file in GetAllCacheFiles())
             {
+                
                 File.Delete(file);
             }
         }

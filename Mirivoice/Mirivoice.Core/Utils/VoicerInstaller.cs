@@ -36,6 +36,21 @@ namespace Mirivoice.Mirivoice.Core.Utils
             this.archiveEncoding = Encoding.UTF8;
             this.textEncoding = Encoding.UTF8;
         }
+        string MakeDirectoryUnique(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                return path;
+            }
+            int i = 1;
+            string newPath = path;
+            while (Directory.Exists(newPath))
+            {
+                newPath = $"{path}({i})";
+                ++i;
+            }
+            return newPath;
+        }
 
         public async void InstallVoicers(string[] paths)
         {
@@ -43,7 +58,8 @@ namespace Mirivoice.Mirivoice.Core.Utils
             foreach (string p in paths)
             {
                 Log.Information($"Installing voicer from {p}");
-                var result = await v.ShowTaskWindow("menu.tools.voicerinstall", "menu.tools.voicerinstall", Install(p), "menu.tools.voicerinstall.process", "menu.tools.voicerinstall.success", "menu.tools.voicerinstall.failed");
+                // Currently it puts suffix to the directory name if it already exists, but if the bug in VoicerSelector.cs is fixed, it should be changed to overwrite the existing directory(to update Voicer).
+                var result = await v.ShowTaskWindow("menu.tools.voicerinstall", "menu.tools.voicerinstall", Install(MakeDirectoryUnique(p)), "menu.tools.voicerinstall.process", "menu.tools.voicerinstall.success", "menu.tools.voicerinstall.failed");
                 Log.Information($"Voicer installed.");
             }
             Log.Information($"Refresh Voicers");

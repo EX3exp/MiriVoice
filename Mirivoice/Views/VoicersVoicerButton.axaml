@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Mirivoice.VoicersVoicerButton">
+	<ToggleButton Width="230" Height="100" IsChecked="{Binding IsSelected}" Command="{Binding OnButtonClick}">
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+			<Rectangle x:Name="voicerIcon" Margin="0 0 0 0" Width="80" Height="80" Fill="{Binding Icon}" ></Rectangle>
+
+			<StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock  Background="DarkOliveGreen" Width="30" FontSize="15" TextElement.Foreground="Beige"  Text="{Binding LangCode}" Height="30" Margin="15 5 0 5" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  LineHeight="40" ></TextBlock>
+					<TextBlock  Background="DarkSlateGray" Width="70" FontSize="15" TextElement.Foreground="Beige"  Text="{Binding Voicer.Info.Type}" Height="30" Margin="0 5 5 5" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  LineHeight="40" ></TextBlock>
+				</StackPanel>
+
+				<TextBlock Padding="5 2 5 5" Text="{Binding Voicer.Info.Name}" MaxWidth="178" Height="64" Margin="13 5 0 0" TextAlignment="Left" TextTrimming="WordEllipsis" xml:space="preserve" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="15" ></TextBlock>
+
+			</StackPanel>
+
+		</StackPanel>
+	</ToggleButton>
+</UserControl>

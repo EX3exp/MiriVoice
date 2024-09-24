@@ -73,6 +73,7 @@ namespace Mirivoice.Mirivoice.Core.Editor
             }
         }
 
+        // TODO Fix bug : VoicerSelector does not update voicerscollection properly, when voicer is updated by voicerinstaller.
         public void UpdateVoicerCollection()
         {
             ObservableCollection<Voicer> _voicers = MainManager.Instance.GetVoicersCollectionNew();

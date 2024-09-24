@@ -775,6 +775,12 @@ namespace Mirivoice.ViewModels
             window.Show();
         }
 
+        public void OnVoicersButtonClick()
+        {
+            Window window = new VoicersWindow(this, mainWindow);
+            window.Show();
+        }
+
         public async void OnVoicerInstallButtonClick()
         {
             VoicerInstaller voicerInstaller = new VoicerInstaller(this);

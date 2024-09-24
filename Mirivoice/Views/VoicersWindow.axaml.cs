@@ -7,15 +7,17 @@ namespace Mirivoice;
 
 public partial class VoicersWindow : Window
 {
-    // todo
+    VoicersWindowViewModel viewModel;
     public VoicersWindow(MainViewModel v, Window owner)
     {
         owner.Closed += (_, __) => Close();
-        InitializeComponent();
+        InitializeComponent(v);
     }
 
-    private void InitializeComponent()
+    private void InitializeComponent(MainViewModel v)
     {
         AvaloniaXamlLoader.Load(this);
+        DataContext = viewModel = new VoicersWindowViewModel(v);
+
     }
 }

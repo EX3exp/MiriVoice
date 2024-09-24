@@ -2,58 +2,100 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		xmlns:vm="using:Mirivoice.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+		MinWidth="1280" MinHeight="600" Width="1280" Height="600" WindowStartupLocation="CenterScreen"
+		Icon="/Assets/mirivoice-logo.ico"
         x:Class="Mirivoice.VoicersWindow"
         Title="{DynamicResource voicers.title}">
 
-	<StackPanel Orientation="Horizontal" >
+	<Design.DataContext>
+		<vm:VoicersViewModel/>
+		</Design.DataContext>
+	<Border>
+		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
 
-		<Grid ColumnDefinitions="280, Auto, 256"  >
-		
-		<StackPanel  Grid.Column="0" Margin="15 15 10 10"  HorizontalAlignment="Stretch">
-			<Path  Width="280" Height="36" Margin="10 0 0 0" Data="{StaticResource person_voice_regular}" Fill="Bisque" Stretch="Uniform"/>
-			<ScrollViewer Margin="5 10 5 5"  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" >
-				<StackPanel>
-					<ItemsControl >
-						<Button Width="230" Height="100">
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-								<Rectangle x:Name="voicerIcon" Margin="0 0 0 0" Width="80" Height="80" Fill="LightBlue" ></Rectangle>
-								
-								<StackPanel>
-									<StackPanel Orientation="Horizontal">
-										<TextBlock  Background="DarkOliveGreen" Width="30" FontSize="15" TextElement.Foreground="Beige"  Text="KO" Height="30" Margin="15 5 0 5" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  LineHeight="40" ></TextBlock>
-										<TextBlock  Background="DarkSlateGray" Width="70" FontSize="15" TextElement.Foreground="Beige"  Text="VITS2" Height="30" Margin="0 5 5 5" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  LineHeight="40" ></TextBlock>
-									</StackPanel>
-									
-									<TextBlock Padding="5 2 5 5" Text="Natasha vits ve3243242" MaxWidth="178" Height="64" Margin="13 5 0 0" TextAlignment="Left" TextTrimming="WordEllipsis" xml:space="preserve" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="15" ></TextBlock>
-									
-								</StackPanel>
+			<Grid ColumnDefinitions="280, *, 400, *" >
+
+				<Grid Grid.Column="0" Margin="15 15 10 10"  HorizontalAlignment="Stretch">
+					<StackPanel>
+						<Path  Width="280" Height="36" Margin="10 0 0 0" Data="{StaticResource person_voice_regular}" Fill="Bisque" Stretch="Uniform"/>
+						<ScrollViewer Margin="5 10 10 15" AllowAutoHide="False"  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" >
+							<StackPanel>
+								<ItemsControl ItemsSource="{Binding VoicersVoicerButtons}">
+
+
+
+								</ItemsControl>
 
 							</StackPanel>
-						</Button>
+						</ScrollViewer>
+					</StackPanel>
+
+				</Grid>
+				<Grid Grid.Column="1"  Margin="10 5 5 5">
+					<StackPanel VerticalAlignment="Stretch" Width="280" >
+						<TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="15" Text="{DynamicResource voicers.readme}" FontSize="15" Margin="15 30 10 10" FontWeight="Bold" ></TextBlock>
+						<ScrollViewer Height="250" BorderThickness="1" AllowAutoHide="False"  Margin="15 0 10 15" Focusable="True"  HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Visible" >
+							<Grid >
+
+								<TextBlock  Text="{Binding Readme}" TextWrapping="Wrap" Foreground="DarkSlateGray"  FontWeight="Light" FontSize="15" Margin="0 0 0 0" />
+							</Grid>
+						</ScrollViewer>
+						<ScrollViewer Height="200" BorderThickness="1" AllowAutoHide="False" Margin="15 10 10 15" Focusable="True"   HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible" >
+							<StackPanel>
+								<StackPanel Orientation="Horizontal" Margin="0 0 0 0">
+									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="50" Text="{DynamicResource voicers.author}" FontSize="15" Margin="0 0 0 0" FontWeight="Bold" Foreground="DarkOliveGreen"></TextBlock>
+									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="50" Text="{Binding Author}" FontSize="13" Margin="10 0 0 0" FontWeight="Light" ></TextBlock>
+								</StackPanel>
+
+								<StackPanel Orientation="Horizontal"  Margin="0 0 0 0" >
+									<TextBlock TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"  Height="50" Text="{DynamicResource voicers.voice}" FontSize="15" Margin="0 0 0 0" FontWeight="Bold" Foreground="DarkOliveGreen"></TextBlock>
+									<TextBlock  TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="50" Text="{Binding Voice}" FontSize="13" Margin="10 0 0 0" FontWeight="Light" ></TextBlock>
+								</StackPanel>
+
+								<StackPanel Orientation="Horizontal" Margin="0 0 0 0">
+									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="50" Text="{DynamicResource voicers.engineer}" FontSize="15" Margin="0 0 0 0" FontWeight="Bold" Foreground="DarkOliveGreen"></TextBlock>
+									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="50" Text="{Binding Engineer}" FontSize="13" Margin="10 0 0 0 " FontWeight="Light" ></TextBlock>
+								</StackPanel>
+
+								<StackPanel Orientation="Horizontal" Margin="0 0 0 0" >
+									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="50" Text="{DynamicResource voicers.illust}" FontSize="15" Margin="0 0 0 0" FontWeight="Bold" Foreground="DarkOliveGreen"></TextBlock>
+									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="50" Text="{Binding Illustrator}" FontSize="13" Margin="10 0 0 0" FontWeight="Light" ></TextBlock>
+								</StackPanel>
+							</StackPanel>
+						</ScrollViewer>
+					</StackPanel>
 
 
-					</ItemsControl>
-					
-				</StackPanel>
-			</ScrollViewer>
-			</StackPanel>
-
-			<ScrollViewer Grid.Column="1"  MinWidth="320" Margin="0 64 5 5"  HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Visible" >
-					<Grid>
-						<TextBlock Text="Voicers" FontSize="" Margin="5 15 5 5" >
-							
-						</TextBlock>
-
-					</Grid>
-				</ScrollViewer>
+				</Grid>
 
 
-			<StackPanel Grid.Column="2" Margin="0 0 0 0" Background="Beige">
-				<Rectangle x:Name="voicerPortrait" Margin="0 0 0 0" Width="256" Height="512" Fill="LightBlue" ></Rectangle>
 
-			</StackPanel>
-		</Grid>
-	</StackPanel>
+
+
+				<Grid Grid.Column="2" Margin="0 0 0 0" VerticalAlignment="Top">
+					<Rectangle x:Name="voicerPortrait" Margin="0 0 0 0" Width="400" Height="800" Fill="{Binding Portrait}" VerticalAlignment="Top" ></Rectangle>
+				</Grid>
+				<Grid Grid.Column="3"  Margin="10 5 5 5">
+					<StackPanel VerticalAlignment="Stretch" Width="280" >
+						<TextBlock Height="124" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="26" MaxLines="4" Text="{Binding Name}" FontSize="45"  Margin="15 30 10 10" Padding="10 10 10 10" FontWeight="Bold" ></TextBlock>
+						<ScrollViewer Height="151" BorderThickness="1" AllowAutoHide="False"  Margin="15 0 10 15" Focusable="True"  HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Disabled" >
+
+						</ScrollViewer>
+						<ScrollViewer Height="200" BorderThickness="1" AllowAutoHide="False" Margin="15 10 10 15" Focusable="True"   HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Visible" >
+							<Grid >
+
+								<TextBlock  Text="{Binding Description}" TextWrapping="Wrap" Foreground="DarkSlateGray"  FontWeight="Medium" FontSize="15" Margin="0 0 0 0" />
+							</Grid>
+						</ScrollViewer>
+					</StackPanel>
+
+
+				</Grid>
+			</Grid>
+		</StackPanel>
+	</Border>
+	
 
 </Window>

@@ -39,7 +39,7 @@ namespace Mirivoice.Mirivoice.Core.Format
 
         public VoicerMeta[] VoicerMetas { get; set; } = new VoicerMeta[1] { new VoicerMeta() };
 
-        public string ReadMe { get; set; } = "";
+        public string Readme { get; set; } = "";
     }
 
     public class Voicer : ReactiveObject, INotifyPropertyChanged
