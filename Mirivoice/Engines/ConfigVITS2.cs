@@ -80,7 +80,16 @@ namespace Mirivoice.Engines
             }
             private set { }
         }
-        
+
+        public string _blank
+        {
+            get
+            {
+                return "<blank>";
+            }
+            private set { }
+        }
+
         public string _punctuation {
             get
             {
@@ -114,6 +123,8 @@ namespace Mirivoice.Engines
             get {
                 // Export all symbols
                 StringBuilder sb = new StringBuilder();
+                sb.Append(_blank);
+                sb.Append("\t");
                 sb.Append(_pad);
                 
                 
@@ -122,7 +133,7 @@ namespace Mirivoice.Engines
                 sb.Append("\t");
                 sb.Append(_punctuation);
                 sb.Append("\t");
-                sb.Append("<bos>\t<eos>\t<space>");
+                sb.Append("<bos>\t<eos>\t<space>\t<blank>");
                 return sb.ToString().Split("\t").ToList();
             }
             private set
@@ -132,14 +143,6 @@ namespace Mirivoice.Engines
         }
 
 
-        // Special symbol ids
-        public int SPACE_ID {
-            get {
-                return symbols.IndexOf("<space>");
-            }
-            private set {
-            }
-        }
 
     }
     

@@ -51,7 +51,7 @@
 					</Style>
 				</StackPanel.Styles>
 			</StackPanel>
-
+			
 			<StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" x:Name="Buttons">
 				<StackPanel.Styles>
 					<Style Selector="Button">

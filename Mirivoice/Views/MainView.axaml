@@ -55,6 +55,7 @@
 				<MenuItem Header="{DynamicResource menu.tools.settings}" Command="{Binding OnGlobalSettingButtonClick}"></MenuItem>
 				<Separator/>
 				<MenuItem Header="{DynamicResource menu.tools.voicers}" Command="{Binding OnVoicersButtonClick}"></MenuItem>
+				<MenuItem Header="{DynamicResource menu.tools.voicerinstall}" Command="{Binding OnVoicerInstallButtonClick}"></MenuItem>
 				<MenuItem Header="{DynamicResource menu.tools.voicerMakingSupport}">
 					<MenuItem Header="{DynamicResource menu.tools.voicerMakingSupport.preprocessor}" Command="{Binding OnDataPreprocessButtonClick}"></MenuItem>
 				</MenuItem>

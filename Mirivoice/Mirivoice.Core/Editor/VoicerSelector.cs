@@ -6,6 +6,7 @@ using ReactiveUI;
 using Serilog;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Mirivoice.Mirivoice.Core.Editor
 {
@@ -32,7 +33,9 @@ namespace Mirivoice.Mirivoice.Core.Editor
                     this.RaiseAndSetIfChanged(ref _currentVoicer, value);
                     _currentVoicer.RefreshNickAndStyle();
                     OnPropertyChanged(nameof(CurrentVoicer));
-                    
+                    v._currentDefaultVoicerIndex = Voicers.IndexOf(value);
+                    OnPropertyChanged(nameof(CurrentDefaultVoicerIndex));
+
                 }
                 
             }
@@ -58,18 +61,43 @@ namespace Mirivoice.Mirivoice.Core.Editor
             SetDefVoicerCommand = new MementoCommand<int>(setDefVoicerOriginator);
         }
 
-        
+        /// <summary>
+        /// can be used when new voicer is ADDED
+        /// (do not use when voicer is removed)
+        /// </summary>
+        public void UpdateVoicerCollection()
+        {
+            ObservableCollection<Voicer> _voicers = MainManager.Instance.GetVoicersCollectionNew();
+            int offset = _voicers.Count - Voicers.Count - 1; // this amount of voicers will be added
+            if (offset < 0)
+            {
+                return;
+            }
+            for (int i = offset; i < _voicers.Count; i++)
+            {
+                Voicers.Add(_voicers[i]);
+            }
+
+        }
+
         bool Undobackuped = false;
 
         public int CurrentDefaultVoicerIndex
         {
             get
             {
+                if (_currentDefaultVoicerIndex == -1)
+                {
+                    this.RaiseAndSetIfChanged(ref _currentDefaultVoicerIndex, 0);
+                }
                 return _currentDefaultVoicerIndex;
             }
             set
             {
-                
+                if (value == -1)
+                {
+                    return;
+                }
                 lastDefaultVoicerIndex = _currentDefaultVoicerIndex;
 
                 //Log.Debug("CurrentDefaultVoicerIndex: {value}", value);

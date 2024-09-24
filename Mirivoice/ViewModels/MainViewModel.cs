@@ -38,6 +38,12 @@ namespace Mirivoice.ViewModels
         {
             Patterns = new[] { "*.wav" }
         };
+
+        public static FilePickerFileType MiriVoiceVoicer { get; } = new("Zip File")
+        {
+            Patterns = new[] { "*.zip" }
+        };
+
         Mrp initMrp;
         Version version = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version;
 
@@ -372,7 +378,7 @@ namespace Mirivoice.ViewModels
                     {
                         return;
                     }
-                    currentLineBoxIndex = 0;
+                    currentLineBoxIndex = 1;
                 }
                 else
                 {
@@ -487,12 +493,6 @@ namespace Mirivoice.ViewModels
             StopButtonEnabled = false;
         }
 
-
-        public void PlayAudio()
-        {
-            // TODO
-            // play cached audios
-        }
         public void OnAddBoxesButtonClick()
         {
             addLineBoxesReceiver.SetScript(mTextBoxEditor.CurrentScript);
@@ -656,6 +656,23 @@ namespace Mirivoice.ViewModels
             }
         }
 
+        public async Task<bool> ShowTaskWindow(string resourceIdText, string resourceIdTitle, Task<bool> task,
+            string resourceIdProcessing, string resourceIdSuccess, string resourceIdFailed)
+        {
+
+            var result = await MessageWindow.Show(mainWindow, (string)mainWindow.FindResource(resourceIdText),
+                (string)mainWindow.FindResource(resourceIdTitle), MessageWindow.MessageBoxButtons.OkWithProgress, task, (string)mainWindow.FindResource(resourceIdProcessing), (string)mainWindow.FindResource(resourceIdSuccess), (string)mainWindow.FindResource(resourceIdFailed)
+                );
+
+            switch (result)
+            {
+                case MessageWindow.MessageBoxResult.Ok:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         /*
         public async Task<bool> ShowErrorWindow(string errormsg)
         {
@@ -758,7 +775,34 @@ namespace Mirivoice.ViewModels
             window.Show();
         }
 
+        public async void OnVoicerInstallButtonClick()
+        {
+            VoicerInstaller voicerInstaller = new VoicerInstaller(this);
+            var topLevel = TopLevel.GetTopLevel(mainWindow);
 
+            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = (string)mainWindow.FindResource("menu.tools.voicerinstall.desc"),
+                AllowMultiple = true,
+                FileTypeFilter = new[] { MiriVoiceVoicer }
+            });
+
+            List<string> p_ = new List<string>();
+            if (files is not null && files.Count >= 1)
+            {
+                
+                foreach (var f in files)
+                {
+                    if (File.Exists(f.Path.LocalPath))
+                    {
+                        p_.Add(f.Path.LocalPath);
+                    }
+                    
+                }
+            }
+
+            voicerInstaller.InstallVoicers(p_.ToArray());
+        }
 
         public override void OnVoicerChanged(Voicer value) { }
 

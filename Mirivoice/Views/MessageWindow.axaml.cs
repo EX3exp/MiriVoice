@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml;
 using Mirivoice.ViewModels;
 using Mirivoice.Views;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mirivoice;
@@ -23,19 +24,24 @@ public partial class MessageWindow : Window
     }
 
 
-    public enum MessageBoxButtons { Ok, OkCancel, YesNo, YesNoCancel, YesNoCancelHideCancel}
+    public enum MessageBoxButtons { Ok, OkWithProgress, OkCancel, YesNo, YesNoCancel, YesNoCancelHideCancel}
     public enum MessageBoxResult { Ok, Cancel, Yes, No }
 
-    public static Task<MessageBoxResult> Show(Window parent, string text, string title, MessageBoxButtons buttons)
+    public static async Task<MessageBoxResult> Show(Window parent, string text, string title, MessageBoxButtons buttons, Task<bool> taskBeforeClose=null, string taskProcessingMessage="", string taskEndMessage="", string taskFailedMessage="")
     {
         var msgbox = new MessageWindow(text);
         msgbox.IsVisible = false;
 
         var res = MessageBoxResult.Ok;
 
-        void AddButton(string caption, MessageBoxResult r, bool def = false)
+        void AddButton(string caption, MessageBoxResult r, bool def = false, bool visible=true, string name="")
         {
-            var btn = new Button { Content = caption };
+            var btn = new Button { 
+                Content = caption,
+                IsVisible = visible
+            };
+
+
             btn.Click += (_, __) => {
                 res = r;
                 msgbox.Close();
@@ -52,8 +58,26 @@ public partial class MessageWindow : Window
         {
             AddButton((string)parent.FindResource("app.ok"), MessageBoxResult.Ok, true);
         }
+
+        if (buttons == MessageBoxButtons.OkWithProgress)
+        {
+            AddButton((string)parent.FindResource("app.ok"), MessageBoxResult.Ok, true, false, "okButton");
             
-        if (buttons == MessageBoxButtons.YesNo || buttons == MessageBoxButtons.YesNoCancel)
+            msgbox.viewModel.Message = taskProcessingMessage;
+            var result = await Task.Run(() => taskBeforeClose);
+            if (result)
+            {
+                msgbox.viewModel.Message = taskEndMessage;
+            }
+            else
+            {
+                msgbox.viewModel.Message = taskFailedMessage;
+            }
+
+            msgbox.Buttons.Children.First().IsVisible = true;
+        }
+
+            if (buttons == MessageBoxButtons.YesNo || buttons == MessageBoxButtons.YesNoCancel)
         {
             AddButton((string)parent.FindResource("app.yes"), MessageBoxResult.Yes);
             AddButton((string)parent.FindResource("app.no"), MessageBoxResult.No, false);
@@ -76,7 +100,7 @@ public partial class MessageWindow : Window
             msgbox.Show();
         }
         
-        return tcs.Task;
+        return await tcs.Task;
     }
 
 

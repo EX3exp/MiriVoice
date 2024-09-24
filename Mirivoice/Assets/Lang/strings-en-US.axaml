@@ -59,6 +59,17 @@
 	<system:String x:Key="menu.tools.title">Tools</system:String>
 	<system:String x:Key="menu.tools.settings">Global Settings</system:String>
 	<system:String x:Key="menu.tools.voicers">Voicers</system:String>
+	<system:String x:Key="menu.tools.voicerinstall">Install Voicer...</system:String>
+	<system:String x:Key="menu.tools.voicerinstall.desc">Select .zip file to install Voicer</system:String>
+	<system:String x:Key="menu.tools.voicerinstall.process">Installing Voicer...</system:String>
+	<system:String x:Key="menu.tools.voicerinstall.error">Failed to install Voicer. 
+	There's no voicer.yaml inside the archive.</system:String>
+	<system:String x:Key="menu.tools.voicerinstall.success">Voicer installed successfully!</system:String>
+	<system:String x:Key="menu.tools.voicerinstall.failed">
+		Failed to install Voicer.
+		Please Check Log file for more informations.
+	</system:String>
+	
 	<system:String x:Key="menu.tools.voicerMakingSupport">Voicer Making Support...</system:String>
 	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor">Transcription IPA Converter</system:String>
 	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.langCode">LangCode</system:String>
@@ -66,6 +77,7 @@
 	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.browse">Browse</system:String>
 	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.convert">Convert</system:String>
 	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.noFile">No file selected</system:String>
+	
 	
 	<!--help...-->
 	<system:String x:Key="menu.help.title">Help</system:String>
