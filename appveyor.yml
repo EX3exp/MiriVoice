@@ -2,6 +2,7 @@ version: 1.0.{build}
 branches:
   only:
   - stable
+  - main
 skip_tags: true
 image:
 - Visual Studio 2022
@@ -9,6 +10,7 @@ image:
 - Ubuntu
 configuration: Release
 platform: Any CPU
+shallow_clone: true
 nuget:
   project_feed: true
 before_build:
