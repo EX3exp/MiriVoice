@@ -13,6 +13,7 @@ namespace Mirivoice.ViewModels
     public class VoicersWindowViewModel: ViewModelBase
     {
         public ObservableCollection<VoicersVoicerButton> VoicersVoicerButtons { get; set; }
+        public ObservableCollection<VoicersStyleBox> VoicersStyleBoxes { get; set; }
         private string _name;
         public string Name
         {
@@ -142,9 +143,12 @@ namespace Mirivoice.ViewModels
         public VoicersWindowViewModel(MainViewModel v)
         {
             List<VoicersVoicerButton> voicersVoicerButtons = new List<VoicersVoicerButton>();
+            
             foreach (var voicer in v.voicerSelector.Voicers)
             {
-                voicersVoicerButtons.Add(new VoicersVoicerButton(voicer, this));
+                
+                voicersVoicerButtons.Add(new VoicersVoicerButton(voicer, this, v));
+                
             }
 
             VoicersVoicerButtons = new ObservableCollection<VoicersVoicerButton>(voicersVoicerButtons);

@@ -165,9 +165,9 @@ public class EngineVITS2 : BaseEngine
 
             // scales array
             Tensor<float> scalesTensor = new DenseTensor<float>(3);
-            scalesTensor[0] = 0.667f; // scale
-            scalesTensor[1] = 1.0f; // pitch
-            scalesTensor[2] = 0.8f; // energy
+            scalesTensor[0] = 0.667f; // noise_scale
+            scalesTensor[1] = 1.0f; // length_scale. If increased, the speed of the speech will be faster
+            scalesTensor[2] = 0.8f; // noise_scale_w
 
 
             var inputs = new List<NamedOnnxValue>

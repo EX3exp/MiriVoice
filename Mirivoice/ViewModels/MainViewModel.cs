@@ -332,10 +332,32 @@ namespace Mirivoice.ViewModels
         
         public void ClearCache()
         {
-            MainManager.Instance.AudioM.ClearCache();
+            string cachePath = MainManager.Instance.PathM.CachePath;
+            if (Directory.Exists(cachePath))
+            {
+                foreach (string file in Directory.GetFiles(cachePath))
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error($"Failed to delete cache file: {file} {e.Message}");
+                    }
+                }
+            }
         }
 
+        public void PlayAudio(string path)
+        {
+            MainManager.Instance.AudioM.PlayAudio(path);
+        }
 
+        public void StopAudio()
+        {
+            MainManager.Instance.AudioM.StopAudio();
+        }
         public void OnAddButtonClick()
         {
             MainManager.Instance.DefaultVoicerIndex = voicerSelector.CurrentDefaultVoicerIndex;
@@ -578,8 +600,16 @@ namespace Mirivoice.ViewModels
             {
                 if (MainManager.Instance.Setting.ClearCacheOnQuit)
                 {
-                    Log.Information("Clearing cache...");
-                    ClearCache();
+                    MainManager.Instance.AudioM.StopAudio();
+                    try
+                    {
+                        Log.Information("Clearing cache...");
+                        ClearCache();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error($"Failed to clear cache: {ex.Message}");
+                    }
                     Log.Information("Cache cleared.");
                 }
                 return;

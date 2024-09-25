@@ -8,15 +8,16 @@ namespace Mirivoice;
 public partial class VoicersVoicerButton : UserControl
 {
     public VoicersVoicerButtonViewModel viewModel;
-    public VoicersVoicerButton(Voicer voicer, VoicersWindowViewModel v)
+    public VoicersVoicerButton(Voicer voicer, VoicersWindowViewModel v, MainViewModel mv)
     {
         
-        InitializeComponent(voicer, v);
+        InitializeComponent(voicer, v, mv);
+        
     }
 
-    private void InitializeComponent(Voicer voicer, VoicersWindowViewModel v)
+    private void InitializeComponent(Voicer voicer, VoicersWindowViewModel v, MainViewModel mv)
     {
         AvaloniaXamlLoader.Load(this);
-        DataContext = viewModel = new VoicersVoicerButtonViewModel(voicer, v);
+        DataContext = viewModel = new VoicersVoicerButtonViewModel(voicer, v, mv);
     }
 }

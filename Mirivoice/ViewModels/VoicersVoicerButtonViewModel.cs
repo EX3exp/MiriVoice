@@ -8,15 +8,17 @@ using Mirivoice.Mirivoice.Core.Format;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Mirivoice.Mirivoice.Core.Editor;
-
+using System.Collections.ObjectModel;
 using System.IO;
 using Avalonia.Media.Imaging;
+using Mirivoice.Engines;
 
 namespace Mirivoice.ViewModels
 {
     public class VoicersVoicerButtonViewModel: ViewModelBase
     {
         private readonly VoicersWindowViewModel v;
+        private readonly MainViewModel mv;
         private bool _isSelected = false;
         public bool IsSelected
         {
@@ -48,12 +50,12 @@ namespace Mirivoice.ViewModels
                 OnPropertyChanged(nameof(Icon));
             }
         }
-        public VoicersVoicerButtonViewModel(Voicer voicer, VoicersWindowViewModel v)
+        public VoicersVoicerButtonViewModel(Voicer voicer, VoicersWindowViewModel v, MainViewModel mv)
         {
             Voicer = voicer;
             this.v = v;
             VoicerInfo vInfo = Voicer.Info;
-
+            this.mv = mv;
             LangCode = vInfo.LangCode.ToUpper();
 
             if (vInfo.Icon != null && vInfo.Icon != string.Empty)
@@ -96,6 +98,16 @@ namespace Mirivoice.ViewModels
             }
             IsSelected = true;
 
+            List<VoicersStyleBox> voicersStyleBoxes = new List<VoicersStyleBox>();
+            int i = 0;
+            VoicerMeta[] voicerMetas = Voicer.VoicerMetaCollection.ToArray();
+            foreach (var meta in voicerMetas )
+            {
+                voicersStyleBoxes.Add(new VoicersStyleBox(Voicer, i, mv));
+                ++i;
+            }
+            v.VoicersStyleBoxes = new ObservableCollection<VoicersStyleBox>(voicersStyleBoxes);
+            v.OnPropertyChanged(nameof(v.VoicersStyleBoxes));
             v.Name = Voicer.Info.Name;
             v.Voice = Voicer.Info.Voice;
             v.Author = Voicer.Info.Author;

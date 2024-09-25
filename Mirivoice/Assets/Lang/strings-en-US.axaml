@@ -119,9 +119,8 @@
 	<system:String x:Key="voicers.title">Voicers</system:String>
 	<system:String x:Key="voicers.voicer">Voicer</system:String>
 	<system:String x:Key="voicers.readme">Read Me: </system:String>
-	
-	<system:String x:Key="voicers.description">Character</system:String>
-	<system:String x:Key="voicers.styles">Styles</system:String>
+
+	<system:String x:Key="voicers.styles">Styles: </system:String>
 	<system:String x:Key="voicers.illust">Illustrator. </system:String>
 	
 	<system:String x:Key="voicers.engineer">Engineer. </system:String>

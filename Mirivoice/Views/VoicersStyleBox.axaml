@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="54"
+             Width="250" Height="54"
+			 x:Class="Mirivoice.VoicersStyleBox">
+
+	<Border BorderBrush="LightGray" BorderThickness="0 0 0 1" Width="248">
+
+		<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+			<TextBlock Margin="15 5 5 5" Text="{Binding StyleName}" Foreground="DarkOliveGreen" FontSize="15" VerticalAlignment="Center" TextWrapping="Wrap" Width="60" FontWeight="Medium"></TextBlock>
+			<ToggleButton Cursor="Hand" Focusable="False" IsChecked="{Binding IsDescSelected}"  Grid.Row="0" Background="LightSlateGray" Width="22" Height="54" Command="{Binding OnDescButtonClick}" >
+
+				<Path Data="{StaticResource info_regular}" Fill="Wheat" Stretch="Uniform" HorizontalAlignment="Center" Width="16" VerticalAlignment="Center"/>
+			</ToggleButton>
+			<ScrollViewer Width="90" Height="54" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+				<StackPanel>
+					<TextBlock Margin="5 5 5 5" IsVisible="{Binding IsDescOpen}" FontSize="11" VerticalAlignment="Center"  TextWrapping="Wrap" Text="{Binding DescText}"></TextBlock>
+				</StackPanel>
+			</ScrollViewer>
+
+			<ToggleButton Focusable="False" Cursor="Hand"  Grid.Row="0" Click="OnSamplePlayButtonClick" Background="DarkOliveGreen" Width="44" Height="54">
+				<Path Data="{StaticResource speaker_regular}" Fill="Wheat" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</ToggleButton>
+
+		</StackPanel>
+
+
+	</Border>
+</UserControl>

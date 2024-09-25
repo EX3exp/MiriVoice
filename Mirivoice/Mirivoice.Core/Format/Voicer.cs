@@ -74,9 +74,10 @@ namespace Mirivoice.Mirivoice.Core.Format
             //Log.Debug("[Infer Started] --- ipaText");
             int spkid = CurrentVoicerMeta.SpeakerId;
             Engine.Inference(ipaText, cacheFilePath, spkid);
-            l.IsCacheIsVaild = true;
-            
-            
+            if (l != null)
+            {
+                l.IsCacheIsVaild = true;
+            }
         }
 
 

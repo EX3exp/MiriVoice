@@ -20,6 +20,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         private int _currentFileIndex;
         private LineBoxView _;
         private readonly MainViewModel v;
+        private bool MainViewModelPlaying;
         public AudioManager(MainViewModel v)
         {
             this.v = v;
@@ -27,6 +28,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
             _waveOut.PlaybackStopped += OnPlaybackStopped;  // called when playback is stopped
             _audioReaders = new List<AudioFileReader>();
             _currentFileIndex = 0;
+            MainViewModelPlaying = false;
         }
 
         public string SaveToCache(byte[] audioData)
@@ -78,6 +80,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         /// <param name="DirPath"></param>
         public async void PlayAllCacheFiles(int startIndex, bool exportOnlyAndDoNotPlay=false, bool exportPerTrack=true, string fileName="", string DirPath="")
         {
+            MainViewModelPlaying = true;
             if ( _waveOut != null && _waveOut.PlaybackState == PlaybackState.Paused)
             {
                 _waveOut.Play();
@@ -225,7 +228,29 @@ namespace Mirivoice.Mirivoice.Core.Managers
             }
         }
 
-        
+        public void PlayAudio(string cacheFilePath)
+        {
+            if (MainViewModelPlaying)
+            {
+                return;
+            }
+            MainViewModelPlaying = false;
+            if (File.Exists(cacheFilePath))
+            {
+                var reader = new AudioFileReader(cacheFilePath);
+                if (_waveOut.PlaybackState == PlaybackState.Playing)
+                {
+                    _waveOut.Stop();
+                }
+                _waveOut.Init(reader);
+                _waveOut.Play();
+            }
+            else
+            {
+                Log.Error($"Cache file not found: {cacheFilePath}");
+            }
+        }
+
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
             if (_audioReaders.Count == 0) // when stopped
@@ -234,6 +259,10 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 if (_waveOut != null)
                 {
                     _waveOut.Dispose();
+                }
+                if (!MainViewModelPlaying)
+                {
+                    return;
                 }
                 v.LineBoxCollection[currentLine].viewModel.IsSelected = false;
                 v.LineBoxCollection[SelectedBtnIndexBeforePlay].viewModel.IsSelected = true;
@@ -244,6 +273,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 return;
             }
                 _audioReaders[_currentFileIndex].Dispose();
+            
             v.LineBoxCollection[currentLine].viewModel.IsSelected = false;
             v.LinesViewerOffset = new Avalonia.Vector(0, v.LinesViewerOffset.Y + 104);
 
@@ -265,6 +295,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 v.LinesViewerOffset = new Avalonia.Vector(0, OffsetBeforePlay);
                 v.MainWindowGetInput = true;
                 v.StopButtonEnabled = false;
+                MainViewModelPlaying = false;
             }
         }
 
@@ -286,8 +317,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 _waveOut.Pause();
                 _currentFileIndex = 0;
                 _audioReaders.Clear();
-                _waveOut.Stop();                
-                
+                _waveOut.Stop();
+                _waveOut.Dispose();
             }
             
         }
