@@ -1,0 +1,56 @@
+version: 1.0.{build}
+branches:
+  only:
+  - stable
+skip_tags: true
+image:
+- Visual Studio 2022
+- macOS
+- Ubuntu
+configuration: Release
+platform: Any CPU
+nuget:
+  project_feed: true
+before_build:
+- cmd: nuget restore
+build:
+  project: Mirivoice.sln
+  parallel: true
+  verbosity: minimal
+artifacts:
+- path: bin\win-x86
+  name: MiriVoice-win-x86
+- path: bin\win-x64
+  name: MiriVoice-win-x64
+- path: MiriVoice-win-x64.exe
+- path: MiriVoice-osx-x64.dmg
+- path: MiriVoice-linux-x64.tar.gz
+- path: appcast.win-x86.xml
+- path: appcast.win-x64.xml
+- path: appcast.win-x64-installer.xml
+- path: appcast.linux-x64.xml
+- path: appcast.osx-x64.xml
+- path: changelog.txt
+deploy:
+- provider: GitHub
+  tag: build/$(APPVEYOR_BUILD_VERSION)
+  release: $(APPVEYOR_BUILD_VERSION) Beta
+  description: $(APPVEYOR_BUILD_VERSION) Beta ($(APPVEYOR_REPO_COMMIT_TIMESTAMP))
+  auth_token:
+    secure: JOj3dHhQpaawLqJwzShSxgzplsNMnwE9Cpx5OcGUOP2SYJpN84kooY1WNnd3VU1D
+  repository: EX3exp/MiriVoice
+  prerelease: true
+  force_update: true
+  on:
+    branch: main
+- provider: GitHub
+  tag: build/$(APPVEYOR_BUILD_VERSION)
+  release: $(APPVEYOR_BUILD_VERSION)
+  description: $(APPVEYOR_BUILD_VERSION) ($(APPVEYOR_REPO_COMMIT_TIMESTAMP))
+  auth_token:
+    secure: JOj3dHhQpaawLqJwzShSxgzplsNMnwE9Cpx5OcGUOP2SYJpN84kooY1WNnd3VU1D
+  repository: EX3exp/MiriVoice
+  prerelease: false
+  force_update: true
+  on:
+    branch: stable
