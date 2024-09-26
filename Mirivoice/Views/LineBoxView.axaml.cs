@@ -376,12 +376,20 @@ namespace Mirivoice.Views
 
         public async Task StartInference()
         {
+            if (viewModel.voicerSelector.CurrentVoicer is null)
+            {
+                Log.Warning("CurrentVoicer is null");
+                return;
+            }
 
             //Log.Debug("StartInference");
             await Dispatcher.UIThread.InvokeAsync(async () =>
             {
                 if (ShouldPhonemizeWhenSelected)
                 {
+                    DeActivatePhonemizer = false;
+                    ShouldPhonemize = true;
+
                     Task<string> res = viewModel.phonemizer.ConvertToIPA(viewModel.LineText, DispatcherPriority.ApplicationIdle);
                     IPAText = await res;
                 }
@@ -399,8 +407,9 @@ namespace Mirivoice.Views
                     {
                         IsCacheIsVaild = false;
                     }
-                    if (viewModel.voicerSelector.CurrentVoicer.CurrentVoicerMeta != lastInferencedVoicerMeta)
+                    if (lastInferencedVoicerMeta is not null &&  viewModel.voicerSelector.CurrentVoicer.CurrentVoicerMeta.SpeakerId != lastInferencedVoicerMeta.SpeakerId)
                     {
+                        Log.Debug("meta changed");
                         IsCacheIsVaild = false;
                     }
                     if (!System.IO.Path.Exists(CurrentCacheName))
@@ -420,6 +429,7 @@ namespace Mirivoice.Views
                 else
                 {
                     Log.Warning("CurrentVoicerMeta is null");
+                    return;
                 }
             }
             , DispatcherPriority.ApplicationIdle);

@@ -150,7 +150,7 @@ namespace Mirivoice.ViewModels
             VoicerInfo vInfo = voicer.Info;
             
             phonemizer = GetPhonemizer(voicer.Info.LangCode);
-            
+            l.IsCacheIsVaild = false;
 
             LangCode = voicer.Info.LangCode.ToUpper().Substring(0, 2);
             VoicerType = voicer.Info.Type;

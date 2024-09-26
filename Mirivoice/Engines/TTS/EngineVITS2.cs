@@ -178,10 +178,6 @@ public class EngineVITS2 : BaseEngine
             NamedOnnxValue.CreateFromTensor("sid", sidTensor)
         };
 
-            if (File.Exists(cacheFilePath))
-            {
-                return;
-            }
             var options = new SessionOptions();
             using (var results = new InferenceSession(ModelPath, options).Run(inputs))
             {

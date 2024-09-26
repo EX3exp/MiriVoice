@@ -272,8 +272,16 @@ namespace Mirivoice.Mirivoice.Core.Managers
                
                 return;
             }
+            try
+            {
                 _audioReaders[_currentFileIndex].Dispose();
-            
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error disposing audio reader.");
+            }
+
+
             v.LineBoxCollection[currentLine].viewModel.IsSelected = false;
             v.LinesViewerOffset = new Avalonia.Vector(0, v.LinesViewerOffset.Y + 104);
 
@@ -319,6 +327,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 _audioReaders.Clear();
                 _waveOut.Stop();
                 _waveOut.Dispose();
+                MainViewModelPlaying = false;
             }
             
         }

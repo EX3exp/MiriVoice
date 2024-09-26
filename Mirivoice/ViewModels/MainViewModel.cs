@@ -548,6 +548,7 @@ namespace Mirivoice.ViewModels
 
                 CurrentProjectPath = (string)mainWindow.FindResource("app.defprojectname");
                 mTextBoxEditor.CurrentScript = "";
+                
                 CurrentEditIndex = 0;
     
                 MainManager.Instance.cmd.ProjectOpened();
@@ -564,8 +565,10 @@ namespace Mirivoice.ViewModels
 
             }
 
-            
 
+            LineBoxCollection.Clear();
+            CurrentSingleLineEditor = null;
+            MResultsCollection.Clear();
 
         }
 
