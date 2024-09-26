@@ -1,5 +1,6 @@
 ﻿using Mirivoice.Mirivoice.Core.Editor;
 using Mirivoice.ViewModels;
+using System.Globalization;
 using VYaml.Annotations;
 
 namespace Mirivoice.Mirivoice.Core.Format
@@ -48,5 +49,6 @@ namespace Mirivoice.Mirivoice.Core.Format
 
         }
         public override void OnVoicerChanged(Voicer value) { }
+        public override void OnVoicerCultureChanged(CultureInfo culture) { }
     }
 }

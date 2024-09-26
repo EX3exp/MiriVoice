@@ -18,10 +18,10 @@
 			<Grid ColumnDefinitions="40, 1, 100, 40, 40, 40, 40, *, *, *" RowDefinitions="*, *, *">
 				
 				<StackPanel Margin="0 0 0 0"  Grid.Column="0" Grid.Row="0">
-					<TextBlock Text="{Binding LineNo, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" Width="40" Height="40" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  LineHeight="40"  FontSize="15" Background="DarkOliveGreen" TextElement.Foreground="White"></TextBlock>
-					<TextBlock Grid.Column="0" Width="40" Height="32" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  LineHeight="40"  FontSize="15" Background="Transparent" ></TextBlock>
+					<TextBlock Text="{Binding LineNo, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" Width="40" Height="40" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  LineHeight="40"  FontSize="15" Background="DarkGoldenrod" TextElement.Foreground="WhiteSmoke"></TextBlock>
+					<TextBlock Foreground="Wheat" Text="{Binding VoicerType, Mode=TwoWay}" Grid.Column="0" Width="40" Height="32" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  LineHeight="40"  FontSize="11" Background="DarkSlateGray" ></TextBlock>
 					<Border >
-						<TextBlock Text="{Binding LangCode}" Grid.Column="0" Width="40" Height="32" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  LineHeight="40"  FontSize="15" ></TextBlock>
+						<TextBlock Foreground="Wheat" Background="DarkOliveGreen" Text="{Binding LangCode}" Grid.Column="0" Width="40" Height="30" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  LineHeight="27"  FontSize="15" ></TextBlock>
 					</Border>
 
 				</StackPanel>

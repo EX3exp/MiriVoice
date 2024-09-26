@@ -3,6 +3,7 @@ using Serilog;
 using System.ComponentModel;
 using Mirivoice.Mirivoice.Core.Format;
 using System;
+using System.Globalization;
 
 namespace Mirivoice.ViewModels
 {
@@ -65,6 +66,7 @@ namespace Mirivoice.ViewModels
             mTextBoxEditor.CurrentScript = string.Empty; // save undo history
         }
         public abstract void OnVoicerChanged(Voicer value);
+        public abstract void OnVoicerCultureChanged(CultureInfo culture);
         public VoicerSelectingViewModelBase(string initText, bool saveUndoAtInit, bool useVoicerSelector = false)
         {
             if (useVoicerSelector)

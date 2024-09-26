@@ -56,7 +56,7 @@ namespace Mirivoice.ViewModels
             this.v = v;
             VoicerInfo vInfo = Voicer.Info;
             this.mv = mv;
-            LangCode = vInfo.LangCode.ToUpper();
+            LangCode = vInfo.LangCode.ToUpper().Substring(0, 2);
 
             if (vInfo.Icon != null && vInfo.Icon != string.Empty)
             {

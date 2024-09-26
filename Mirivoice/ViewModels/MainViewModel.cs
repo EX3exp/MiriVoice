@@ -22,6 +22,7 @@ using VYaml.Serialization;
 using System.Text;
 using Avalonia.Interactivity;
 using Avalonia.Controls.ApplicationLifetimes;
+using System.Globalization;
 namespace Mirivoice.ViewModels
 {
     public class MainViewModel : VoicerSelectingViewModelBase
@@ -842,6 +843,6 @@ namespace Mirivoice.ViewModels
 
         public override void OnVoicerChanged(Voicer value) { }
 
-
+        public override void OnVoicerCultureChanged(CultureInfo culture) { }
     }
 }

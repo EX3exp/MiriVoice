@@ -21,6 +21,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
         private List<string> endPuncs = new List<string> { ".", "!", "?", "。" };
         protected virtual string[] SplitToWords(string sentence)
         {
+            // In default, split sentence to words by character
             // you can override if needed
             char[] charArr = sentence.ToCharArray();
             List<string> words = new List<string>();
@@ -33,8 +34,10 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
 
         protected virtual string[] VariateAndSplitToWords(string sentence)
         {
+            // In default, apply variation(e.g. Phoneme Variation in Korean) and split variated sentence to words by character
             // you can override if needed
             // split sentences with punctuation
+            // to fix variating mechanism, you can override Variate method
             string[] unitSentences = Regex.Split(sentence, @"([^\w\s])");
 
             List<string> newSentences = new List<string>();
@@ -47,13 +50,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                 }
             }
 
-            char[] charArr = string.Join("", newSentences).ToCharArray();
-            List<string> words = new List<string>();
-            foreach (char c in charArr)
-            {
-                words.Add(c.ToString());
-            }
-            return words.ToArray();
+            return SplitToWords(string.Join("", newSentences));
         }
 
         protected virtual string Variate(string sentence)
@@ -71,16 +68,16 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
         }
 
 
-        protected virtual string[] ToPhonemes(string word, out bool isEditable)
+        protected virtual string ToPhoneme(string word, out bool isEditable)
         {
             if (word.Trim() == string.Empty)
             {
 
                isEditable = false;
-                return new string[] { string.Empty };
+                return string.Empty;
             }
             isEditable = true;
-            return new string[] { word }; 
+            return word;
         }
 
         
@@ -111,7 +108,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                 var wordTasks = variatedWords
                     .Select(async (word, index) => await Task.Run(()=>
                     {
-                        string phoneme = string.Join("", ToPhonemes(word, out _));
+                        string phoneme = ToPhoneme(word, out _);
                         if (words.Length != variatedWords.Length)
                         {
                             Log.Error($"[ConvertToIPA: Variated Sentence({words.Length})] - [Sentence length({variatedWords.Length})] mismatch");
@@ -245,7 +242,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                     .Select(async (word, index) => 
                     {
 
-                        string phoneme = string.Join("", ToPhonemes(word, out editable));
+                        string phoneme =  ToPhoneme(word, out editable);
                         if (words.Length != variatedWords.Length)
                             {
                             Log.Error($"[Variated Sentence({words.Length})] - [Sentence length({variatedWords.Length})] mismatch");

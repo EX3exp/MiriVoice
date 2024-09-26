@@ -7,6 +7,7 @@ using Serilog;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 
 namespace Mirivoice.Mirivoice.Core.Editor
@@ -175,7 +176,8 @@ namespace Mirivoice.Mirivoice.Core.Editor
         }
 
         bool Undobackuped = false;
-
+        CultureInfo lastCulture;
+        public bool CultureChanged = false;
         public int CurrentDefaultVoicerIndex
         {
             get
@@ -193,7 +195,8 @@ namespace Mirivoice.Mirivoice.Core.Editor
                     return;
                 }
                 lastDefaultVoicerIndex = _currentDefaultVoicerIndex;
-
+                
+                lastCulture = new CultureInfo(CurrentVoicer.Info.LangCode);
                 //Log.Debug("CurrentDefaultVoicerIndex: {value}", value);
 
                 //Log.Debug($"LastDefaultVoicerIndex: {lastDefaultVoicerIndex}");
@@ -221,11 +224,20 @@ namespace Mirivoice.Mirivoice.Core.Editor
                 this.RaiseAndSetIfChanged(ref _currentDefaultVoicerIndex, value);
                 _currentVoicer = Voicers[_currentDefaultVoicerIndex];
                 _currentVoicer.RefreshNickAndStyle();
+
                 v.OnVoicerChanged(_currentVoicer);
                 OnPropertyChanged(nameof(CurrentVoicer));
                 OnPropertyChanged(nameof(CurrentDefaultVoicerIndex));
 
-
+                if (lastCulture != new CultureInfo(CurrentVoicer.Info.LangCode))
+                {
+                    CultureChanged = true;
+                    v.OnVoicerCultureChanged(new CultureInfo(CurrentVoicer.Info.LangCode));
+                }
+                else
+                {
+                    CultureChanged = false;
+                }
             }
         }
         

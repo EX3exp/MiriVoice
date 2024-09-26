@@ -56,6 +56,39 @@ namespace Mirivoice.Views
 
         public string IPAText;
         private bool _shouldPhonemize;
+
+        private List<MResult> backup;
+        private bool _showBackUp;
+        public bool ShowBackUp // set true when restoring MResults 
+        {
+            get { return _showBackUp; }
+            set
+            {
+                if (value != _showBackUp)
+                {
+                    _showBackUp = value;
+                }
+                if (value)
+                {
+                    //Log.Debug("ShowBackUp: true");
+                    if (backup is null)
+                    {
+                        return;
+                    }
+                    MResultsCollection = new ObservableCollection<MResult>(backup);
+                    v.MResultsCollection = MResultsCollection;
+                    v.OnPropertyChanged(nameof(v.MResultsCollection));
+                }
+                else
+                {
+                    //Log.Debug("ShowBackUp: false");
+                    backup = new List<MResult>(MResultsCollection);
+                    DeActivatePhonemizer = false;
+                    ShouldPhonemize = true;
+                    
+                }
+            }
+        }
         public bool ShouldPhonemize
         {
             get { return _shouldPhonemize; }
@@ -77,6 +110,10 @@ namespace Mirivoice.Views
 
         private async Task PhonemizeLine(bool ApplyToCurrentEdit = true)
         {
+            if (viewModel is null)
+            {
+                return;
+            }
             string line = viewModel.LineText;
             try
             {
@@ -351,7 +388,7 @@ namespace Mirivoice.Views
 
                 if (viewModel.voicerSelector.CurrentVoicer is not null)
                 {
-                    //Log.Debug("LineBoxView Inference: {0}", IPAText);
+                    //Log.Debug($"LineBoxView Inference: {IPAText}");
 
                     
                     string lastIPAText = IPAText;
@@ -673,14 +710,14 @@ namespace Mirivoice.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-            this.DataContext = viewModel = new LineBoxViewModel();
+            this.DataContext = viewModel = new LineBoxViewModel(this);
             
         }
 
         private void InitializeComponent(int voicerIndex=0, int metaIndex=0)
         {
             AvaloniaXamlLoader.Load(this);
-            this.DataContext = viewModel = new LineBoxViewModel(voicerIndex, metaIndex);
+            this.DataContext = viewModel = new LineBoxViewModel(voicerIndex, metaIndex, this);
 
 
         }

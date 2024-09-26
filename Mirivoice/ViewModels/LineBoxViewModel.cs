@@ -12,6 +12,8 @@ using System.Globalization;
 using System;
 using Avalonia.Platform;
 using ReactiveUI;
+using Mirivoice.Views;
+using Avalonia.Controls.Documents;
 
 
 namespace Mirivoice.ViewModels
@@ -54,6 +56,8 @@ namespace Mirivoice.ViewModels
             }
         }
 
+        string lineTextBeforeChangedCulture;
+
         public readonly IBrush OriginalBorderColor = new SolidColorBrush(Colors.Gray);
 
         public readonly Thickness OriginalMargin = new Thickness(0.0, 0.0, 0.0, 0.0);
@@ -92,6 +96,16 @@ namespace Mirivoice.ViewModels
             }
         }
 
+        private string _voicerType;
+        public string VoicerType
+        {
+            get => _voicerType;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _voicerType, value);
+                OnPropertyChanged(nameof(VoicerType));
+            }
+        }
         private bool _isSelected = false;
 
         public bool IsSelected
@@ -134,8 +148,12 @@ namespace Mirivoice.ViewModels
         {
             //Log.Debug($"OnVoicerChanged: {voicer.NickAndStyle}");
             VoicerInfo vInfo = voicer.Info;
+            
             phonemizer = GetPhonemizer(voicer.Info.LangCode);
+            
 
+            LangCode = voicer.Info.LangCode.ToUpper().Substring(0, 2);
+            VoicerType = voicer.Info.Type;
             if (vInfo.Icon != null && vInfo.Icon != string.Empty)
             {
                 string voicerIconPath = Path.Combine(voicer.RootPath,
@@ -167,8 +185,28 @@ namespace Mirivoice.ViewModels
                 }
             }
         }
-        public LineBoxViewModel(): base(true)
+
+        bool cultureChangedFirst = false;
+        public override void OnVoicerCultureChanged(CultureInfo culture)
         {
+            if (LineText == lineTextBeforeChangedCulture && cultureChangedFirst)
+            {
+                l.ShowBackUp = true; // restore backup MResults
+                cultureChangedFirst = false;
+            }
+            else
+            {
+                lineTextBeforeChangedCulture = LineText;
+                cultureChangedFirst = true;
+                l.ShowBackUp = false; // backup current MResults
+            }
+            
+        }
+
+        private readonly LineBoxView l;
+        public LineBoxViewModel(LineBoxView l): base(true)
+        {
+            this.l = l;
             int DefaultVoicerIndex = MainManager.Instance.DefaultVoicerIndex;
             int DefaultMetaIndex = MainManager.Instance.DefaultMetaIndex;
             voicerSelector.CurrentDefaultVoicerIndex = DefaultVoicerIndex;
@@ -178,6 +216,7 @@ namespace Mirivoice.ViewModels
             Margin = OriginalMargin;
             VoicerInfo vInfo = voicerSelector.CurrentVoicer.Info;
             Voicer voicer = voicerSelector.CurrentVoicer;
+            lineTextBeforeChangedCulture = LineText;
             if (vInfo.Icon != null && vInfo.Icon != string.Empty)
             {
                 string voicerIconPath = Path.Combine(voicer.RootPath,
@@ -211,8 +250,9 @@ namespace Mirivoice.ViewModels
 
         }
 
-        public LineBoxViewModel(int voicerIndex, int metaIndex) : base(voicerIndex, true)
+        public LineBoxViewModel(int voicerIndex, int metaIndex, LineBoxView l) : base(voicerIndex, true)
         {
+            this.l = l;
             voicerSelector.Voicers[voicerIndex].CurrentVoicerMeta = voicerSelector.Voicers[voicerIndex].VoicerMetaCollection[metaIndex];
             OnVoicerChanged(voicerSelector.CurrentVoicer);
             _borderThickness = OriginalThickness;
@@ -271,7 +311,8 @@ namespace Mirivoice.ViewModels
             {
                 case "KOR":
                     return new KoreanPhonemizer();
-
+                case "ENU":
+                    return new EnglishUSPhonemizer(); 
                 default:
                     return new DefaultPhonemizer();
             }
