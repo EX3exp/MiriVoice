@@ -103,7 +103,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
 
             await Dispatcher.UIThread.InvokeAsync(async () =>
             {
-                IPAPhonemes.Clear();
+                IPAPhonemes = new string[variatedWords.Length].ToList();
                 bool divideWord = false;
                 var wordTasks = variatedWords
                     .Select(async (word, index) => await Task.Run(()=>
@@ -114,17 +114,17 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                             Log.Error($"[ConvertToIPA: Variated Sentence({words.Length})] - [Sentence length({variatedWords.Length})] mismatch");
                             if (UseWordDivider && phoneme.Trim() == string.Empty)
                             {
-                                IPAPhonemes.Add(" ");
+                                IPAPhonemes[index] = " ";
                             }
                             else
                             {
                                 if (index == 0)
                                 {
-                                    IPAPhonemes.Add(IPAConverter.ConvertToIPA(phoneme.Trim(), true));
+                                    IPAPhonemes[index] = IPAConverter.ConvertToIPA(phoneme.Trim(), true);
                                 }
                                 else
                                 {
-                                    IPAPhonemes.Add(IPAConverter.ConvertToIPA(phoneme.Trim(), false));
+                                    IPAPhonemes[index] = IPAConverter.ConvertToIPA(phoneme.Trim(), false);
                                 }
 
                             }
@@ -133,17 +133,17 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                         {
                             if (UseWordDivider && phoneme.Trim() == string.Empty)
                             {
-                                IPAPhonemes.Add(" ");
+                                IPAPhonemes[index] = " ";
                             }
                             else
                             {
                                 if (index == 0)
                                 {
-                                    IPAPhonemes.Add(IPAConverter.ConvertToIPA(phoneme.Trim(), true));
+                                    IPAPhonemes[index] = IPAConverter.ConvertToIPA(phoneme.Trim(), true);
                                 }
                                 else
                                 {
-                                    IPAPhonemes.Add(IPAConverter.ConvertToIPA(phoneme.Trim(), false));
+                                    IPAPhonemes[index] = IPAConverter.ConvertToIPA(phoneme.Trim(), false);
                                 }
                             }
                         }
@@ -292,7 +292,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
             
             await Dispatcher.UIThread.InvokeAsync(async () =>
             {
-                IPAPhonemes.Clear();
+                IPAPhonemes = new string[l.MResultsCollection.Count].ToList();
 
                 bool divideWord = false;
                 var phonemeTasks = l.MResultsCollection
@@ -303,17 +303,17 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
 
                             if (UseWordDivider && (phoneme == null || phoneme.Trim() == string.Empty))
                             {
-                                IPAPhonemes.Add(" ");
+                                IPAPhonemes[index] = " ";
                             }
                             else
                             {
                                 if (index == 0)
                                 {
-                                    IPAPhonemes.Add(IPAConverter.ConvertToIPA(phoneme.Trim(), true));
+                                    IPAPhonemes[index] = IPAConverter.ConvertToIPA(phoneme.Trim(), true);
                                 }
                                 else
                                 {
-                                    IPAPhonemes.Add(IPAConverter.ConvertToIPA(phoneme.Trim(), false));
+                                    IPAPhonemes[index] = IPAConverter.ConvertToIPA(phoneme.Trim(), false);
                                 }
                             }
                       

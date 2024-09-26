@@ -14,6 +14,7 @@
 				<TextBlock Text="{DynamicResource menu.tools.voicerMakingSupport.preprocessor.langCode}" VerticalAlignment="Center" FontSize="15" Margin="10 5 5 5"/>
 				<ComboBox x:Name="langSelectCombobox" Margin="15 10 5 5" SelectedIndex="0" VerticalAlignment="Center" SelectionChanged="LangChanged">
 					<ComboBoxItem Content="ko" />
+					<ComboBoxItem Content="en-US" />
 				</ComboBox>
 			</StackPanel>
 			

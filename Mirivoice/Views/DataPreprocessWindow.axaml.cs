@@ -33,6 +33,8 @@ public partial class DataPreprocessWindow : Window
         {
             case 0:
                 return LineBoxViewModel.GetPhonemizer("ko");
+            case 1:
+                return LineBoxViewModel.GetPhonemizer("en-US");
             default:
                 return new DefaultPhonemizer();
         }

@@ -10,12 +10,13 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
     public class EnglishUSPhonemizer : BasePhonemizer
     {
         public override BaseIPAConverter IPAConverter { get; set; } = new EnglishUSIPAConverter();
-        public override bool UseWordDivider { get; set; } = true;
+        public override bool UseWordDivider { get; set; } = false;
 
         protected override string[] SplitToWords(string sentence)
         {
             List<string> words = new List<string>();
             StringBuilder sb = new StringBuilder();
+            int index = 0;
             foreach (string word in sentence.Split())
             {
                 char[] charArr = word.ToCharArray();
@@ -44,8 +45,14 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                     }
 
                 }
+                
                 words.Add(sb.ToString());
                 sb.Clear();
+                
+                ++index;
+                if (index != sentence.Split().Length ) { 
+                    words.Add(" ");
+                }
             }
             return words.ToArray();
         }

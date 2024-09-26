@@ -77,7 +77,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.IPAConverters
                 }
             }
             string res = string.Join("\t", IPA);
-            //Log.Debug($"Converted {phoneme} to {res}");
+            Log.Debug($"Converted {phoneme} to {res}");
             return res;
         }
     }
