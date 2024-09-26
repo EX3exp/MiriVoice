@@ -15,7 +15,7 @@
 
 	
 	<system:String x:Key="updater.title">Update Checker</system:String>
-	<system:String x:Key="updater.description">Universal TTS Platform</system:String>
+	<system:String x:Key="updater.description">Open-Free TTS Platform For All</system:String>
 	<system:String x:Key="updater.status.available">Mirivoice v{0} is available!</system:String>
 	<system:String x:Key="updater.status.checking">Checking for Updates...</system:String>
 	<system:String x:Key="updater.status.notavailable">(Latest)</system:String>

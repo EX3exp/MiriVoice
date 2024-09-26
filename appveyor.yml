@@ -3,7 +3,6 @@ branches:
   only:
   - stable
   - main
-skip_tags: true
 image:
 - Visual Studio 2022
 - macOS
@@ -23,41 +22,18 @@ dotnet_csproj:
 nuget:
   project_feed: true
 before_build:
-- ps: >-
-    git config --global credential.helper store
-
-    Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
-
-    git config --global user.email "appveyor@appveyor.com"
-
-    git config --global user.name "appveyor"
-
-    nuget restore
+- cmd: nuget restore
 build:
   project: Mirivoice.Desktop/Mirivoice.Desktop.csproj
   parallel: true
   verbosity: minimal
-artifacts:
-- path: bin\win-x86
-  name: MiriVoice-win-x86
-- path: bin\win-x64
-  name: MiriVoice-win-x64
-- path: MiriVoice-win-x64.exe
-- path: MiriVoice-osx-x64.dmg
-- path: MiriVoice-linux-x64.tar.gz
-- path: appcast.win-x86.xml
-- path: appcast.win-x64.xml
-- path: appcast.win-x64-installer.xml
-- path: appcast.linux-x64.xml
-- path: appcast.osx-x64.xml
-- path: changelog.txt
 deploy:
 - provider: GitHub
   tag: build/$(APPVEYOR_BUILD_VERSION)
-  release: $(APPVEYOR_BUILD_VERSION) Beta
+  release: MiriVoice-v$(APPVEYOR_BUILD_VERSION) Beta
   description: $(APPVEYOR_BUILD_VERSION) Beta ($(APPVEYOR_REPO_COMMIT_TIMESTAMP))
   auth_token:
-    secure: JOj3dHhQpaawLqJwzShSxgzplsNMnwE9Cpx5OcGUOP2SYJpN84kooY1WNnd3VU1D
+    secure: EZGpxMjy4Z14QdM0UqgRTRn+GRbehi7bp6TtZVjH04PqNqMljX9d1QU29YDHOhld
   repository: EX3exp/MiriVoice
   prerelease: true
   force_update: true
@@ -65,10 +41,10 @@ deploy:
     branch: main
 - provider: GitHub
   tag: build/$(APPVEYOR_BUILD_VERSION)
-  release: $(APPVEYOR_BUILD_VERSION)
+  release: MiriVoice-v$(APPVEYOR_BUILD_VERSION)
   description: $(APPVEYOR_BUILD_VERSION) ($(APPVEYOR_REPO_COMMIT_TIMESTAMP))
   auth_token:
-    secure: JOj3dHhQpaawLqJwzShSxgzplsNMnwE9Cpx5OcGUOP2SYJpN84kooY1WNnd3VU1D
+    secure: EZGpxMjy4Z14QdM0UqgRTRn+GRbehi7bp6TtZVjH04PqNqMljX9d1QU29YDHOhld
   repository: EX3exp/MiriVoice
   prerelease: false
   force_update: true
