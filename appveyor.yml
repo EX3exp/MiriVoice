@@ -1,8 +1,9 @@
-version: 1.0.1.{build}
+version: 1.0.0.{build}
 branches:
   only:
   - stable
   - main
+skip_tags: true
 image:
 - Visual Studio 2022
 - macOS
@@ -12,7 +13,7 @@ platform: Any CPU
 shallow_clone: true
 dotnet_csproj:
   patch: true
-  file: Mirivoice.Desktop/Mirivoice.Desktop.csproj
+  file: '**/Mirivoice.Desktop.csproj'
   version: '{version}'
   version_prefix: '{version}'
   package_version: '{version}'
@@ -24,7 +25,7 @@ nuget:
 before_build:
 - cmd: nuget restore
 build:
-  project: Mirivoice.Desktop/Mirivoice.Desktop.csproj
+  project: Mirivoice.sln
   parallel: true
   verbosity: minimal
 deploy:
