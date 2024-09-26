@@ -11,6 +11,15 @@ image:
 configuration: Release
 platform: Any CPU
 shallow_clone: true
+dotnet_csproj:
+  patch: true
+  file: Mirivoice.Desktop/Mirivoice.Desktop.csproj
+  version: '{version}'
+  version_prefix: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 nuget:
   project_feed: true
 before_build:
@@ -25,7 +34,7 @@ before_build:
 
     nuget restore
 build:
-  project: Mirivoice.sln
+  project: Mirivoice.Desktop/Mirivoice.Desktop.csproj
   parallel: true
   verbosity: minimal
 artifacts:
