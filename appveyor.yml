@@ -14,7 +14,16 @@ shallow_clone: true
 nuget:
   project_feed: true
 before_build:
-- cmd: nuget restore
+- ps: >-
+    git config --global credential.helper store
+
+    Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
+
+    git config --global user.email "appveyor@appveyor.com"
+
+    git config --global user.name "appveyor"
+
+    nuget restore
 build:
   project: Mirivoice.sln
   parallel: true

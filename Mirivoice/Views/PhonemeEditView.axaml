@@ -10,10 +10,8 @@
 
 	<Border BorderBrush="DarkSlateGray" BorderThickness="1" Background="Gray">
 		<ScrollViewer AllowAutoHide="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-			<!-- ItemsControl for custom layout -->
 			<ItemsControl ItemsSource="{Binding MResultsCollection}">
 				<ItemsControl.ItemsPanel>
-					<!-- Use a horizontal StackPanel to arrange items side by side -->
 					<ItemsPanelTemplate>
 						<StackPanel Orientation="Horizontal"/>
 					</ItemsPanelTemplate>
@@ -22,7 +20,6 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate DataType="model:MResult">
 						<Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
-							<!-- Parent StackPanel for Word and Phoneme -->
 							<StackPanel>
 								<!-- Word displayed on the first line -->
 								<TextBlock x:Name="WordTextBlock"
