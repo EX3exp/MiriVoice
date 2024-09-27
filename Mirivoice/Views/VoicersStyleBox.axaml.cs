@@ -56,13 +56,17 @@ public partial class VoicersStyleBox : UserControl
         if (File.Exists(cachePath))
         {
             isPlaying = true;
+            v.PlayAudio(cachePath);
+            return;
         }
         if (voicer != null)
         {
             isPlaying = true;
             string ipa = await phonemizer.ConvertToIPA(phrase, DispatcherPriority.ApplicationIdle);
             voicer.Inference(ipa, cachePath, null, sid);
+            v.PlayAudio(cachePath);
+            return;
         }
-        v.PlayAudio(cachePath);
+        
     }
 }
