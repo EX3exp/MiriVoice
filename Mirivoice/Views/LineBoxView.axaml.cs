@@ -108,6 +108,7 @@ namespace Mirivoice.Views
             }
         }
 
+        public string lastPhonemizedText = string.Empty;
         private async Task PhonemizeLine(bool ApplyToCurrentEdit = true)
         {
             if (viewModel is null)
@@ -140,6 +141,7 @@ namespace Mirivoice.Views
                 else
                 {
                     await Task.Run(() => viewModel.phonemizer.PhonemizeAsync(textChanged, this, ApplyToCurrentEdit));
+                    lastPhonemizedText = textChanged;
                 }
 
 

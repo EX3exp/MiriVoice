@@ -67,6 +67,7 @@ namespace Mirivoice.ViewModels
         }
         public abstract void OnVoicerChanged(Voicer value);
         public abstract void OnVoicerCultureChanged(CultureInfo culture);
+
         public VoicerSelectingViewModelBase(string initText, bool saveUndoAtInit, bool useVoicerSelector = false)
         {
             if (useVoicerSelector)

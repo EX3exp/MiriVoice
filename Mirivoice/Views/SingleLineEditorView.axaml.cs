@@ -28,56 +28,20 @@ public partial class SingleLineEditorView : UserControl
 
     private async void LineTextChanged(object sender, TextChangedEventArgs e)
     {
-
-        var textBox = sender as TextBox;
-        if (textBox != null)
+        
+        l.DeActivatePhonemizer = false;
+        if (FirstUpdate)
         {
-            try
-            {
-                
-                string textChanged = textBox.Text;
-                if (l is null)
-                {
-                    //Log.Debug("LineBoxView is null");
-                    return;
-                }
-                if (l.viewModel.LineText == textBox.Text)
-                {
-                    //Log.Debug($"No need to phonemize ---- SingleLineTBox '{textBox.Text}' // linePreview '{l.viewModel.LineText}' "); ;
-                    l.DeActivatePhonemizer = true; // no need to phonemize
-                }
-                else
-                {
-                    //Log.Debug($"SingleLineTBox '{textBox.Text}' // linePreview '{l.viewModel.LineText}' "); ;
-                    l.viewModel.LineText = textChanged;
-                    l.DeActivatePhonemizer = false;
-                    if (FirstUpdate)
-                    {
-                        FirstUpdate = false;
-                        Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
-                        return;
-                    }
-                    if (l.ShouldPhonemize && !l.DeActivatePhonemizer)
-                    {
-                        await Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(textChanged, l));
-                    }
-                    
-
-                    
-                }
-
-                
-
-
-                
-                
-            }
-            finally
-            {
-
-            }
-
+            FirstUpdate = false;
+            Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
+            return;
         }
+        if (l.ShouldPhonemize && !l.DeActivatePhonemizer)
+        {
+            await Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
+        }
+        l.viewModel.LineText = viewModel.mTextBoxEditor.CurrentScript;
+
     }
 
     private void LineLostFocus(object sender, RoutedEventArgs e)

@@ -50,5 +50,6 @@ namespace Mirivoice.Mirivoice.Core.Format
         }
         public override void OnVoicerChanged(Voicer value) { }
         public override void OnVoicerCultureChanged(CultureInfo culture) { }
+
     }
 }

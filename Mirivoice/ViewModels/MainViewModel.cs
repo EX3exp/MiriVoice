@@ -353,6 +353,7 @@ namespace Mirivoice.ViewModels
         public void PlayAudio(string path)
         {
             MainManager.Instance.AudioM.PlayAudio(path);
+            
         }
 
         public void StopAudio()
@@ -847,5 +848,6 @@ namespace Mirivoice.ViewModels
         public override void OnVoicerChanged(Voicer value) { }
 
         public override void OnVoicerCultureChanged(CultureInfo culture) { }
+
     }
 }

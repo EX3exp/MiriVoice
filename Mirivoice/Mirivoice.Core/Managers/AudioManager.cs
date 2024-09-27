@@ -21,6 +21,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         private LineBoxView _;
         private readonly MainViewModel v;
         private bool MainViewModelPlaying;
+        public bool IsPlaying => _waveOut.PlaybackState == PlaybackState.Playing;
         public AudioManager(MainViewModel v)
         {
             this.v = v;

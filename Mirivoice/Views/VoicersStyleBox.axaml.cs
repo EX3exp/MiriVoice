@@ -11,6 +11,7 @@ using System;
 using Serilog;
 using System.IO;
 using System.Linq;
+using Mirivoice.Mirivoice.Core;
 namespace Mirivoice;
 
 
@@ -47,21 +48,18 @@ public partial class VoicersStyleBox : UserControl
 
     public async void OnSamplePlayButtonClick(object sender, RoutedEventArgs e)
     {
-        if (isPlaying)
+        if (MainManager.Instance.AudioM.IsPlaying)
         {
             v.StopAudio();
-            isPlaying = false;
             return;
         }
         if (File.Exists(cachePath))
         {
             isPlaying = true;
-            v.PlayAudio(cachePath);
             return;
         }
         if (voicer != null)
         {
-            isPlaying = true;
             string ipa = await phonemizer.ConvertToIPA(phrase, DispatcherPriority.ApplicationIdle);
             voicer.Inference(ipa, cachePath, null, sid);
             v.PlayAudio(cachePath);

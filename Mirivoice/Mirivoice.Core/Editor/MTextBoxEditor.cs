@@ -69,6 +69,11 @@ namespace Mirivoice.Mirivoice.Core.Editor
                 
                 if ( value != null)
                 {
+                    if (value == _currentScript)
+                    {
+                        Log.Debug("CurrentScript was same as lastScript");
+                        return;
+                    }
                     lastScript = _currentScript;
 
                     //Log.Debug("CurrentScript: {value}", value);
@@ -98,7 +103,6 @@ namespace Mirivoice.Mirivoice.Core.Editor
                     this.RaiseAndSetIfChanged(ref _currentScript, value);
 
                     OnPropertyChanged(nameof(CurrentScript));
-
                 }
 
 
