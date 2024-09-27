@@ -51,6 +51,17 @@ namespace Mirivoice.ViewModels
                 OnPropertyChanged(nameof(StyleName));
             }
         }
+
+        private int _spkid;
+        public int Spkid
+        {
+            get => _spkid;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _spkid, value);
+                OnPropertyChanged(nameof(Spkid));
+            }
+        }
         public VoicersStyleBoxViewModel()
         {
         }

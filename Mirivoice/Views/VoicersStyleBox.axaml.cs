@@ -8,6 +8,9 @@ using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using System;
+using Serilog;
+using System.IO;
+using System.Linq;
 namespace Mirivoice;
 
 
@@ -15,7 +18,7 @@ public partial class VoicersStyleBox : UserControl
 {
     public VoicersStyleBoxViewModel viewModel;
     private readonly MainViewModel v;
-    private Voicer voicer;
+    private Voicer voicer; // shared
     private string phrase;
     private BasePhonemizer phonemizer;
     private string cachePath;
@@ -33,7 +36,6 @@ public partial class VoicersStyleBox : UserControl
         phonemizer = LineBoxViewModel.GetPhonemizer(voicer.Info.LangCode);
         cachePath = Guid.NewGuid().ToString();
         this.voicer = voicer;
-        voicer.CurrentVoicerMeta = voicer.VoicerMetaCollection[metaIndex];
         this.v = v;
     }
 
@@ -51,12 +53,16 @@ public partial class VoicersStyleBox : UserControl
             isPlaying = false;
             return;
         }
+        if (File.Exists(cachePath))
+        {
+            isPlaying = true;
+        }
         if (voicer != null)
         {
             isPlaying = true;
             string ipa = await phonemizer.ConvertToIPA(phrase, DispatcherPriority.ApplicationIdle);
-            voicer.Inference(ipa, cachePath, null);
-            v.PlayAudio(cachePath);
+            voicer.Inference(ipa, cachePath, null, sid);
         }
+        v.PlayAudio(cachePath);
     }
 }

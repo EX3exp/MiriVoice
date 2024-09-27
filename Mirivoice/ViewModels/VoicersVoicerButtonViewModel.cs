@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using Avalonia.Media.Imaging;
 using Mirivoice.Engines;
+using Serilog;
 
 namespace Mirivoice.ViewModels
 {
@@ -103,6 +104,8 @@ namespace Mirivoice.ViewModels
             VoicerMeta[] voicerMetas = Voicer.VoicerMetaCollection.ToArray();
             foreach (var meta in voicerMetas )
             {
+                Log.Debug($"VoicerMeta {i}: {meta.Style}");
+                Voicer.CurrentVoicerMeta = meta;
                 voicersStyleBoxes.Add(new VoicersStyleBox(Voicer, i, mv));
                 ++i;
             }
