@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Mirivoice.ViewModels;
 using Mirivoice.Views;
@@ -62,7 +63,13 @@ namespace Mirivoice.Mirivoice.Core.Managers
             }
             else return filepath;
         }
-
+        public TimeSpan GetAudioDuration(string audioFilePath)
+        {
+            using (var reader = new AudioFileReader(audioFilePath))
+            {
+                return reader.TotalTime;
+            }
+        }
         List<string> GetAllCacheFiles()
         {
             return Directory.GetFiles(MainManager.Instance.PathM.CachePath, "*.wav").ToList();
@@ -79,7 +86,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         /// <param name="exportPerTrack"></param>
         /// <param name="fileName"></param>
         /// <param name="DirPath"></param>
-        public async void PlayAllCacheFiles(int startIndex, bool exportOnlyAndDoNotPlay=false, bool exportPerTrack=true, string fileName="", string DirPath="")
+        public async void PlayAllCacheFiles(int startIndex, bool exportOnlyAndDoNotPlay=false, bool exportPerTrack=true, string fileName="", string DirPath="", bool exportSrtInsteadOfAudio = false)
         {
             MainViewModelPlaying = true;
             if ( _waveOut != null && _waveOut.PlaybackState == PlaybackState.Paused)
@@ -88,6 +95,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 return;
             }
             List<string> caches = new List<string>();
+            List<string> lines = new List<string>();
+            List<string> voicerNames = new List<string>();
 
             int index = 0;
             v.SingleTextBoxEditorEnabled = false;
@@ -95,9 +104,13 @@ namespace Mirivoice.Mirivoice.Core.Managers
             var tasks = new List<Task>();
             
             caches.Clear();
+            lines.Clear();
+            voicerNames.Clear();
             for (int i = startIndex - 1; i < v.LineBoxCollection.Count; ++i)
             {
                 caches.Add(v.LineBoxCollection[i].CurrentCacheName);
+                lines.Add(v.LineBoxCollection[i].viewModel.LineText);
+                voicerNames.Add(v.LineBoxCollection[i].viewModel.voicerSelector.CurrentVoicer.Info.Name);
             }
             v.MainWindowGetInput = false;
             for (int i = 0; i < v.LineBoxCollection.Count; ++i)
@@ -165,8 +178,45 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 }
                 else
                 {
+                    string exportPath;
+                    // export srt  for mixdown 
+                    if (exportSrtInsteadOfAudio)
+                    {
+                        exportPath = Path.Combine(DirPath, $"{fileName}.srt"); // for srt with line texts
+                        string exportPathNamesSrt = Path.Combine(DirPath, $"{fileName}-voicer names.srt"); // for srt with voicer names
+                        exportPath = SetSuffixToUnique(exportPath, 1);
+                        exportPathNamesSrt = SetSuffixToUnique(exportPathNamesSrt, 1);
+
+                        TimeSpan lastTs = TimeSpan.Zero;
+                        StringBuilder sb1 = new StringBuilder();
+                        StringBuilder sb2 = new StringBuilder();
+                        for (int i = 0; i < caches.Count; ++i)
+                        {
+                            sb1.AppendLine((i + 1).ToString());
+                            sb2.AppendLine((i + 1).ToString());
+                            TimeSpan currTs = GetAudioDuration(caches[i]);
+
+                            string lastTime = lastTs.ToString(@"hh\:mm\:ss\,fff");
+                            string currTime = currTs.ToString(@"hh\:mm\:ss\,fff");
+                            sb1.AppendLine($"{lastTime} --> {currTime}"); // hours:minutes:seconds,milliseconds (00:00:00,000)
+                            sb2.AppendLine($"{lastTime} --> {currTime}");
+                            sb1.AppendLine(lines[i]);
+                            sb2.AppendLine(voicerNames[i]);
+                            sb1.AppendLine();
+                            sb2.AppendLine();
+
+                            
+
+                            lastTs = currTs;
+                        }
+                        File.WriteAllText(exportPath, sb1.ToString());
+                        File.WriteAllText(exportPathNamesSrt, sb2.ToString());
+
+                        return;
+                    }
+
                     // export mixdown
-                    string exportPath = Path.Combine(DirPath, $"{fileName}.wav"); 
+                    exportPath = Path.Combine(DirPath, $"{fileName}.wav"); 
                     exportPath = SetSuffixToUnique(exportPath, 1);
                     using (var outputWaveFile = new WaveFileWriter(exportPath, new WaveFormat(48000, 1))) 
                     {

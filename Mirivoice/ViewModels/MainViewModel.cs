@@ -40,6 +40,10 @@ namespace Mirivoice.ViewModels
             Patterns = new[] { "*.wav" }
         };
 
+        public static FilePickerFileType MiriVoiceExportSubRip { get; } = new("SubRip File")
+        {
+            Patterns = new[] { "*.srt" }
+        };
         public static FilePickerFileType MiriVoiceVoicer { get; } = new("Zip File")
         {
             Patterns = new[] { "*.zip" }
@@ -816,6 +820,36 @@ namespace Mirivoice.ViewModels
             window.Show();
         }
 
+        public async void OnExportSrtClick()
+        {
+            if (LineBoxCollection.Count == 0)
+            {
+                return;
+            }
+            var topLevel = TopLevel.GetTopLevel(mainWindow);
+            var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+            {
+                Title = (string)mainWindow.FindResource("menu.files.export.srt.desc"),
+                DefaultExtension = "srt",
+                ShowOverwritePrompt = true,
+                FileTypeChoices = new[] { MiriVoiceExportSubRip },
+                SuggestedFileName = System.IO.Path.GetFileNameWithoutExtension(CurrentProjectPath) + ".srt"
+            });
+
+            if (file is not null)
+            {
+                string path = file.Path.LocalPath;
+                try
+                {
+                    MainManager.Instance.AudioM.PlayAllCacheFiles(1, true, false, System.IO.Path.GetFileNameWithoutExtension(path), System.IO.Path.GetDirectoryName(path), true);
+                }
+                catch (Exception e)
+                {
+                    Log.Error($"[Failed to export srt for merged audio]{e.ToString}: {e.Message} \n>> traceback: \n\t{e.StackTrace}");
+                    var res = await ShowConfirmWindow("menu.files.export.failed");
+                }
+            }
+        }
         public async void OnVoicerInstallButtonClick()
         {
             VoicerInstaller voicerInstaller = new VoicerInstaller(this);

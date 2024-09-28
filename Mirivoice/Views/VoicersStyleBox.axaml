@@ -20,9 +20,9 @@
 				</StackPanel>
 			</ScrollViewer>
 
-			<ToggleButton Focusable="False" Cursor="Hand"  Grid.Row="0" Click="OnSamplePlayButtonClick" Background="DarkOliveGreen" Width="44" Height="54">
+			<Button Focusable="False" Cursor="Hand"  Grid.Row="0" Click="OnSamplePlayButtonClick" Background="DarkOliveGreen" Width="44" Height="54">
 				<Path Data="{StaticResource speaker_regular}" Fill="Wheat" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-			</ToggleButton>
+			</Button>
 
 		</StackPanel>
 

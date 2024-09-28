@@ -105,7 +105,6 @@ namespace Mirivoice.ViewModels
             foreach (var meta in voicerMetas )
             {
                 Log.Debug($"VoicerMeta {i}: {meta.Style}");
-                Voicer.CurrentVoicerMeta = meta;
                 voicersStyleBoxes.Add(new VoicersStyleBox(Voicer, i, mv));
                 ++i;
             }

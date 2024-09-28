@@ -44,8 +44,11 @@
 		An Error occured during export.
 		Please Check Log file for more informations.</system:String>
 	<system:String x:Key="menu.files.export.perLine.desc">Select Directory to export</system:String>
-	<system:String x:Key="menu.files.export.merged">Export audio merged (.wav)</system:String>
+	<system:String x:Key="menu.files.export.merged">Export merged audio (.wav)</system:String>
 	<system:String x:Key="menu.files.export.merged.desc">Set Filename to export</system:String>
+
+	<system:String x:Key="menu.files.export.srt">Export SubRip Text for merged audio (.srt)</system:String>
+	<system:String x:Key="menu.files.export.srt.desc">Set Filename to export</system:String>
 	
 	
 	<!--project...-->

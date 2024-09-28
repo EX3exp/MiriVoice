@@ -56,6 +56,7 @@ public partial class VoicersStyleBox : UserControl
         if (File.Exists(cachePath))
         {
             isPlaying = true;
+            v.PlayAudio(cachePath);
             return;
         }
         if (voicer != null)
