@@ -6,8 +6,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <ApplicationIcon>mirivoice-logo.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyName>MiriVoice</AssemblyName>
+    <RootNamespace>Mirivoice.Desktop</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="mirivoice-logo.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="11.1.3" />

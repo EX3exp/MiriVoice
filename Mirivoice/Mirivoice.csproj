@@ -3,9 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <ApplicationIcon>Assets\mirivoice-logo.ico</ApplicationIcon>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Version>0.0.0</Version>
+    
   </PropertyGroup>
   <PropertyGroup>
     <CFBundleName>MiriVoice</CFBundleName>
@@ -39,6 +37,18 @@
             </dict>
         </array>          
     </CFBundleDocumentTypes>
+    <AssemblyName>MiriVoice.Main</AssemblyName>
+    <SignAssembly>False</SignAssembly>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Company>EX3</Company>
+    <Product>MiriVOice</Product>
+    <Authors>EX3</Authors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
