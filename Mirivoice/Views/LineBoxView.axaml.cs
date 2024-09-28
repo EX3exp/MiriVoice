@@ -1,30 +1,20 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using Avalonia.Media.Imaging;
 using Avalonia.Threading;
-using DynamicData;
 using Mirivoice.Commands;
 using Mirivoice.Engines;
 using Mirivoice.Mirivoice.Core;
-using Mirivoice.Mirivoice.Core.Editor;
 using Mirivoice.Mirivoice.Core.Format;
-using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers;
 using Mirivoice.ViewModels;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 

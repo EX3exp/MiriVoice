@@ -1,13 +1,4 @@
-﻿using Avalonia.Media;
-using Avalonia.Platform;
-using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Serilog;
 
 namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers.Utils
 {

@@ -1,12 +1,7 @@
-﻿using System;
+﻿using Avalonia.Media;
+using ReactiveUI;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ReactiveUI;
-using Mirivoice.Mirivoice.Core.Format;
-using Avalonia.Media;
 
 namespace Mirivoice.ViewModels
 {

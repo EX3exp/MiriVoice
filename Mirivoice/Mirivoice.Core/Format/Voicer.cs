@@ -1,5 +1,4 @@
-﻿using Avalonia.Styling;
-using Mirivoice.Commands;
+﻿using Mirivoice.Commands;
 using Mirivoice.Engines;
 using Mirivoice.Engines.TTS;
 using Mirivoice.Views;
@@ -10,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using VYaml.Annotations;
-using System.Threading.Tasks;
 
 namespace Mirivoice.Mirivoice.Core.Format
 {

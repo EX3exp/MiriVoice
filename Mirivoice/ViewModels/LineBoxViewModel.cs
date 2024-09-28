@@ -1,19 +1,17 @@
 ﻿using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Mirivoice.Mirivoice.Core;
 using Mirivoice.Mirivoice.Core.Editor;
-using System.Runtime.CompilerServices;
-using System.IO;
 using Mirivoice.Mirivoice.Core.Format;
 using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers;
-using Serilog;
-using System.Globalization;
-using System;
-using Avalonia.Platform;
-using ReactiveUI;
 using Mirivoice.Views;
-using Avalonia.Controls.Documents;
+using ReactiveUI;
+using Serilog;
+using System;
+using System.Globalization;
+using System.IO;
 
 
 namespace Mirivoice.ViewModels

@@ -1,10 +1,6 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Mirivoice.ViewModels;
-using Mirivoice.Views;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 

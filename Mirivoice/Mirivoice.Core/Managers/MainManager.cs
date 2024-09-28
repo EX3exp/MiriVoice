@@ -3,11 +3,9 @@ using Mirivoice.Mirivoice.Core.Managers;
 using Mirivoice.Mirivoice.Core.Utils;
 using Serilog;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.IO;
-using VYaml.Annotations;
+using System.Threading.Tasks;
 using VYaml.Serialization;
-using Mirivoice.Views;
 
 namespace Mirivoice.Mirivoice.Core
 {

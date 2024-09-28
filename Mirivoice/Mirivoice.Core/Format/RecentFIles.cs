@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using VYaml.Annotations;
-using VYaml.Serialization;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using Avalonia.Controls;
 using Mirivoice.ViewModels;
 using R3;
 using ReactiveUI;
-using Mirivoice.Mirivoice.Core.Format;
-using Avalonia.Controls;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using VYaml.Annotations;
+using VYaml.Serialization;
 
 namespace Mirivoice.Mirivoice.Core.Managers
 {
-    
-        [YamlObject]
+
+    [YamlObject]
     public partial class RecentFiles
     {
         public List<string> Files { get; set; } = new List<string>();

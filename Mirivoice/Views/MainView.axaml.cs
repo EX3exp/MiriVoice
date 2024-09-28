@@ -1,9 +1,5 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Avalonia.Platform.Storage;
-using Mirivoice.ViewModels;
-using System.IO;
 
 namespace Mirivoice.Views;
 

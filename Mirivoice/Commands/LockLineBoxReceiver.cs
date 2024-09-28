@@ -1,13 +1,4 @@
-﻿using Avalonia.Controls;
-using Mirivoice.Mirivoice.Core;
-using Mirivoice.Mirivoice.Core.Format;
-using Mirivoice.ViewModels;
-using Mirivoice.Views;
-using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using Mirivoice.Views;
 
 namespace Mirivoice.Commands
 {

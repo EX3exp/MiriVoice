@@ -1,21 +1,19 @@
-﻿using System;
-using System.Diagnostics;
-using Avalonia;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-
+using Avalonia.Styling;
+using Mirivoice.Mirivoice.Core;
 using Mirivoice.ViewModels;
 using Mirivoice.Views;
-using Mirivoice.Mirivoice.Core;
 using Serilog;
-using System.IO;
-using System.Threading.Tasks;
-using System.Globalization;
-using Avalonia.Controls;
-using Avalonia.Styling;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 namespace Mirivoice;
 
 

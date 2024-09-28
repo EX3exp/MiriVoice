@@ -3,11 +3,10 @@ using Mirivoice.ViewModels;
 using ReactiveUI;
 using Serilog;
 using System.ComponentModel;
-using VYaml.Annotations;
 
 namespace Mirivoice.Mirivoice.Core.Editor
 {
-    
+
     public partial class MTextBoxEditor : ReactiveObject, INotifyPropertyChanged
     {
         string _currentScript;

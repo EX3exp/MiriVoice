@@ -1,8 +1,5 @@
 ﻿using Mirivoice.Mirivoice.Core.Editor;
-using Serilog;
-using System.ComponentModel;
 using Mirivoice.Mirivoice.Core.Format;
-using System;
 using System.Globalization;
 
 namespace Mirivoice.ViewModels

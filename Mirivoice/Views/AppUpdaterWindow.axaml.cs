@@ -1,12 +1,11 @@
 using Avalonia.Controls;
+using Mirivoice.Mirivoice.Core;
 using Mirivoice.ViewModels;
+using NetSparkleUpdater.Enums;
 using Serilog;
 using System;
 using System.Threading;
-using NetSparkleUpdater.Enums;
 using System.Threading.Tasks;
-using Mirivoice.Mirivoice.Core;
-using Mirivoice.Views;
 namespace Mirivoice;
 
 public partial class AppUpdaterWindow : Window {

@@ -1,11 +1,6 @@
-﻿using NAudio.Wave;
-using System;
-using System.Collections.Generic;
+﻿using Mirivoice.Mirivoice.Core.Format;
+using NAudio.Wave;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mirivoice.Mirivoice.Core.Format;
 
 namespace Mirivoice.Engines.TTS
 {

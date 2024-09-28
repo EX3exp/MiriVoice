@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ReactiveUI;
-using Mirivoice.Mirivoice.Core.Format;
-using Avalonia.Media;
+﻿using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using Mirivoice.Mirivoice.Core.Editor;
+using Mirivoice.Engines;
+using Mirivoice.Mirivoice.Core.Format;
+using ReactiveUI;
+using Serilog;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using Avalonia.Media.Imaging;
-using Mirivoice.Engines;
-using Serilog;
+using System.Linq;
 
 namespace Mirivoice.ViewModels
 {

@@ -1,6 +1,4 @@
-﻿using Avalonia.Controls;
-using Mirivoice.ViewModels;
-using Mirivoice.Views;
+﻿using Mirivoice.Views;
 using System;
 
 namespace Mirivoice.Commands

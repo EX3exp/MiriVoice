@@ -1,9 +1,6 @@
-﻿using DynamicData;
-using Mirivoice.Mirivoice.Core.Editor;
+﻿using Mirivoice.Mirivoice.Core.Editor;
 using Mirivoice.Mirivoice.Core.Format;
-using Mirivoice.Views;
 using System.Globalization;
-using System.Reactive.Linq;
 
 namespace Mirivoice.ViewModels
 {

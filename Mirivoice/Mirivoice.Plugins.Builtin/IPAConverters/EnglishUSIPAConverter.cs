@@ -1,12 +1,5 @@
-﻿using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers.Utils;
-using Serilog;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Serilog;
 using System;
-using System.IO;
-using System.Text;
-using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 namespace Mirivoice.Mirivoice.Plugins.Builtin.IPAConverters

@@ -1,8 +1,7 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Mirivoice.ViewModels;
 using Mirivoice.Mirivoice.Core.Format;
+using Mirivoice.ViewModels;
 namespace Mirivoice;
 
 public partial class VoicersVoicerButton : UserControl

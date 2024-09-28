@@ -1,6 +1,5 @@
 ﻿using Avalonia;
 using Avalonia.ReactiveUI;
-using Microsoft.Extensions.Logging;
 using Mirivoice.Mirivoice.Core;
 using Serilog;
 using System;

@@ -1,5 +1,4 @@
-﻿using Avalonia.Controls;
-using Mirivoice.Mirivoice.Core;
+﻿using Mirivoice.Mirivoice.Core;
 using Mirivoice.Mirivoice.Core.Format;
 using Mirivoice.ViewModels;
 using Mirivoice.Views;

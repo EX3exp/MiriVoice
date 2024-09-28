@@ -1,7 +1,5 @@
 ﻿using Mirivoice.Mirivoice.Plugins.Builtin.IPAConverters;
 using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers.Utils;
-using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Text;
 

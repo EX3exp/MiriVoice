@@ -1,7 +1,5 @@
-﻿using Serilog;
-using System;
+﻿using System;
 using System.Collections;
-using System.Diagnostics;
 
 namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers.Utils
 {

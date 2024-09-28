@@ -1,14 +1,12 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers;
 using Mirivoice.ViewModels;
-using Mirivoice.Views;
-using System.IO;
 using System.Collections.Generic;
-using Avalonia.Threading;
+using System.IO;
 using System.Threading.Tasks;
 namespace Mirivoice;
 using Serilog;

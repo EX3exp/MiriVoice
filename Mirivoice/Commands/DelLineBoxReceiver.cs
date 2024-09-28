@@ -4,7 +4,6 @@ using Mirivoice.ViewModels;
 using Mirivoice.Views;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace Mirivoice.Commands
 {
