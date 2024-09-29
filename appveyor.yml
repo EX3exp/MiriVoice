@@ -22,6 +22,12 @@ dotnet_csproj:
   informational_version: '{version}'
 nuget:
   project_feed: true
+before_build:
+- cmd: dotnet restore
+build:
+  project: Mirivoice.sln
+  parallel: true
+  verbosity: minimal
 artifacts:
 - path: bin\Release\net8.0\win-x64\MiriVoice.zip
   name: MiriVoice-win-x64
