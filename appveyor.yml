@@ -22,8 +22,6 @@ dotnet_csproj:
   informational_version: '{version}'
 nuget:
   project_feed: true
-build_script:
-- cmd: dotnet publish -c Release -r %PLATFORM% --self-contained --project Mirivoice.Desktop\Mirivoice.Desktop.csproj
 artifacts:
 - path: bin\Release\net8.0\win-x64\MiriVoice.zip
   name: MiriVoice-win-x64
