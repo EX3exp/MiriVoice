@@ -52,14 +52,14 @@ namespace Mirivoice.Mirivoice.Core
         }
         public void LoadSetting()
         {
-            if (File.Exists(PathM.SettingsPath))
+            if (File.Exists(MainManager.Instance.PathM.SettingsPath))
             {
-                var yamlUtf8Bytes = System.Text.Encoding.UTF8.GetBytes(ReadTxtFile(PathM.SettingsPath));
-                Setting = YamlSerializer.Deserialize<UserSetting>(yamlUtf8Bytes);
+                var yamlUtf8Bytes = System.Text.Encoding.UTF8.GetBytes(ReadTxtFile(MainManager.Instance.PathM.SettingsPath));
+                MainManager.Instance.Setting = YamlSerializer.Deserialize<UserSetting>(yamlUtf8Bytes);
             }
             else
             {
-                Setting.Save();
+                MainManager.Instance.Setting.Save();
             }
         }
         private static void DeleteExtractedZip(string zipFilePath)

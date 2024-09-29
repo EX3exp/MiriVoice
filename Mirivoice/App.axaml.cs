@@ -27,6 +27,8 @@ public partial class App : Application
         InitializeCulture();
     }
 
+    public static string[] Languages = new string[] { "en-US", "ko-KR"};
+
     public override void OnFrameworkInitializationCompleted()
     {
 
@@ -89,12 +91,14 @@ public partial class App : Application
         }
         var translations = App.Current.Resources.MergedDictionaries.OfType<ResourceInclude>().FirstOrDefault(x => x.Source?.OriginalString?.Contains("/Lang/") ?? false);
 
-        if (!File.Exists( new Uri($"avares://Mirivoice.Main/Assets/Lang/{language}.axaml").LocalPath))
+        if (Languages.Contains(language) == false)
         {
+            Log.Warning($"Language {language} is not supported. Defaulting to en-US.");
             language = "en-US";
             MainManager.Instance.Setting.Langcode = language;
             MainManager.Instance.Setting.Save();
         }
+
 
         if (translations != null)
             App.Current.Resources.MergedDictionaries.Remove(translations);
