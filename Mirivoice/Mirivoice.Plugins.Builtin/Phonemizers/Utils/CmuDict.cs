@@ -13,7 +13,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers.Utils
         public CmuDict()
         {
             CMUDict = new Dictionary<string, string>();
-            var uri = new Uri("avares://Mirivoice/Assets/Plugin.Datas/cmudict.txt");
+            var uri = new Uri("avares://Mirivoice.Main/Assets/Plugin.Datas/cmudict.txt");
             var assets = AssetLoader.Open(uri);
 
             using (var stream = assets)

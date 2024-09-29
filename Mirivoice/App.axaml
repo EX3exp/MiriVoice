@@ -8,8 +8,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="avares://LoadingIndicators.Avalonia/LoadingIndicators.axaml" />
 				
-				
-				<ResourceInclude Source="/Assets/Lang/strings-en-US.axaml" />
+			
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 

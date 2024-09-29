@@ -9,7 +9,7 @@ namespace Mirivoice.Mirivoice.Core.Format
     public partial class UserSetting
     {
         public Version Version { get; set; } = new Version(1, 0);
-        public string Langcode { get; set; } = "en-US"; // ui language
+        public string Langcode { get; set; } = null; // ui language
         public bool ClearCacheOnQuit { get; set; } = false;
         public bool UseBeta { get; set; } = true;
         public string SkipUpdate { get; set; } = "";

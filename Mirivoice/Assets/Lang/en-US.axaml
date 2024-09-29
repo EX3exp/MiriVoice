@@ -10,7 +10,7 @@
 	
 	<system:String x:Key="app.beforeExit">Current Project File is not saved. Do you want to save? </system:String>
 	<system:String x:Key="app.openproject">Open Project</system:String>
-	<system:String x:Key="app.saveproject">Save Mrp</system:String>
+	<system:String x:Key="app.saveproject">Save Project</system:String>
 	
 	<system:String x:Key="app.defprojectname">New Project</system:String>
 	<system:String x:Key="app.Error">Error</system:String>
@@ -18,7 +18,7 @@
 	
 	<system:String x:Key="updater.title">Update Checker</system:String>
 	<system:String x:Key="updater.description">Open-Free TTS Platform For All</system:String>
-	<system:String x:Key="updater.status.available">Mirivoice v{0} is available!</system:String>
+	<system:String x:Key="updater.status.available">MiriVoice v{0} is available!</system:String>
 	<system:String x:Key="updater.status.checking">Checking for Updates...</system:String>
 	<system:String x:Key="updater.status.notavailable">(Latest)</system:String>
 	<system:String x:Key="updater.status.unknown">Update Checking Failed...</system:String>
@@ -106,7 +106,6 @@
 		[미리] (bright)
 		날씨가 좋네요! </system:String>
 
-	<system:String x:Key="editor.input.mult.lineCount">Lines: {0}</system:String>
 	
 	<system:String x:Key="editor.input.mult.defaultVoicerName">Default Voicer</system:String>
 	<system:String x:Key="editor.input.mult.defaultVoicerStyle">Style</system:String>

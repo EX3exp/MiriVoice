@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
 using Mirivoice.Mirivoice.Core;
 using Mirivoice.ViewModels;
@@ -63,21 +64,15 @@ public partial class App : Application
         Log.Information("Initializing culture.");
         string sysLang = CultureInfo.InstalledUICulture.Name;
         string prefLang = MainManager.Instance.Setting.Langcode;
-        var languages = GetLanguages();
-        if (languages.ContainsKey(prefLang))
+        if (prefLang == null)
         {
-            SetLanguage(prefLang);
-        }
-        else if (languages.ContainsKey(sysLang))
-        {
-            SetLanguage(sysLang);
-            MainManager.Instance.Setting.Langcode = sysLang;
+            prefLang = sysLang;
+            MainManager.Instance.Setting.Langcode = prefLang;
             MainManager.Instance.Setting.Save();
         }
-        else
-        {
-            SetLanguage("en-US");
-        }
+
+        SetLanguage(prefLang);
+       
 
         // Force using InvariantCulture to prevent issues caused by culture dependent string conversion, especially for floating point numbers.
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
@@ -85,24 +80,6 @@ public partial class App : Application
         Log.Information("Initialized culture.");
     }
 
-    public static Dictionary<string, IResourceProvider> GetLanguages()
-    {
-        if (Current == null)
-        {
-            return new();
-        }
-        var result = new Dictionary<string, IResourceProvider>();
-        foreach (string key in Current.Resources.Keys.OfType<string>())
-        {
-            if (key.StartsWith("strings-") &&
-                Current.Resources.TryGetResource(key, ThemeVariant.Default, out var res) &&
-                res is IResourceProvider rp)
-            {
-                result.Add(key.Replace("strings-", ""), rp);
-            }
-        }
-        return result;
-    }
 
     public static void SetLanguage(string language)
     {
@@ -110,19 +87,24 @@ public partial class App : Application
         {
             return;
         }
-        var languages = GetLanguages();
-        foreach (var res in languages.Values)
+        var translations = App.Current.Resources.MergedDictionaries.OfType<ResourceInclude>().FirstOrDefault(x => x.Source?.OriginalString?.Contains("/Lang/") ?? false);
+
+        if (!File.Exists( new Uri($"avares://Mirivoice.Main/Assets/Lang/{language}.axaml").LocalPath))
         {
-            Current.Resources.MergedDictionaries.Remove(res);
+            language = "en-US";
+            MainManager.Instance.Setting.Langcode = language;
+            MainManager.Instance.Setting.Save();
         }
-        if (language != "en-US")
-        {
-            Current.Resources.MergedDictionaries.Add(languages["en-US"]);
-        }
-        if (languages.TryGetValue(language, out var res1))
-        {
-            Current.Resources.MergedDictionaries.Add(res1);
-        }
+
+        if (translations != null)
+            App.Current.Resources.MergedDictionaries.Remove(translations);
+
+        App.Current.Resources.MergedDictionaries.Add(
+            new ResourceInclude(new Uri($"avares://Mirivoice.Main/Assets/Lang/{language}.axaml"))
+            {
+                Source = new Uri($"avares://Mirivoice.Main/Assets/Lang/{language}.axaml")
+            });
+
     }
 
 }

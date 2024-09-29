@@ -1,0 +1,139 @@
+<ResourceDictionary
+	xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+	<system:String x:Key="app.yes">네</system:String>
+	<system:String x:Key="app.no">아니요</system:String>
+	<system:String x:Key="app.cancel">취소</system:String>
+	<system:String x:Key="app.ok">확인</system:String>
+	
+	<system:String x:Key="app.beforeExit">프로젝트가 저장되지 않았어요. 저장할까요?</system:String>
+	<system:String x:Key="app.openproject">프로젝트 열기</system:String>
+	<system:String x:Key="app.saveproject">프로젝트 저장</system:String>
+	
+	<system:String x:Key="app.defprojectname">새 프로젝트</system:String>
+	<system:String x:Key="app.Error">오류</system:String>
+
+	
+	<system:String x:Key="updater.title">업데이트 확인</system:String>
+	<system:String x:Key="updater.description">모두를 위한 개방형 TTS 플랫폼</system:String>
+	<system:String x:Key="updater.status.available">MiriVoice v{0}을 쓸 수 있어요!</system:String>
+	<system:String x:Key="updater.status.checking">업데이트 확인 중...</system:String>
+	<system:String x:Key="updater.status.notavailable">(최신)</system:String>
+	<system:String x:Key="updater.status.unknown">업데이트 확인 실패...</system:String>
+	<system:String x:Key="updater.update">업데이트</system:String>
+
+	
+	<!-- Menu -->
+	<!--files...-->
+	<system:String x:Key="menu.files.title">파일</system:String>
+	
+	<system:String x:Key="menu.files.open">열기...</system:String>
+	<system:String x:Key="menu.files.recent">최근 파일...</system:String>
+	<system:String x:Key="menu.files.openFailed">파일을 열던 도중 문제가 발생했어요. 
+	오류에 관해 자세히 알고 싶다면, 로그 파일을 확인해 주세요.</system:String>
+	
+	<system:String x:Key="menu.files.recent.openFailed">선택한 최근 파일이 존재하지 않아요. 
+	저장공간에서 삭제된 파일 같아요.</system:String>
+	
+	<system:String x:Key="menu.files.save">저장</system:String>
+	<system:String x:Key="menu.files.saveas">다른 이름으로 저장...</system:String>
+	<system:String x:Key="menu.files.new">새 프로젝트</system:String>
+	
+	
+	<system:String x:Key="menu.files.export">내보내기</system:String>
+	<system:String x:Key="menu.files.export.perLine">[내보내기] 모든 대사를 '분할된 오디오'로 (.wav)</system:String>
+	<system:String x:Key="menu.files.export.failed">
+		파일을 내보내는 도중 문제가 발생했어요.
+		오류에 관해 자세히 알고 싶다면, 로그 파일을 확인해 주세요.</system:String>
+	<system:String x:Key="menu.files.export.perLine.desc">내보낼 폴더 선택</system:String>
+	<system:String x:Key="menu.files.export.merged">[내보내기] 모든 대사를 '합쳐진 오디오'로 (.wav)</system:String>
+	<system:String x:Key="menu.files.export.merged.desc">내보낼 파일 이름 지정</system:String>
+
+	<system:String x:Key="menu.files.export.srt">[내보내기] '합쳐진 오디오' 용 자막 파일 (.srt)</system:String>
+	<system:String x:Key="menu.files.export.srt.desc">내보낼 파일 이름 지정</system:String>
+	
+	
+	<!--project...-->
+	<system:String x:Key="menu.project.title">프로젝트</system:String>
+	<system:String x:Key="menu.project.undo">실행 취소</system:String>
+	<system:String x:Key="menu.project.redo">다시 실행</system:String>
+	
+	<system:String x:Key="menu.project.pref">프로젝트 표현 설정</system:String>
+	<system:String x:Key="menu.project.clearCache">캐시 초기화</system:String>
+	
+	<!--tools...-->
+	<system:String x:Key="menu.tools.title">도구</system:String>
+	<system:String x:Key="menu.tools.settings">환경설정</system:String>
+	<system:String x:Key="menu.tools.voicers">성우 목록</system:String>
+	
+	<system:String x:Key="menu.tools.voicerinstall">성우 설치...</system:String>
+	<system:String x:Key="menu.tools.voicerinstall.desc">설치할 성우의 .zip 파일 선택</system:String>
+	<system:String x:Key="menu.tools.voicerinstall.process">성우 설치 중...</system:String>
+	
+	<system:String x:Key="menu.tools.voicerinstall.error">성우 설치에 실패했어요.
+	압축 파일 안에서 voicer.yaml을 찾지 못했어요.</system:String>
+	<system:String x:Key="menu.tools.voicerinstall.success">성우 설치에 성공했어요!</system:String>
+	<system:String x:Key="menu.tools.voicerinstall.failed">
+		성우 설치에 실패했어요.
+		오류에 관해 자세히 알고 싶다면, 로그 파일을 확인해 주세요.
+	</system:String>
+	
+	<system:String x:Key="menu.tools.voicerMakingSupport">성우 제작 도우미...</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor">전사 파일 IPA 변환기</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.langCode">언어 코드</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.inputFile">읽을 파일</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.browse">탐색</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.convert">변환</system:String>
+	<system:String x:Key="menu.tools.voicerMakingSupport.preprocessor.noFile">선택된 파일이 없어요</system:String>
+	
+	
+	<!--help...-->
+	<system:String x:Key="menu.help.title">도움말</system:String>
+	<system:String x:Key="menu.help.update">업데이트 확인</system:String>
+	<system:String x:Key="menu.help.github">GitHub 방문</system:String>
+	
+	<!--editor body 1 -->
+	<system:String x:Key="editor.input.mult.title">대사 입력란</system:String>
+	<system:String x:Key="editor.input.mult.desc">여러 대사들을 한꺼번에 입력할 수 있어요. 각각의 대사는 "엔터" 키를 눌러 구분해 주세요.
+	중간에 성우를 바꾸고 싶다면: 
+		[성우 애칭] (스타일 이름)
+		- 당신의 대사 내용 -
+
+	예시:
+		안녕하세요!
+		[미리] (bright)
+		날씨가 좋네요! </system:String>
+
+
+	<system:String x:Key="editor.input.mult.defaultVoicerName">기본 성우</system:String>
+
+	<system:String x:Key="editor.input.mult.genLines">대사 생성하기</system:String>
+	
+	<!--editor body 2-->
+	<system:String x:Key="editor.lines.title">대사</system:String>
+	
+	<!--Global Settings-->
+	<system:String x:Key="gprefs.title">환경설정</system:String>
+	<system:String x:Key="gprefs.lang">UI 언어</system:String>
+	
+	<system:String x:Key="gprefs.lang.en">English</system:String>
+	<system:String x:Key="gprefs.lang.ko">한국어</system:String>
+	
+	<system:String x:Key="gprefs.clearcacheonquit">나갈 때 캐시 비우기</system:String>
+	<system:String x:Key="gprefs.usebeta">베타 버전 사용</system:String>
+	
+	<!-- Voicers -->
+	<system:String x:Key="voicers.title">성우 목록</system:String>
+	<system:String x:Key="voicers.voicer">성우</system:String>
+	<system:String x:Key="voicers.readme">이용 약관: </system:String>
+
+	<system:String x:Key="voicers.styles">스타일 목록: </system:String>
+	<system:String x:Key="voicers.illust">일러스트레이터. </system:String>
+	
+	<system:String x:Key="voicers.engineer">기술 담당자. </system:String>
+	<system:String x:Key="voicers.voice">음성 제공자. </system:String>
+	<system:String x:Key="voicers.author">관리자. </system:String>
+	
+</ResourceDictionary>
