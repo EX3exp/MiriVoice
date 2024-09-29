@@ -28,13 +28,11 @@ build_script:
 
     dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
 artifacts:
-- path: C:\projects\mirivoice\Mirivoice.Desktop\bin\Release\net8.0\win-x64\publish
+- path: Mirivoice.Desktop\bin\Release\net8.0\win-x64\publish
   name: MiriVoice-win-x64
-- path: C:\projects\mirivoice\Mirivoice.Desktop\bin\Release\net8.0\win-x86\publish
-  name: MiriVoice-win-x86
-- path: C:\projects\mirivoice\Mirivoice.Desktop\bin\Release\net8.0\osx-x64\publish
+- path: Mirivoice.Desktop\bin\Release\net8.0\osx-x64\publish
   name: MiriVoice-osx-x64
-- path: C:\projects\mirivoice\Mirivoice.Desktop\bin\Release\net8.0\linux-x64\publish
+- path: Mirivoice.Desktop\bin\Release\net8.0\linux-x64\publish
   name: MiriVoice-linux-x64
 deploy:
 - provider: GitHub
