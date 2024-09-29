@@ -65,6 +65,7 @@
 
 			<MenuItem Header="{DynamicResource menu.help.title}">
 				<MenuItem Header="{DynamicResource menu.help.update}" Command="{Binding OnUpdateCheckButtonClick}"></MenuItem>
+				<MenuItem Header="{DynamicResource menu.help.github}" Command="{Binding OnGithubButtonClick}"></MenuItem>
 			</MenuItem>
 		</Menu>
 

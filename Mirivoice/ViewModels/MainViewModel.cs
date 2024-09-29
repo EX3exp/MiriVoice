@@ -147,6 +147,10 @@ namespace Mirivoice.ViewModels
             await SaveAs();
         }
 
+        public void OnGithubButtonClick()
+        {
+            VoicersWindow.OpenUrl("https://github.com/EX3exp/MiriVoice");
+        }
         public async Task SaveProject(bool forceSaveAs = false)
         {
             if (File.Exists(CurrentProjectPath) && !forceSaveAs)

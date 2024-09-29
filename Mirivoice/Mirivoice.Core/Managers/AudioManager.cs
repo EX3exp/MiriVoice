@@ -378,6 +378,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 _audioReaders.Clear();
                 _waveOut.Stop();
                 _waveOut.Dispose();
+                v.MainWindowGetInput = true;
                 MainViewModelPlaying = false;
             }
             

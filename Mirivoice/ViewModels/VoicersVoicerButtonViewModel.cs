@@ -74,7 +74,7 @@ namespace Mirivoice.ViewModels
             }
             else
             {
-                var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
+                var uri = new Uri("avares://Mirivoice.Main/Assets/default_icon.bmp");
                 var assets = AssetLoader.Open(uri);
 
                 using (var stream = assets)
@@ -114,6 +114,7 @@ namespace Mirivoice.ViewModels
             v.Illustrator = Voicer.Info.Illustrator;
             v.Version = Voicer.Info.Version;
             v.Description = Voicer.Info.Description;
+            v.Web = Voicer.Info.Web;    
 
             VoicerInfo vInfo = Voicer.Info;
             Voicer voicer = Voicer;
@@ -135,7 +136,7 @@ namespace Mirivoice.ViewModels
             }
             else
             {
-                var uri = new Uri("avares://Mirivoice/Assets/default_portrait.bmp");
+                var uri = new Uri("avares://Mirivoice.Main/Assets/default_portrait.bmp");
                 var assets = AssetLoader.Open(uri);
 
                 using (var stream = assets)
@@ -166,7 +167,7 @@ namespace Mirivoice.ViewModels
             }
             else
             {
-                var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
+                var uri = new Uri("avares://Mirivoice.Main/Assets/default_icon.bmp");
                 var assets = AssetLoader.Open(uri);
 
                 using (var stream = assets)

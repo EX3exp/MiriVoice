@@ -170,7 +170,7 @@ namespace Mirivoice.ViewModels
             }
             else
             {
-                var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
+                var uri = new Uri("avares://Mirivoice.Main/Assets/default_icon.bmp");
                 var assets = AssetLoader.Open(uri);
 
                 using (var stream = assets)
@@ -233,7 +233,7 @@ namespace Mirivoice.ViewModels
             }
             else
             {
-                var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
+                var uri = new Uri("avares://Mirivoice.Main/Assets/default_icon.bmp");
                 var assets = AssetLoader.Open(uri);
 
                 using (var stream = assets)
@@ -276,7 +276,7 @@ namespace Mirivoice.ViewModels
             }
             else
             {
-                var uri = new Uri("avares://Mirivoice/Assets/default_icon.bmp");
+                var uri = new Uri("avares://Mirivoice.Main/Assets/default_icon.bmp");
                 var assets = AssetLoader.Open(uri);
 
                 using (var stream = assets)

@@ -61,22 +61,22 @@
 							<StackPanel>
 								<StackPanel Orientation="Horizontal" Margin="0 0 0 0">
 									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48"  LineHeight="15" Text="{DynamicResource voicers.author}" FontSize="15" Margin="0 0 0 0" FontWeight="Bold" Foreground="DarkOliveGreen"></TextBlock>
-									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{Binding Author}" FontSize="11" Margin="10 0 0 0" FontWeight="Light" ></TextBlock>
+									<TextBlock xml:space="preserve" TextAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{Binding Author}" FontSize="11" Margin="10 0 0 0" FontWeight="Light" ></TextBlock>
 								</StackPanel>
 
 								<StackPanel Orientation="Horizontal"  Margin="0 0 0 0" >
 									<TextBlock TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{DynamicResource voicers.voice}" FontSize="15" Margin="0 0 0 0" FontWeight="Bold" Foreground="DarkOliveGreen"></TextBlock>
-									<TextBlock  TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{Binding Voice}" FontSize="11" Margin="10 0 0 0" FontWeight="Light" ></TextBlock>
+									<TextBlock  xml:space="preserve" TextAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{Binding Voice}" FontSize="11" Margin="10 0 0 0" FontWeight="Light" ></TextBlock>
 								</StackPanel>
 
 								<StackPanel Orientation="Horizontal" Margin="0 0 0 0">
 									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{DynamicResource voicers.engineer}" FontSize="15" Margin="0 0 0 0" FontWeight="Bold" Foreground="DarkOliveGreen"></TextBlock>
-									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{Binding Engineer}" FontSize="11" Margin="10 0 0 0 " FontWeight="Light" ></TextBlock>
+									<TextBlock xml:space="preserve" TextAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{Binding Engineer}" FontSize="11" Margin="10 0 0 0 " FontWeight="Light" ></TextBlock>
 								</StackPanel>
 
 								<StackPanel Orientation="Horizontal" Margin="0 0 0 0" >
 									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{DynamicResource voicers.illust}" FontSize="15" Margin="0 0 0 0" FontWeight="Bold" Foreground="DarkOliveGreen"></TextBlock>
-									<TextBlock TextAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{Binding Illustrator}" FontSize="11" Margin="10 0 0 0" FontWeight="Light" ></TextBlock>
+									<TextBlock  xml:space="preserve" TextAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Center"  Height="48" LineHeight="15" Text="{Binding Illustrator}" FontSize="11" Margin="10 0 0 0" FontWeight="Light" ></TextBlock>
 								</StackPanel>
 							</StackPanel>
 								
@@ -96,7 +96,7 @@
 				</Grid>
 				<Grid Grid.Column="3"  Margin="10 5 5 5">
 					<StackPanel VerticalAlignment="Stretch" Width="280" >
-						<TextBlock Height="124" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="26" MaxLines="4" Text="{Binding Name}" FontSize="45"  Margin="15 30 10 10" Padding="10 10 10 10" FontWeight="Bold" ></TextBlock>
+						<TextBlock Tapped="OnVoicerWebClicked" Cursor="Hand" Height="124" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="26" MaxLines="4" Text="{Binding Name}" FontSize="45"  Margin="15 30 10 10" Padding="10 10 10 10" FontWeight="Bold" ></TextBlock>
 						<TextBlock VerticalAlignment="Center"  TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="15" Text="{DynamicResource voicers.styles}" FontSize="15" Margin="15 30 10 10" FontWeight="Bold" ></TextBlock>
 						<Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="15 0 0 0">
 							<ScrollViewer BorderBrush="LightGray" Height="126" BorderThickness="1"   AllowAutoHide="False"  Margin="0 0 0 0" Focusable="True"  HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Visible" >

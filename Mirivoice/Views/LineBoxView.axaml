@@ -29,7 +29,7 @@
 				<StackPanel Margin="0 0 0 0"  Grid.Column="2" Grid.RowSpan="2" Width="100">
 					<Rectangle Margin="0 0 0 0" Width="100" Height="70" Fill="{Binding Icon}" />
 
-					<ComboBox HorizontalContentAlignment="Left" ItemsSource="{Binding voicerSelector.Voicers, Mode=TwoWay}"   Cursor="Hand"  SelectedIndex="{Binding voicerSelector.CurrentDefaultVoicerIndex, Mode=TwoWay}" Margin="0 0 0 0" Grid.Column="1" Grid.Row="2" FontSize="15" Height="34" Width="100" CornerRadius="2" TextBlock.TextTrimming="CharacterEllipsis"  VerticalAlignment="Center" >						
+					<ComboBox HorizontalContentAlignment="Left" ItemsSource="{Binding voicerSelector.Voicers, Mode=TwoWay}"   Cursor="Hand"  SelectedIndex="{Binding voicerSelector.CurrentDefaultVoicerIndex, Mode=TwoWay}" Margin="0 0 0 0" Grid.Column="1" Grid.Row="2" FontSize="13" Height="35" Width="100" CornerRadius="2" TextBlock.TextTrimming="CharacterEllipsis"  VerticalAlignment="Center" >						
 					<ComboBox.ItemTemplate>
 						
 								<DataTemplate>

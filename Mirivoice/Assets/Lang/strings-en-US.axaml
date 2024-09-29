@@ -7,9 +7,11 @@
 	<system:String x:Key="app.no">No</system:String>
 	<system:String x:Key="app.cancel">Cancel</system:String>
 	<system:String x:Key="app.ok">OK</system:String>
+	
 	<system:String x:Key="app.beforeExit">Current Project File is not saved. Do you want to save? </system:String>
 	<system:String x:Key="app.openproject">Open Project</system:String>
 	<system:String x:Key="app.saveproject">Save Mrp</system:String>
+	
 	<system:String x:Key="app.defprojectname">New Project</system:String>
 	<system:String x:Key="app.Error">Error</system:String>
 
@@ -31,8 +33,10 @@
 	<system:String x:Key="menu.files.recent">Recent...</system:String>
 	<system:String x:Key="menu.files.openFailed">An Error occured during open file. 
 	Please Check Log file for more informations.</system:String>
+	
 	<system:String x:Key="menu.files.recent.openFailed">Selected Recent file not exists. 
 	It seems to be already removed from your disk.</system:String>
+	
 	<system:String x:Key="menu.files.save">Save</system:String>
 	<system:String x:Key="menu.files.saveas">Save As...</system:String>
 	<system:String x:Key="menu.files.new">New</system:String>
@@ -55,6 +59,7 @@
 	<system:String x:Key="menu.project.title">Project</system:String>
 	<system:String x:Key="menu.project.undo">Undo</system:String>
 	<system:String x:Key="menu.project.redo">Redo</system:String>
+	
 	<system:String x:Key="menu.project.pref">Project Expressions</system:String>
 	<system:String x:Key="menu.project.clearCache">Clear Cache</system:String>
 	
@@ -62,9 +67,11 @@
 	<system:String x:Key="menu.tools.title">Tools</system:String>
 	<system:String x:Key="menu.tools.settings">Global Settings</system:String>
 	<system:String x:Key="menu.tools.voicers">Voicers</system:String>
+	
 	<system:String x:Key="menu.tools.voicerinstall">Install Voicer...</system:String>
 	<system:String x:Key="menu.tools.voicerinstall.desc">Select .zip file to install Voicer</system:String>
 	<system:String x:Key="menu.tools.voicerinstall.process">Installing Voicer...</system:String>
+	
 	<system:String x:Key="menu.tools.voicerinstall.error">Failed to install Voicer. 
 	There's no voicer.yaml inside the archive.</system:String>
 	<system:String x:Key="menu.tools.voicerinstall.success">Voicer installed successfully!</system:String>
@@ -85,6 +92,7 @@
 	<!--help...-->
 	<system:String x:Key="menu.help.title">Help</system:String>
 	<system:String x:Key="menu.help.update">Check Updates</system:String>
+	<system:String x:Key="menu.help.github">Visit GitHub</system:String>
 	
 	<!--editor body 1 -->
 	<system:String x:Key="editor.input.mult.title">Lines Input</system:String>
@@ -97,7 +105,7 @@
 		안녕하세요!
 		[미리] (bright)
 		날씨가 좋네요! </system:String>
-	<system:String x:Key="editor.input.mult.placeholder">Input your Lines here... </system:String>
+
 	<system:String x:Key="editor.input.mult.lineCount">Lines: {0}</system:String>
 	
 	<system:String x:Key="editor.input.mult.defaultVoicerName">Default Voicer</system:String>
