@@ -178,7 +178,7 @@
 					<li:LoadingIndicator IsVisible="{Binding IsArcActive, Mode=TwoWay}" IsActive="{Binding IsArcActive, Mode=TwoWay}" Background="White" Grid.Row="1" Grid.RowSpan="2"  Grid.Column="0" Mode="Ring" SpeedRatio="1.5" />
 					<StackPanel Grid.Row="0" Grid.Column="0">
 						<ComboBox Cursor="Hand" SelectedIndex="{Binding CurrentEditIndex}" Grid.Column="0"  FontSize="15" CornerRadius="2" IsHitTestVisible="{Binding MainWindowGetInput}">
-							<ComboBoxItem>Phoneme</ComboBoxItem>
+							<ComboBoxItem Content="{DynamicResource singlelinebox.placeholder}"></ComboBoxItem>
 							<!--<ComboBoxItem>Pitch</ComboBoxItem>-->
 						</ComboBox>
 					</StackPanel>

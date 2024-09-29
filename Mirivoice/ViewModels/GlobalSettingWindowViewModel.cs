@@ -72,6 +72,36 @@ namespace Mirivoice.ViewModels
         }
         public GlobalSettingWindowViewModel()
         {
+            switch (MainManager.Instance.Setting.Langcode)
+            {
+                case "en-US":
+                    SelectedLanguageIndex = 0;
+                    break;
+                case "ko-KR":
+                    SelectedLanguageIndex = 1;
+                    break;
+                default:
+                    SelectedLanguageIndex = 0;
+                    break;
+            }
+
+            if (MainManager.Instance.Setting.ClearCacheOnQuit)
+            {
+                ClearCacheOnQuit = true;
+            }
+            else
+            {
+                ClearCacheOnQuit = false;
+            }
+
+            if (MainManager.Instance.Setting.UseBeta)
+            {
+                UseBeta = true;
+            }
+            else
+            {
+                UseBeta = false;
+            }
         }
     }
 }

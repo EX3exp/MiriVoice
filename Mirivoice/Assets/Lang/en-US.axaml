@@ -24,6 +24,9 @@
 	<system:String x:Key="updater.status.unknown">Update Checking Failed...</system:String>
 	<system:String x:Key="updater.update">Update</system:String>
 
+	<system:String x:Key="singlelinebox.placeholder">(Line is empty)</system:String>
+
+	<system:String x:Key="edits.phoneme">Phoneme</system:String>
 	
 	<!-- Menu -->
 	<!--files...-->

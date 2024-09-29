@@ -24,6 +24,9 @@
 	<system:String x:Key="updater.status.unknown">업데이트 확인 실패...</system:String>
 	<system:String x:Key="updater.update">업데이트</system:String>
 
+	<system:String x:Key="singlelinebox.placeholder">(대사가 비어 있어요)</system:String>
+
+	<system:String x:Key="edits.phoneme">음소</system:String>
 	
 	<!-- Menu -->
 	<!--files...-->
