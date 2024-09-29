@@ -7,7 +7,7 @@ skip_tags: true
 image:
 - Visual Studio 2022
 - macOS
-- Ubuntu
+- Ubuntu2204
 configuration: Release
 platform: Any CPU
 shallow_clone: true
@@ -22,12 +22,23 @@ dotnet_csproj:
   informational_version: '{version}'
 nuget:
   project_feed: true
-before_build:
-- cmd: nuget restore
-build:
-  project: Mirivoice.sln
-  parallel: true
-  verbosity: minimal
+build_script:
+- cmd: >-
+    |
+          if "%platform%" == "Windows" (
+            dotnet publish -c Release -r win-x64 --self-contained -o bin\Release\win-x64
+          ) else if "%platform%" == "macOS" (
+            dotnet publish -c Release -r osx-x64 --self-contained -o bin\Release\osx-x64
+          ) else if "%platform%" == "Linux" (
+            dotnet publish -c Release -r linux-x64 --self-contained -o bin\Release\linux-x64
+          )
+artifacts:
+- path: bin\Release\win-x64\MiriVoice.zip
+  name: MiriVoice-win-x64
+- path: bin\Release\osx-x64\MiriVoice.zip
+  name: MiriVoice-macOS
+- path: bin\Release\linux-x64\MiriVoice.zip
+  name: MiriVoice-linux
 deploy:
 - provider: GitHub
   tag: build/$(APPVEYOR_BUILD_VERSION)

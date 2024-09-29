@@ -11,7 +11,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>MiriVoice</AssemblyName>
     <RootNamespace>Mirivoice.Desktop</RootNamespace>
+    <Company>EX3</Company>
   </PropertyGroup>
+  
   <ItemGroup>
     <Content Include="mirivoice-logo.ico" />
   </ItemGroup>
