@@ -23,13 +23,13 @@ dotnet_csproj:
 nuget:
   project_feed: true
 before_build:
-- cmd: dotnet restore
+- ps: dotnet restore
 build:
   project: Mirivoice.sln
   parallel: true
   verbosity: minimal
 after_build:
-- cmd: dotnet publish -c Release -r %PLATFORM% --self-contained
+- ps: dotnet publish -c Release -r %PLATFORM% --self-contained --project Mirivoice.Desktop\Mirivoice.Desktop.csproj
 artifacts:
 - path: bin\Release\net8.0\win-x64
   name: MiriVoice-win-x64
