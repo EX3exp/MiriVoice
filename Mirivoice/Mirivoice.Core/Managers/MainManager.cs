@@ -2,10 +2,14 @@
 using Mirivoice.Mirivoice.Core.Managers;
 using Mirivoice.Mirivoice.Core.Utils;
 using Serilog;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
+using SharpCompress;
 using VYaml.Serialization;
+using SharpCompress.Archives;
+
 
 namespace Mirivoice.Mirivoice.Core
 {
@@ -32,6 +36,7 @@ namespace Mirivoice.Mirivoice.Core
         public void Initialize()
         {
             CheckDirs();
+            UpdateDefaultVoicers();
             LoadVoicerManager();
             LoadSetting();
             InitializationTask = Task.Run(() => {
@@ -57,8 +62,60 @@ namespace Mirivoice.Mirivoice.Core
                 Setting.Save();
             }
         }
+        private static void DeleteExtractedZip(string zipFilePath)
+        {
+            // deletes zip file and split files
+            string baseFileName = Path.GetFileNameWithoutExtension(zipFilePath);
+            string directory = Path.GetDirectoryName(zipFilePath);
 
-        
+            // delete zip file
+            if (File.Exists(zipFilePath))
+            {
+                File.Delete(zipFilePath);
+                Console.WriteLine($"Deleted: {zipFilePath}");
+            }
+
+            // delete split files
+            int index = 1;
+            while (true)
+            {
+                string splitFilePath = Path.Combine(directory, $"{baseFileName}.z{index:D2}");
+                if (File.Exists(splitFilePath))
+                {
+                    File.Delete(splitFilePath);
+                    index++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        public void UpdateDefaultVoicers()
+        {
+            Log.Information("Updating default voicers.");
+            string dirName = Path.Combine(MainManager.Instance.PathM.AssetsPath, "DefaultVoicers");
+            if (Directory.Exists(dirName))
+            {
+                foreach (string file in Directory.GetFiles(dirName))
+                {
+                    if (Path.GetExtension(file).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+                    {
+                        try
+                        {
+                            ExtractSplitZip(file, PathM.VoicerPath);
+                            Log.Information($"Successfully extracted {file}.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error($"Error extracting {file}: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+
+
 
         public string ReadTxtFile(string txtPath)
         {
@@ -95,7 +152,32 @@ namespace Mirivoice.Mirivoice.Core
             }
         }
 
+        public static void ExtractSplitZip(string zipFilePath, string extractPath)
+        {
+            using (var archive = ArchiveFactory.Open(zipFilePath))
+            {
+                foreach (var entry in archive.Entries)
+                {
+                    if (!entry.IsDirectory)
+                    {
+                        string entryPath = Path.Combine(extractPath, entry.Key);
 
+                        string directoryPath = Path.GetDirectoryName(entryPath);
+                        if (!string.IsNullOrEmpty(directoryPath))
+                        {
+                            Directory.CreateDirectory(directoryPath);
+                        }
+
+                        using (var stream = File.OpenWrite(entryPath))
+                        {
+                            entry.WriteTo(stream);
+                        }
+                    }
+                }
+            }
+
+            DeleteExtractedZip(zipFilePath);
+        }
 
     }
 

@@ -3,6 +3,7 @@ using Avalonia.ReactiveUI;
 using Mirivoice.Mirivoice.Core;
 using Serilog;
 using System;
+using System.IO;
 using System.Text;
 
 namespace Mirivoice.Desktop;
@@ -19,7 +20,7 @@ class Program
 
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         InitLogging();
-        initMirivoice();
+        InitMirivoice();
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         
     }
@@ -49,7 +50,7 @@ class Program
         Log.Information("Logging initialized.");
     }
 
-    public static void initMirivoice()
+    public static void InitMirivoice()
     {
         
         Log.Information("Mirivoice init");
@@ -57,4 +58,6 @@ class Program
 
 
     }
+
+    
 }

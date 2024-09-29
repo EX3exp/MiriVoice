@@ -55,6 +55,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Assets\DefaultVoicers\**">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\mirivoice-logo - 복사.ico" />
   </ItemGroup>
 
@@ -95,6 +101,8 @@
       <SubType>Designer</SubType>
     </AvaloniaXaml>
   </ItemGroup>
+
+  
 
   <ItemGroup>
     <Compile Update="Views\LineBoxView.axaml.cs">

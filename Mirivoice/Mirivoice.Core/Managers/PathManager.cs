@@ -13,13 +13,14 @@ namespace Mirivoice.Mirivoice.Core.Managers
         public string DataPath { get; private set; }
         public string CachePath { get; private set; }
         public string SettingsPath { get; private set; }
+        
         public string RecentFilesPath { get; private set; }
         public bool HomePathIsAscii { get; private set; }
         public bool IsInstalled { get; private set; }
 
         public string LogFilePath => Path.Combine(DataPath, "Logs", "log.txt");
         public string VoicerPath => Path.Combine(RootPath, "Voicers");
-
+        public string AssetsPath => Path.Combine(RootPath, "Assets");
 
         public PathManager()
         {
