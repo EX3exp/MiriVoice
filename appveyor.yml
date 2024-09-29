@@ -22,8 +22,10 @@ dotnet_csproj:
   informational_version: '{version}'
 nuget:
   project_feed: true
-build_script:
-- cmd: dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r %PLATFORM% --self-contained true
+build:
+  project: Mirivoice.Desktop\Mirivoice.Desktop.csproj
+  parallel: true
+  verbosity: minimal
 artifacts:
 - path: C:\projects\mirivoice\Mirivoice.Desktop\bin\Release\net8.0\win-x64\publish
   name: MiriVoice-win-x64
