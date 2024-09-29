@@ -26,8 +26,13 @@
 
 	<system:String x:Key="singlelinebox.placeholder">(Line is empty)</system:String>
 
-	<system:String x:Key="edits.phoneme">Phoneme</system:String>
+	<system:String x:Key="edits.phoneme">Phonemes</system:String>
+	<!--
+	<system:String x:Key="edits.expression">Expressions</system:String>
+	<system:String x:Key="edits.expression.speed">Speed</system:String>
 	
+	<system:String x:Key="edits.pitch">Pitch</system:String>
+	-->
 	<!-- Menu -->
 	<!--files...-->
 	<system:String x:Key="menu.files.title">Files</system:String>

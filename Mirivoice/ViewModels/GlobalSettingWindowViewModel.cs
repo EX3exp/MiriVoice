@@ -75,32 +75,32 @@ namespace Mirivoice.ViewModels
             switch (MainManager.Instance.Setting.Langcode)
             {
                 case "en-US":
-                    SelectedLanguageIndex = 0;
+                    _selectedLanguageIndex = 0;
                     break;
                 case "ko-KR":
-                    SelectedLanguageIndex = 1;
+                    _selectedLanguageIndex = 1;
                     break;
                 default:
-                    SelectedLanguageIndex = 0;
+                    _selectedLanguageIndex = 0;
                     break;
             }
 
             if (MainManager.Instance.Setting.ClearCacheOnQuit)
             {
-                ClearCacheOnQuit = true;
+                _clearCacheOnQuit = true;
             }
             else
             {
-                ClearCacheOnQuit = false;
+                _clearCacheOnQuit = false;
             }
 
             if (MainManager.Instance.Setting.UseBeta)
             {
-                UseBeta = true;
+                _useBeta = true;
             }
             else
             {
-                UseBeta = false;
+                _useBeta = false;
             }
         }
     }

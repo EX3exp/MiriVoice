@@ -27,6 +27,12 @@
 	<system:String x:Key="singlelinebox.placeholder">(대사가 비어 있어요)</system:String>
 
 	<system:String x:Key="edits.phoneme">음소</system:String>
+	<!--
+	<system:String x:Key="edits.expression">표현</system:String>
+	<system:String x:Key="edits.expression.speed">속도</system:String>
+	
+	<system:String x:Key="edits.pitch">피치</system:String>
+	-->
 	
 	<!-- Menu -->
 	<!--files...-->
