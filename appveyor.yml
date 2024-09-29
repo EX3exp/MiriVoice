@@ -28,6 +28,8 @@ build:
   project: Mirivoice.sln
   parallel: true
   verbosity: minimal
+after_build:
+- cmd: dotnet publish -c Release -r %PLATFORM% --self-contained
 artifacts:
 - path: bin\Release\net8.0\win-x64\MiriVoice.zip
   name: MiriVoice-win-x64
