@@ -31,11 +31,11 @@ build:
 after_build:
 - cmd: dotnet publish -c Release -r %PLATFORM% --self-contained
 artifacts:
-- path: bin\Release\net8.0\win-x64\MiriVoice.zip
+- path: bin\Release\net8.0\win-x64
   name: MiriVoice-win-x64
-- path: bin\Release\net8.0\osx-x64\MiriVoice.zip
+- path: bin\Release\net8.0\osx-x64
   name: MiriVoice-macOS
-- path: bin\Release\net8.0\linux-x64\MiriVoice.zip
+- path: bin\Release\net8.0\linux-x64
   name: MiriVoice-linux
 deploy:
 - provider: GitHub
