@@ -31,11 +31,11 @@ build:
 after_build:
 - ps: dotnet publish -c Release -r %PLATFORM% --self-contained --project Mirivoice.Desktop\Mirivoice.Desktop.csproj
 artifacts:
-- path: bin\Release\net8.0\win-x64
+- path: bin\Release\net8.0\win-x64\MiriVoice.zip
   name: MiriVoice-win-x64
-- path: bin\Release\net8.0\osx-x64
+- path: bin\Release\net8.0\osx-x64\MiriVoice.zip
   name: MiriVoice-macOS
-- path: bin\Release\net8.0\linux-x64
+- path: bin\Release\net8.0\linux-x64\MiriVoice.zip
   name: MiriVoice-linux
 deploy:
 - provider: GitHub
@@ -45,6 +45,7 @@ deploy:
   auth_token:
     secure: EZGpxMjy4Z14QdM0UqgRTRn+GRbehi7bp6TtZVjH04PqNqMljX9d1QU29YDHOhld
   repository: EX3exp/MiriVoice
+  artifact: /.*\.nupkg/
   prerelease: true
   force_update: true
   on:
@@ -56,6 +57,7 @@ deploy:
   auth_token:
     secure: EZGpxMjy4Z14QdM0UqgRTRn+GRbehi7bp6TtZVjH04PqNqMljX9d1QU29YDHOhld
   repository: EX3exp/MiriVoice
+  artifact: /.*\.nupkg/
   prerelease: false
   force_update: true
   on:
