@@ -4,12 +4,9 @@ branches:
   - stable
   - main
 skip_tags: true
-image:
-- Visual Studio 2022
-- macOS
-- Ubuntu2204
+image: Ubuntu2204
 configuration: Release
-platform: Any CPU
+platform: x64
 shallow_clone: true
 dotnet_csproj:
   patch: true
@@ -32,11 +29,11 @@ build_script:
 
     dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
 artifacts:
-- path: Mirivoice.Desktop\bin\Any CPU\Release\net8.0\win-x64\publish\
+- path: Mirivoice.Desktop\bin\x64\Release\net8.0\win-x64\publish\
   name: MiriVoice-win-x64
-- path: Mirivoice.Desktop\bin\Any CPU\Release\net8.0\osx-x64\publish\
+- path: Mirivoice.Desktop\bin\x64\Release\net8.0\osx-x64\publish\
   name: MiriVoice-osx-x64
-- path: Mirivoice.Desktop\bin\Any CPU\Release\net8.0\linux-x64\publish\
+- path: Mirivoice.Desktop\bin\x64\Release\net8.0\linux-x64\publish\
   name: MiriVoice-linux-x64
 deploy:
 - provider: GitHub
