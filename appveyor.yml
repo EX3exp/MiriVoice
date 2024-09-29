@@ -24,9 +24,9 @@ nuget:
   project_feed: true
 build_script:
 - cmd: >-
-    dotnet restore C:\Users\inthe\Downloads\MiriVoice\Mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj
+    dotnet restore C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj
 
-    dotnet publish C:\Users\inthe\Downloads\MiriVoice\Mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
+    dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
 artifacts:
 - path: C:\projects\mirivoice\Mirivoice.Desktop\bin\Release\net8.0\win-x64\publish
   name: MiriVoice-win-x64
