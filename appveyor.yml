@@ -23,21 +23,13 @@ dotnet_csproj:
 nuget:
   project_feed: true
 build_script:
-- cmd: >-
-    |
-          if "%platform%" == "Windows" (
-            dotnet publish -c Release -r win-x64 --self-contained -o bin\Release\win-x64
-          ) else if "%platform%" == "macOS" (
-            dotnet publish -c Release -r osx-x64 --self-contained -o bin\Release\osx-x64
-          ) else if "%platform%" == "Linux" (
-            dotnet publish -c Release -r linux-x64 --self-contained -o bin\Release\linux-x64
-          )
+- cmd: dotnet publish -c Release -r $(PLATFORM) --self-contained
 artifacts:
-- path: bin\Release\win-x64\MiriVoice.zip
+- path: bin\Release\net8.0\win-x64\MiriVoice.zip
   name: MiriVoice-win-x64
-- path: bin\Release\osx-x64\MiriVoice.zip
+- path: bin\Release\net8.0\osx-x64\MiriVoice.zip
   name: MiriVoice-macOS
-- path: bin\Release\linux-x64\MiriVoice.zip
+- path: bin\Release\net8.0\linux-x64\MiriVoice.zip
   name: MiriVoice-linux
 deploy:
 - provider: GitHub
