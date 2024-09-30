@@ -57,7 +57,6 @@ for:
       - pwd
       - dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj
       - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
-
   - 
     matrix:
       only:
@@ -72,9 +71,9 @@ for:
 artifacts:
 - path: Mirivoice.Desktop\bin\x64\Release\net8.0\win-x64\publish\
   name: MiriVoice-win-x64
-- path: Mirivoice.Desktop\bin\x64\Release\net8.0\osx-x64\publish\
+- path: Mirivoice.Desktop\bin\x64\Release\net8.0\osx-x64\
   name: MiriVoice-osx-x64
-- path: Mirivoice.Desktop\bin\x64\Release\net8.0\linux-x64\publish\
+- path: Mirivoice.Desktop\bin\x64\Release\net8.0\linux-x64\
   name: MiriVoice-linux-x64
 deploy:
 - provider: GitHub
