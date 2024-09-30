@@ -46,7 +46,7 @@ for:
       - job_name: Windows build
 
       - build_script:
-        - dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
+        - cmd: dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
 
   - 
     matrix:
@@ -54,7 +54,7 @@ for:
       - job_name: MacOS build
 
       - build_script:
-        - dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
+        - cmd: dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
 
   - 
     matrix:
@@ -62,7 +62,7 @@ for:
       - job_name: Linux build
 
       - build_script:
-        - dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
+        - cmd: dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
 
 
 artifacts:
