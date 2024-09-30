@@ -63,8 +63,9 @@ for:
       - cp -R Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/publish/* Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/MacOS/
       - cp Mirivoice/Assets/mirivoice.icns Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/Resources/
       - cp Mirivoice/Assets/Info.plist Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/
-      - hdiutil create -volname "MiriVoice" -srcfolder Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app -ov -format UDZO MiriVoice-osx-x64.dmg
-
+      - npm install -g create-dmg
+      - create-dmg Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app MiriVoice-osx-x64.dmg
+      - codesign -fvs - MiriVoice-osx-x64.dmg
   - 
     matrix:
       only:
