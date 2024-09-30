@@ -37,16 +37,18 @@ nuget:
   project_feed: true
 
 for:
-
   - 
     matrix:
       only:
-      - job_name: Windows build
+      - job_name: Linux build
 
     build_script:
       - pwd
       - dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj
-      - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
+      - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
+      - chmod +x Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/publish
+      - mv Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/publish Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/MiriVoice-linux-x64
+      - tar -C Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/ -czvf MiriVoice-linux-x64.tar.gz
 
   - 
     matrix:
@@ -65,18 +67,19 @@ for:
       - npm install -g create-dmg
       - create-dmg Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app 
       - mv *.dmg Mirivoice-osx-x64.dmg
+      
   - 
     matrix:
       only:
-      - job_name: Linux build
+      - job_name: Windows build
 
     build_script:
       - pwd
       - dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj
-      - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
-      - chmod +x Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/publish
-      - mv Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/publish Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/MiriVoice-linux-x64
-      - tar -C Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/ -czvf MiriVoice-linux-x64.tar.gz
+      - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
+
+  
+  
 
 
 artifacts:
