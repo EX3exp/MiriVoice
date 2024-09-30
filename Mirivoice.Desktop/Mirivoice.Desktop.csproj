@@ -13,7 +13,45 @@
     <RootNamespace>Mirivoice.Desktop</RootNamespace>
     <Company>EX3</Company>
   </PropertyGroup>
-  
+  <PropertyGroup>
+    <CFBundleName>MiriVoice</CFBundleName>
+    <CFBundleDisplayName>MiriVoice</CFBundleDisplayName>
+    <CFBundleIdentifier>com.ex3.mirivoice</CFBundleIdentifier>
+    <CFBundleVersion>0.0.0</CFBundleVersion>
+    <CFBundleShortVersionString>0.0.0</CFBundleShortVersionString>
+    <CFBundlePackageType>APPL</CFBundlePackageType>
+    <CFBundleSignature>????</CFBundleSignature>
+    <CFBundleExecutable>MiriVoice</CFBundleExecutable>
+    <CFBundleIconFile>mirivoice.icns</CFBundleIconFile>
+    <NSPrincipalClass>NSApplication</NSPrincipalClass>
+    <NSHighResolutionCapable>true</NSHighResolutionCapable>
+    <CFBundleDocumentTypes>
+        <array>
+            <dict>
+                <key>CFBundleTypeName</key>
+                <string>MiriVoice Project File</string>
+                <key>CFBundleTypeExtensions</key>
+                <array>
+                    <string>mrp</string>
+                </array>
+                <key>CFBundleTypeIconFile</key>
+                <string>mirivoice.icns</string>
+                <key>CFBundleTypeRole</key>
+                <string>Editor</string>
+                <key>LSItemContentTypes</key>
+                <array>
+                    <string>com.ex3.mirivoice.mrp</string>
+                </array>
+            </dict>
+        </array>          
+    </CFBundleDocumentTypes>
+    <AssemblyName>MiriVoice.Main</AssemblyName>
+    <SignAssembly>False</SignAssembly>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Company>EX3</Company>
+    <Product>MiriVOice</Product>
+    <Authors>EX3</Authors>
+  </PropertyGroup>
   <ItemGroup>
     <Content Include="mirivoice-logo.ico" />
   </ItemGroup>

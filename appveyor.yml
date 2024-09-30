@@ -57,12 +57,12 @@ for:
     build_script:
       - pwd
       - dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj
-      - dotnet build Mirivoice.Desktop/Mirivoice.Desktop.csproj -t:BundleApp -c Release -r osx-x64 --self-contained true
+      - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
       - cp Mirivoice/Assets/mirivoice.icns Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/Resources/
       - npm install -g create-dmg
-      - create-dmg Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app
-      - mv *.dmg MiriVoice-osx-x64.dmg
+      - create-dmg 'Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app' --overwrite --dmg-title=MiriVoice-osx-x64
       - codesign -fvs - MiriVoice-osx-x64.dmg
+      
   - 
     matrix:
       only:
