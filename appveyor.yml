@@ -32,8 +32,6 @@ dotnet_csproj:
   file_version: '{version}'
   informational_version: '{version}'
 
-init:
-  - cmd: dotnet restore C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj
 
 nuget:
   project_feed: true
@@ -46,6 +44,7 @@ for:
       - job_name: Windows build
 
     build_script:
+      - dotnet restore C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj
       - dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
 
   - 
@@ -54,6 +53,7 @@ for:
       - job_name: MacOS build
 
     build_script:
+      - dotnet restore C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj
       - dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
 
   - 
@@ -62,6 +62,7 @@ for:
       - job_name: Linux build
 
     build_script:
+      - dotnet restore C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj
       - dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
 
 
