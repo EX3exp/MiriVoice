@@ -4,7 +4,6 @@ branches:
   - stable
   - main
 skip_tags: true
-image: Ubuntu2204
 configuration: Release
 platform: x64
 shallow_clone: true
