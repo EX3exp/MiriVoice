@@ -38,8 +38,7 @@ nuget:
 
 for:
 
-  -
-    matrix:
+  - matrix:
       only:
         - job_name: Windows build
 
@@ -47,8 +46,7 @@ for:
     - cmd: >-
     dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
 
-  -
-    matrix:
+  - matrix:
       only:
         - job_name: MacOS build
 
@@ -56,8 +54,7 @@ for:
     - cmd: >-
     dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
 
-  -
-    matrix:
+  - matrix:
       only:
         - job_name: Linux build
 
