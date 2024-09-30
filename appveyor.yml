@@ -82,9 +82,7 @@ artifacts:
 - path: Mirivoice.Desktop\bin\x64\Release\net8.0\win-x64\publish\
   name: MiriVoice-win-x64
 - path: MiriVoice-osx-x64.dmg
-  name: MiriVoice-osx-x64
 - path: Mirivoice.Desktop\bin\x64\Release\net8.0\linux-x64\publish\MiriVoice-linux-x64.tar.gz
-  name: MiriVoice-linux-x64
 deploy:
 - provider: GitHub
   tag: build/$(APPVEYOR_BUILD_VERSION)
