@@ -2,14 +2,18 @@ version: 1.0.0.{build}
 image: Visual Studio 2022
 environment:
   matrix:
-  - job_name: Windows build
-    appveyor_build_worker_image: Visual Studio 2022
-
   - job_name: MacOS build
     appveyor_build_worker_image: macOS
 
   - job_name: Linux build
     appveyor_build_worker_image: Ubuntu2204
+    
+  - job_name: Windows build
+    appveyor_build_worker_image: Visual Studio 2022
+
+  
+
+  
 matrix:
   fast_finish: true
 
@@ -63,9 +67,7 @@ for:
       - mkdir -p Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/MacOS/
       - cp -R Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/publish/* Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/MacOS/
       - cp Mirivoice/Assets/mirivoice.icns Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/Resources/
-      - npm install -g create-dmg
-      - create-dmg Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/ 
-      - mv *.dmg Mirivoice-osx-x64.dmg
+      - hdiutil create -volname "MiriVoice" -srcfolder Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/ -ov -format UDZO MiriVoice-osx-x64.dmg
 
   - 
     matrix:
