@@ -1,21 +1,5 @@
 version: 1.0.0.{build}
-branches:
-  only:
-  - stable
-  - main
-skip_tags: true
-configuration: Release
-platform: x64
-shallow_clone: true
-dotnet_csproj:
-  patch: true
-  file: Mirivoice.Desktop\Mirivoice.Desktop.csproj
-  version: '{version}'
-  version_prefix: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
+
 environment:
   matrix:
   - job_name: Windows build
@@ -29,6 +13,25 @@ environment:
 matrix:
   fast_finish: true
 
+branches:
+  only:
+  - stable
+  - main
+skip_tags: true
+
+configuration: Release
+platform: x64
+shallow_clone: true
+dotnet_csproj:
+  patch: true
+  file: Mirivoice.Desktop\Mirivoice.Desktop.csproj
+  version: '{version}'
+  version_prefix: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
 init:
   - cmd: dotnet restore C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj
 
@@ -37,29 +40,29 @@ nuget:
 
 for:
 
-  - matrix:
-      only:
-        - job_name: Windows build
+- 
+  matrix:
+    only:
+    - job_name: Windows build
+
+  build_script:
+    - cmd: dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
+
+- 
+  matrix:
+    only:
+    - job_name: MacOS build
 
     build_script:
-    - cmd: >-
-    dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
+    - cmd: dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
 
-  - matrix:
-      only:
-        - job_name: MacOS build
-
-    build_script:
-    - cmd: >-
-    dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
-
-  - matrix:
-      only:
-        - job_name: Linux build
+- 
+  matrix:
+    only:
+    - job_name: Linux build
 
     build_script:
-    - cmd: >-
-    dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
+    - cmd: dotnet publish C:\projects\mirivoice\Mirivoice.Desktop\Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
 
 
 artifacts:
