@@ -57,6 +57,14 @@ for:
       - pwd
       - dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj
       - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
+      - mkdir -p Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/Resources/
+      - mkdir -p Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/MacOS/
+      - cp -R Mirivoice.Desktop/bin/Release/net8.0/osx-x64/publish/* Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/MacOS/
+      - cp Mirivoice/Assets/mirivoice.icns Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app/Contents/Resources/
+      - rm *.dmg
+      - npm install -g create-dmg
+      - create-dmg Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/MiriVoice.app 
+      - mv *.dmg Mirivoice-osx-x64.dmg
   - 
     matrix:
       only:
@@ -66,14 +74,17 @@ for:
       - pwd
       - dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj
       - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
+      - chmod +x Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/publish
+      - mv Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/publish Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/MiriVoice-linux-x64
+      - tar -C Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/ -czvf MiriVoice-linux-x64.tar.gz
 
 
 artifacts:
 - path: Mirivoice.Desktop\bin\x64\Release\net8.0\win-x64\publish\
   name: MiriVoice-win-x64
-- path: Mirivoice.Desktop\bin\x64\Release\net8.0\osx-x64\
+- path: MiriVoice-osx-x64.dmg
   name: MiriVoice-osx-x64
-- path: Mirivoice.Desktop\bin\x64\Release\net8.0\linux-x64\
+- path: MiriVoice-linux-x64.tar.gz
   name: MiriVoice-linux-x64
 deploy:
 - provider: GitHub
