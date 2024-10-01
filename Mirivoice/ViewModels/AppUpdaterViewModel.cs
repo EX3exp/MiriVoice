@@ -82,7 +82,7 @@ namespace Mirivoice.ViewModels
             mainWindow = w;
             UpdateAvailable = false;
             UpdateButtonFontWeight = FontWeight.Normal;
-            Init();
+            Init(w);
         }
 
         public static async Task<SparkleUpdater?> NewUpdaterAsync()
@@ -150,7 +150,7 @@ namespace Mirivoice.ViewModels
                 .FirstOrDefault();
         }
 
-        async void Init()
+        async void Init(Window mainWindow)
         {
             UpdaterStatus = (string)mainWindow.FindResource("updater.status.checking");
             sparkle = await NewUpdaterAsync();

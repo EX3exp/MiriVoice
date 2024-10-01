@@ -15,7 +15,7 @@ public partial class MainWindow : Window
         AppUpdaterWindow.CheckForUpdate(
             dialog => dialog.Show(this),
             () => (Application.Current?.ApplicationLifetime as IControlledApplicationLifetime)?.Shutdown(),
-            TaskScheduler.FromCurrentSynchronizationContext());
+            TaskScheduler.FromCurrentSynchronizationContext(), this);
         Log.Information("Created main window.");
     }
 

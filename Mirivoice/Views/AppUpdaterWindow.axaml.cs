@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 using Mirivoice.Mirivoice.Core;
 using Mirivoice.ViewModels;
 using NetSparkleUpdater.Enums;
@@ -9,18 +10,23 @@ using System.Threading.Tasks;
 namespace Mirivoice;
 
 public partial class AppUpdaterWindow : Window {
-    public readonly AppUpdaterViewModel viewModel;
-    static Window mainWindow;
+    public AppUpdaterViewModel viewModel;
     public AppUpdaterWindow(Window owner) {
-        InitializeComponent();
-        mainWindow = owner;
+        InitializeComponent(owner);
+        
+    }
+
+    private void InitializeComponent(Window owner)
+    {
+        AvaloniaXamlLoader.Load(this);
         DataContext = viewModel = new AppUpdaterViewModel(owner);
     }
+
     void OnClosing(object sender, WindowClosingEventArgs e) 
     {
         viewModel.OnClosing();
     }
-    public static void CheckForUpdate(Action<Window> showDialog, Action closeApplication, TaskScheduler scheduler) {
+    public static void CheckForUpdate(Action<Window> showDialog, Action closeApplication, TaskScheduler scheduler, Window mainWindow) {
         Task.Run(async () => {
             using var updater = await AppUpdaterViewModel.NewUpdaterAsync();
             if (updater == null) {

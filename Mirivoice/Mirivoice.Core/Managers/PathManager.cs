@@ -30,8 +30,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 Directory.CreateDirectory(RootPath);
             }
 
-            SettingsPath = Path.Combine(DataPath, "settings.yaml");
-            RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
+            
 
             if (OS.IsMacOS())
             {
@@ -49,7 +48,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     }
                 }
                 catch { }
-
+                SettingsPath = Path.Combine(DataPath, "settings.yaml");
+                RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
             }
             else if (OS.IsLinux())
             {
@@ -67,6 +67,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 }
                 CachePath = Path.Combine(cacheHome, "Mirivoice");
                 HomePathIsAscii = true;
+                SettingsPath = Path.Combine(DataPath, "settings.yaml");
+                RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
             }
             else
             {
@@ -93,6 +95,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         break;
                     }
                 }
+                SettingsPath = Path.Combine(DataPath, "settings.yaml");
+                RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
 
             }
         }
