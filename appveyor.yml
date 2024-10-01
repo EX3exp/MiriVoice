@@ -30,21 +30,21 @@ before_build:
   - ps: git config --global user.name "appveyor"
   - cmd: nuget restore
 after_test:
-  - ps: if ($isWindows) { python appveyor.py 2>&1 } else { python3 appveyor.py 2>&1 }
+  - ps: if ($isWindows) { python Mirivoice.Desktop/appveyor.py 2>&1 } else { python3 Mirivoice.Desktop/appveyor.py 2>&1 }
 artifacts:
-  - path: bin\win-x86
+  - path: Mirivoice.Desktop\bin\win-x86
     name: MiriVoice-win-x86
     type: zip
-  - path: bin\win-x64
+  - path: Mirivoice.Desktop\bin\win-x64
     name: MiriVoice-win-x64
     type: zip
-  - path: MiriVoice-osx-x64.dmg
-  - path: MiriVoice-linux-x64.tar.gz
-  - path: appcast.win-x86.xml
-  - path: appcast.win-x64.xml
-  - path: appcast.linux-x64.xml
-  - path: appcast.osx-x64.xml
-  - path: changelog.txt
+  - path: Mirivoice.Desktop\MiriVoice-osx-x64.dmg
+  - path: Mirivoice.Desktop\MiriVoice-linux-x64.tar.gz
+  - path: Mirivoice.Desktop\appcast.win-x86.xml
+  - path: Mirivoice.Desktop\appcast.win-x64.xml
+  - path: Mirivoice.Desktop\appcast.linux-x64.xml
+  - path: Mirivoice.Desktop\appcast.osx-x64.xml
+  - path: Mirivoice.Desktop\changelog.txt
 deploy:
   - provider: GitHub
     tag: build/$(APPVEYOR_BUILD_VERSION)

@@ -22,9 +22,6 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Assets\mirivoice-logo - 복사.ico" />
-  </ItemGroup>
 
   <ItemGroup>
     <AvaloniaResource Include="Mirivoice.Core\Managers\MainManager.cs" />
