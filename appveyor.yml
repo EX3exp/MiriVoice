@@ -5,7 +5,7 @@ environment:
 image:
   - Visual Studio 2022
   - macOS
-  - Ubuntu
+  - Ubuntu2204
 branches:
   only:
     - stable
@@ -56,7 +56,7 @@ deploy:
     prerelease: true
     force_update: true
     on:
-      branch: master
+      branch: main
       APPVEYOR_REPO_TAG: false
   - provider: GitHub
     tag: build/$(APPVEYOR_BUILD_VERSION)
