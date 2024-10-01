@@ -13,7 +13,9 @@ namespace Mirivoice.Mirivoice.Core.Format
         public bool ClearCacheOnQuit { get; set; } = false;
         public bool UseBeta { get; set; } = true;
         public string SkipUpdate { get; set; } = "";
-
+        public string PlaybackDevice { get; set; } = string.Empty;
+        public int PlaybackDeviceNumber { get; set; }
+        public int? PlaybackDeviceIndex { get; set; }
         public void Save()
         {
             // save to file

@@ -9,26 +9,27 @@ using Mirivoice.ViewModels;
 using Mirivoice.Views;
 using NAudio.Wave;
 using Serilog;
+using NetCoreAudio;
 
 namespace Mirivoice.Mirivoice.Core.Managers
 {
-    
+
 
     public class AudioManager
     {
-        private IWavePlayer _waveOut;
-        private List<AudioFileReader> _audioReaders;
+        private Player _player = new Player();
+
+        private List<string> audioPaths;
         private int _currentFileIndex;
         private LineBoxView _;
         private readonly MainViewModel v;
         private bool MainViewModelPlaying;
-        public bool IsPlaying => _waveOut.PlaybackState == PlaybackState.Playing;
+        public bool IsPlaying => _player.Playing;
         public AudioManager(MainViewModel v)
         {
             this.v = v;
-            _waveOut = new WaveOutEvent();
-            _waveOut.PlaybackStopped += OnPlaybackStopped;  // called when playback is stopped
-            _audioReaders = new List<AudioFileReader>();
+            _player.PlaybackFinished += OnPlaybackStopped; // called when playback is stopped
+            audioPaths = new List<string>();
             _currentFileIndex = 0;
             MainViewModelPlaying = false;
         }
@@ -86,12 +87,12 @@ namespace Mirivoice.Mirivoice.Core.Managers
         /// <param name="exportPerTrack"></param>
         /// <param name="fileName"></param>
         /// <param name="DirPath"></param>
-        public async void PlayAllCacheFiles(int startIndex, bool exportOnlyAndDoNotPlay=false, bool exportPerTrack=true, string fileName="", string DirPath="", bool exportSrtInsteadOfAudio = false)
+        public async void PlayAllCacheFiles(int startIndex, bool exportOnlyAndDoNotPlay = false, bool exportPerTrack = true, string fileName = "", string DirPath = "", bool exportSrtInsteadOfAudio = false)
         {
             MainViewModelPlaying = true;
-            if ( _waveOut != null && _waveOut.PlaybackState == PlaybackState.Paused)
+            if (_player != null && _player.Paused)
             {
-                _waveOut.Play();
+                _player.Resume();
                 return;
             }
             List<string> caches = new List<string>();
@@ -102,7 +103,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
             v.SingleTextBoxEditorEnabled = false;
             v.CurrentEdit.IsEnabled = false;
             var tasks = new List<Task>();
-            
+
             caches.Clear();
             lines.Clear();
             voicerNames.Clear();
@@ -134,7 +135,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 tasks.Add(Task.Run(async () =>
                 {
                     await l.StartInference();
-                    
+
                     l.v.ProgressProgressbar(1);
                 }));
             }
@@ -150,7 +151,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
             if (exportOnlyAndDoNotPlay)
             {
-                
+
                 Log.Information("Exporting cache files.");
                 if (exportPerTrack)
                 {
@@ -159,7 +160,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     foreach (string cacheName in caches)
                     {
                         string exportPath = Path.Combine(DirPath, $"{no}_{fileName}.wav");
-                      
+
                         exportPath = SetSuffixToUnique(exportPath, 1);
                         Log.Debug($"Exporting {cacheName} to {exportPath}");
                         // resample to 48000kHz 
@@ -168,13 +169,13 @@ namespace Mirivoice.Mirivoice.Core.Managers
                             using (var resampler = new MediaFoundationResampler(reader, new WaveFormat(48000, reader.WaveFormat.Channels)))
                             {
                                 resampler.ResamplerQuality = 60;
-                                
+
                                 WaveFileWriter.CreateWaveFile(exportPath, resampler);
                             }
                         }
                         no++;
                     }
-                    
+
                 }
                 else
                 {
@@ -205,7 +206,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                             sb1.AppendLine();
                             sb2.AppendLine();
 
-                            
+
 
                             lastTs = currTs;
                         }
@@ -216,9 +217,9 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     }
 
                     // export mixdown
-                    exportPath = Path.Combine(DirPath, $"{fileName}.wav"); 
+                    exportPath = Path.Combine(DirPath, $"{fileName}.wav");
                     exportPath = SetSuffixToUnique(exportPath, 1);
-                    using (var outputWaveFile = new WaveFileWriter(exportPath, new WaveFormat(48000, 1))) 
+                    using (var outputWaveFile = new WaveFileWriter(exportPath, new WaveFormat(48000, 1)))
                     {
                         foreach (string cacheName in caches)
                         {
@@ -248,10 +249,9 @@ namespace Mirivoice.Mirivoice.Core.Managers
             foreach (string cacheName in caches)
             {
                 //Log.Debug($"[Playing Cache] {cacheName}");
-                var reader = new AudioFileReader(cacheName);
-                _audioReaders.Add(reader);
+                audioPaths.Add(cacheName);
 
-                
+
 
             }
 
@@ -260,22 +260,18 @@ namespace Mirivoice.Mirivoice.Core.Managers
             SelectedBtnIndexBeforePlay = startIndex - 1;
             v.LinesViewerOffset = new Avalonia.Vector(0, 104 * (startIndex - 1));
             currentLine = startIndex - 1;
-            
+
             PlayNextFile();
         }
 
         private void PlayNextFile()
         {
 
-            if (_currentFileIndex < _audioReaders.Count)
+            if (_currentFileIndex < audioPaths.Count)
             {
-
-                _waveOut.Init(_audioReaders[_currentFileIndex]);
+                _player.Play(audioPaths[_currentFileIndex]);
                 v.LineBoxCollection[currentLine].viewModel.IsSelected = true;
-                
-                _waveOut.Play();
-                
-                
+
             }
         }
 
@@ -288,13 +284,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
             MainViewModelPlaying = false;
             if (File.Exists(cacheFilePath))
             {
-                var reader = new AudioFileReader(cacheFilePath);
-                if (_waveOut.PlaybackState == PlaybackState.Playing)
-                {
-                    _waveOut.Stop();
-                }
-                _waveOut.Init(reader);
-                _waveOut.Play();
+                Log.Debug($"Playing cache file: {cacheFilePath}");
+                _player.Play(cacheFilePath);
             }
             else
             {
@@ -302,86 +293,75 @@ namespace Mirivoice.Mirivoice.Core.Managers
             }
         }
 
-        private void OnPlaybackStopped(object sender, StoppedEventArgs e)
+        private void OnPlaybackStopped(object sender, EventArgs e)
         {
-            if (_audioReaders.Count == 0) // when stopped
+            Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
-                v.isPlaying = false;
-                if (_waveOut != null)
+                if (audioPaths.Count == 0) // when stopped
                 {
-                    _waveOut.Dispose();
-                }
-                if (!MainViewModelPlaying)
-                {
+                    v.isPlaying = false;
+                    if (!MainViewModelPlaying)
+                    {
+                        return;
+                    }
+                    v.LineBoxCollection[currentLine].viewModel.IsSelected = false;
+                    v.LineBoxCollection[SelectedBtnIndexBeforePlay].viewModel.IsSelected = true;
+                    v.LinesViewerOffset = new Avalonia.Vector(0, OffsetBeforePlay);
+                    v.MainWindowGetInput = true;
+                    v.StopButtonEnabled = false;
+
                     return;
                 }
+
+
                 v.LineBoxCollection[currentLine].viewModel.IsSelected = false;
-                v.LineBoxCollection[SelectedBtnIndexBeforePlay].viewModel.IsSelected = true;
-                v.LinesViewerOffset = new Avalonia.Vector(0, OffsetBeforePlay);
-                v.MainWindowGetInput = true;
-                v.StopButtonEnabled = false;
-               
-                return;
-            }
-            try
-            {
-                _audioReaders[_currentFileIndex].Dispose();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Error disposing audio reader.");
-            }
+                v.LinesViewerOffset = new Avalonia.Vector(0, v.LinesViewerOffset.Y + 104);
 
+                currentLine++;
+                _currentFileIndex++;
 
-            v.LineBoxCollection[currentLine].viewModel.IsSelected = false;
-            v.LinesViewerOffset = new Avalonia.Vector(0, v.LinesViewerOffset.Y + 104);
+                if (_currentFileIndex < audioPaths.Count)
+                {
+                    PlayNextFile();
+                }
+                else
+                {
+                    Log.Information("All cache files have been played.");
 
-            currentLine++;
-            _currentFileIndex++;
+                    v.isPlaying = false;
 
-            if (_currentFileIndex < _audioReaders.Count)
-            {
-                PlayNextFile();  
-            }
-            else
-            {
-                Log.Information("All cache files have been played.");
-                v.isPlaying = false;
-                
-                _waveOut.Dispose();
-                v.LineBoxCollection[currentLine-1].viewModel.IsSelected = false;
-                v.LineBoxCollection[SelectedBtnIndexBeforePlay].viewModel.IsSelected = true;
-                v.LinesViewerOffset = new Avalonia.Vector(0, OffsetBeforePlay);
-                v.MainWindowGetInput = true;
-                v.StopButtonEnabled = false;
-                MainViewModelPlaying = false;
-            }
+                    v.LineBoxCollection[currentLine - 1].viewModel.IsSelected = false;
+                    v.LineBoxCollection[SelectedBtnIndexBeforePlay].viewModel.IsSelected = true;
+                    v.LinesViewerOffset = new Avalonia.Vector(0, OffsetBeforePlay);
+                    v.MainWindowGetInput = true;
+                    v.StopButtonEnabled = false;
+                    MainViewModelPlaying = false;
+                }
+            });
         }
 
         public void PauseAudio()
         {
-            if (_waveOut is not null && _waveOut.PlaybackState == PlaybackState.Playing)
+            if (_player is not null && _player.Playing)
             {
-                _waveOut.Pause();
+                _player.Pause();
             }
-            
+
         }
 
         public void StopAudio()
         {
-            
 
-            if (_waveOut is not null)
+
+            if (_player is not null)
             {
-                _waveOut.Pause();
+                _player.Stop();
                 _currentFileIndex = 0;
-                _audioReaders.Clear();
-                _waveOut.Stop();
-                _waveOut.Dispose();
+                audioPaths.Clear();
                 v.MainWindowGetInput = true;
                 MainViewModelPlaying = false;
             }
-            
+
         }
         public void DeleteCacheFile(string cacheFilePath)
         {
@@ -396,7 +376,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
             StopAudio();
             foreach (var file in GetAllCacheFiles())
             {
-                
+
                 File.Delete(file);
             }
         }

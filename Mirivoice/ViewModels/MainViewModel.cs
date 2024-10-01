@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using VYaml.Serialization;
@@ -47,7 +48,7 @@ namespace Mirivoice.ViewModels
         };
 
         Mrp initMrp;
-        Version version = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version;
+        Version version = Assembly.GetEntryAssembly()?.GetName().Version;
 
         private bool _mainWindowGetInput = true;
         public bool MainWindowGetInput
@@ -387,9 +388,10 @@ namespace Mirivoice.ViewModels
                 else
                 {
                     // audio stop
-                    MainManager.Instance.AudioM.PauseAudio();
+                    
                     SingleTextBoxEditorEnabled = true;
                     CurrentEdit.IsEnabled = true;
+                    MainManager.Instance.AudioM.PauseAudio();
                 }
                 OnPropertyChanged(nameof(isPlaying));
             }

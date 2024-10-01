@@ -1,4 +1,5 @@
 ﻿using Avalonia.Threading;
+using Mirivoice.Engines;
 using Mirivoice.ViewModels;
 using Mirivoice.Views;
 using R3;
@@ -105,7 +106,16 @@ namespace Mirivoice.Mirivoice.Core.Format
                         int voicerIndex = MainManager.Instance.VoicerM.FindVoicerIndex(
                         MainManager.Instance.VoicerM.FindVoicerWithNameAndLangCodeAndUUID(l.voicerName, l.langCode, l.voicerUuid)
                         );
-                        int metaIndex = l.voicerStyleId;
+                        int spkid = l.voicerStyleId;
+                        int metaIndex = 0;
+                        foreach (VoicerMeta v in v.voicerSelector.Voicers[voicerIndex].VoicerMetaCollection)
+                        {
+                            if (v.SpeakerId == spkid)
+                            {
+                                break;
+                            }
+                            metaIndex++;
+                        }
                         lines[index] = new LineBoxView(l, v, index, voicerIndex, metaIndex);
 
                     });
@@ -130,7 +140,7 @@ namespace Mirivoice.Mirivoice.Core.Format
                 {
                     v.voicerSelector.CurrentDefaultVoicerIndex = MainManager.Instance.VoicerM.FindVoicerIndex(defVoicer);
                     v.voicerSelector.Voicers[v.voicerSelector.CurrentDefaultVoicerIndex].CurrentVoicerMeta =
-                        v.voicerSelector.Voicers[v.voicerSelector.CurrentDefaultVoicerIndex].VoicerMetaCollection[this.DefaultVoicerStyleId];
+                        v.voicerSelector.Voicers[v.voicerSelector.CurrentDefaultVoicerIndex].VoicerMetaCollection.FirstOrDefault(m => m.SpeakerId == this.DefaultVoicerStyleId);
                 }
 
                 

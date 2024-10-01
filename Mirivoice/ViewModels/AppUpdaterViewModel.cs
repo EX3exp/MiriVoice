@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Mirivoice.ViewModels
@@ -37,7 +38,7 @@ namespace Mirivoice.ViewModels
             public GithubReleaseAsset[] assets = new GithubReleaseAsset[0];
 #pragma warning restore 0649
         }
-        public string AppVersion => $"v{System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version}";
+        public string AppVersion => $"v{Assembly.GetEntryAssembly()?.GetName().Version}";
 
         private string _updateStatus;
         public string UpdaterStatus

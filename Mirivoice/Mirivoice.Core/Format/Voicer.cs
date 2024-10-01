@@ -77,6 +77,11 @@ namespace Mirivoice.Mirivoice.Core.Format
         public void Inference(string ipaText, string cacheFilePath, LineBoxView l, int sid)
         {
             //Log.Debug("[Infer Started] --- ipaText");
+            if (Engine is null)
+            {
+                Log.Error("Engine is not initialized.");
+                return;
+            }
             Engine.Inference(ipaText, cacheFilePath, sid);
             if (l != null)
             {

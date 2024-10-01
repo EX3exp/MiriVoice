@@ -31,7 +31,7 @@ public partial class VoicersStyleBox : UserControl
 
         phrase = voicer.Info.VoicerMetas[metaIndex].Phrase;
         phonemizer = LineBoxViewModel.GetPhonemizer(voicer.Info.LangCode);
-        cachePath = Guid.NewGuid().ToString();
+        cachePath = Path.Combine(MainManager.Instance.PathM.CachePath, Guid.NewGuid().ToString() + ".wav");
         this.voicer = voicer;
         this.v = v;
     }
