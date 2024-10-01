@@ -37,11 +37,12 @@ if sys.platform == 'win32':
 
     os.system("del *.xml 2>&1")
 
-    os.system("dotnet restore Mirivoice.Desktop.csproj")
+    os.system("dotnet restore Mirivoice.Desktop.csproj -r win-x86")
     os.system(
         "dotnet publish Mirivoice.Desktop.csproj -c Release -r win-x86 --self-contained true -o bin/win-x86")
     write_appcast("windows", "win-x86", "MiriVoice-win-x86.zip")
 
+    os.system("dotnet restore Mirivoice.Desktop.csproj -r win-x64")
     os.system(
         "dotnet publish Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true -o bin/win-x64")
     write_appcast("windows", "win-x64", "MiriVoice-win-x64.zip")
@@ -55,7 +56,7 @@ elif sys.platform == 'darwin':
     os.system("rm LICENSE.txt")
     os.system(
         "sed -i '' \"s/0.0.0/%s/g\" Mirivoice.Desktop.csproj" % (appcast_ver))
-    os.system("dotnet restore Mirivoice.Desktop.csproj")
+    os.system("dotnet restore Mirivoice.Desktop.csproj -r osx-x64")
     os.system("dotnet msbuild Mirivoice.Desktop.csproj -t:BundleApp -p:Configuration=Release -p:RuntimeIdentifier=osx-x64 -p:UseAppHost=true -p:OutputPath=../bin/osx-x64/")
     os.system(
         "cp mirivoice.icns bin/osx-x64/publish/MiriVoice.app/Contents/Resources/")
@@ -72,7 +73,7 @@ elif sys.platform == 'darwin':
 else:
     os.system("rm *.xml")
 
-    os.system("dotnet restore Mirivoice.Desktop.csproj ")
+    os.system("dotnet restore Mirivoice.Desktop.csproj -r linux-x64")
     os.system(
         "dotnet publish Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true -o bin/linux-x64")
     os.system("chmod +x bin/linux-x64/MiriVoice")
