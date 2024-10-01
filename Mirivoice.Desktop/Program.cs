@@ -17,12 +17,19 @@ class Program
     [STAThread]
     public static void Main(string[] args) 
     {
+        try
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            InitLogging();
+            InitMirivoice();
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+        }
+        catch (Exception e)
+        {
+            Log.Fatal($"{e.Message}\n{e.StackTrace}");
+        }
 
-        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-        InitLogging();
-        InitMirivoice();
-        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-        
+
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
