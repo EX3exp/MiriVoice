@@ -1,106 +1,72 @@
-version: 1.0.0.{build}
-image: Visual Studio 2022
+version: 0.1.{build}
 environment:
-  matrix:
-  - job_name: Windows build
-    appveyor_build_worker_image: Visual Studio 2022
-
-  - job_name: MacOS build
-    appveyor_build_worker_image: macOS
-
-  - job_name: Linux build
-    appveyor_build_worker_image: Ubuntu2204
-matrix:
-  fast_finish: true
-
+  access_token:
+    secure: EZGpxMjy4Z14QdM0UqgRTRn+GRbehi7bp6TtZVjH04PqNqMljX9d1QU29YDHOhld
+image:
+  - Visual Studio 2022
+  - macOS
+  - Ubuntu
 branches:
   only:
-  - stable
-  - main
+    - stable
+    - main
+skip_commits:
+  files:
+    - .github/*
+  message: /\[nobuild\]/
 skip_tags: true
-
 configuration: Release
-platform: x64
-shallow_clone: true
 dotnet_csproj:
   patch: true
   file: Mirivoice.Desktop\Mirivoice.Desktop.csproj
   version: '{version}'
-  version_prefix: '{version}'
-  package_version: '{version}'
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
-
-
-nuget:
-  project_feed: true
-
-for:
-  - 
-    matrix:
-      only:
-      - job_name: Linux build
-
-    build_script:
-      - pwd
-      - dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj
-      - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r linux-x64 --self-contained true
-      - cd Mirivoice.Desktop/bin/x64/Release/net8.0/linux-x64/publish/
-      - tar -czvf MiriVoice-linux-x64.tar.gz *
-
-  - 
-    matrix:
-      only:
-      - job_name: MacOS build
-
-    build_script:
-      - pwd
-      - dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj
-      - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true
-      - codesign -fvs "Developer ID Application: EX3exp" Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/publish/Mirivoice.app
-      - brew install create-dmg
-      - create-dmg MiriVoice-osx-x64.dmg Mirivoice.Desktop/bin/x64/Release/net8.0/osx-x64/publish/Mirivoice.app 
-
-  - 
-    matrix:
-      only:
-      - job_name: Windows build
-
-    build_script:
-      - pwd
-      - dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj
-      - dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r win-x64 --self-contained true
-
-  
-  
-
-
+before_build:
+  - ps: git config --global credential.helper store
+  - ps: Set-Content -Path "$HOME\.git-credentials" -Value "https://$($env:access_token):x-oauth-basic@github.com`n" -NoNewline
+  - ps: git config --global user.email "appveyor@appveyor.com"
+  - ps: git config --global user.name "appveyor"
+  - cmd: nuget restore
+after_test:
+  - ps: if ($isWindows) { python appveyor.py 2>&1 } else { python3 appveyor.py 2>&1 }
 artifacts:
-- path: Mirivoice.Desktop\bin\x64\Release\net8.0\win-x64\publish\
-  name: MiriVoice-win-x64
-- path: MiriVoice-osx-x64.dmg
-- path: Mirivoice.Desktop\bin\x64\Release\net8.0\linux-x64\publish\MiriVoice-linux-x64.tar.gz
+  - path: bin\win-x86
+    name: MiriVoice-win-x86
+    type: zip
+  - path: bin\win-x64
+    name: MiriVoice-win-x64
+    type: zip
+  - path: MiriVoice-osx-x64.dmg
+  - path: MiriVoice-linux-x64.tar.gz
+  - path: appcast.win-x86.xml
+  - path: appcast.win-x64.xml
+  - path: appcast.linux-x64.xml
+  - path: appcast.osx-x64.xml
+  - path: changelog.txt
 deploy:
-- provider: GitHub
-  tag: build/$(APPVEYOR_BUILD_VERSION)
-  release: MiriVoice-v$(APPVEYOR_BUILD_VERSION) Beta
-  description: $(APPVEYOR_BUILD_VERSION) Beta ($(APPVEYOR_REPO_COMMIT_TIMESTAMP))
-  auth_token:
-    secure: EZGpxMjy4Z14QdM0UqgRTRn+GRbehi7bp6TtZVjH04PqNqMljX9d1QU29YDHOhld
-  repository: EX3exp/MiriVoice
-  prerelease: true
-  force_update: true
-  on:
-    branch: main
-- provider: GitHub
-  tag: build/$(APPVEYOR_BUILD_VERSION)
-  release: MiriVoice-v$(APPVEYOR_BUILD_VERSION)
-  description: $(APPVEYOR_BUILD_VERSION) ($(APPVEYOR_REPO_COMMIT_TIMESTAMP))
-  auth_token:
-    secure: EZGpxMjy4Z14QdM0UqgRTRn+GRbehi7bp6TtZVjH04PqNqMljX9d1QU29YDHOhld
-  repository: EX3exp/MiriVoice
-  prerelease: false
-  force_update: true
-  on:
-    branch: stable
+  - provider: GitHub
+    tag: build/$(APPVEYOR_BUILD_VERSION)
+    release: $(APPVEYOR_BUILD_VERSION) Beta
+    description: $(APPVEYOR_BUILD_VERSION) Beta $(APPVEYOR_REPO_COMMIT_TIMESTAMP)
+    auth_token:
+      secure: EZGpxMjy4Z14QdM0UqgRTRn+GRbehi7bp6TtZVjH04PqNqMljX9d1QU29YDHOhld
+    draft: false
+    prerelease: true
+    force_update: true
+    on:
+      branch: master
+      APPVEYOR_REPO_TAG: false
+  - provider: GitHub
+    tag: build/$(APPVEYOR_BUILD_VERSION)
+    release: $(APPVEYOR_BUILD_VERSION)
+    description: $(APPVEYOR_BUILD_VERSION) $(APPVEYOR_REPO_COMMIT_TIMESTAMP)
+    auth_token:
+      secure: EZGpxMjy4Z14QdM0UqgRTRn+GRbehi7bp6TtZVjH04PqNqMljX9d1QU29YDHOhld
+    draft: false
+    prerelease: false
+    force_update: true
+    on:
+      branch: stable
+      APPVEYOR_REPO_TAG: false

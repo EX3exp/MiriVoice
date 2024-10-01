@@ -55,53 +55,6 @@
     <Authors>EX3</Authors>
   </PropertyGroup>
 
-  <Target Name="CreateMacAppBundle" AfterTargets="Publish" Condition="'$(RuntimeIdentifier)' == 'osx-x64' Or '$(RuntimeIdentifier)' == 'osx-arm64'">
-    <Message Text="Building macOS .app bundle..." Importance="high" />
-    
-    <MakeDir Directories="$(PublishDir)$(AssemblyName).app/Contents/MacOS" />
-    <MakeDir Directories="$(PublishDir)$(AssemblyName).app/Contents/Resources" />
-
-    <!-- Move the published executable to the .app bundle -->
-    <Move SourceFiles="$(PublishDir)$(AssemblyName)" 
-          DestinationFiles="$(PublishDir)$(AssemblyName).app/Contents/MacOS/$(AssemblyName)" />
-
-    <!-- Create the Info.plist file -->
-    <WriteLinesToFile File="$(PublishDir)$(AssemblyName).app/Contents/Info.plist" Lines="
-      <?xml version='1.0' encoding='UTF-8'?>
-      <!DOCTYPE plist PUBLIC '-//Apple//DTD PLIST 1.0//EN' 'http://www.apple.com/DTDs/PropertyList-1.0.dtd'>
-      <plist version='1.0'>
-      <dict>
-        <key>CFBundleName</key>
-        <string>$(CFBundleName)</string>
-        <key>CFBundleDisplayName</key>
-        <string>$(CFBundleDisplayName)</string>
-        <key>CFBundleIdentifier</key>
-        <string>$(CFBundleIdentifier)</string>
-        <key>CFBundleVersion</key>
-        <string>$(CFBundleVersion)</string>
-        <key>CFBundleShortVersionString</key>
-        <string>$(CFBundleShortVersionString)</string>
-        <key>CFBundlePackageType</key>
-        <string>$(CFBundlePackageType)</string>
-        <key>CFBundleSignature</key>
-        <string>$(CFBundleSignature)</string>
-        <key>CFBundleExecutable</key>
-        <string>$(CFBundleExecutable)</string>
-        <key>CFBundleIconFile</key>
-        <string>$(CFBundleIconFile)</string>
-        <key>NSPrincipalClass</key>
-        <string>$(NSPrincipalClass)</string>
-        <key>NSHighResolutionCapable</key>
-        <true/>
-      </dict>
-      </plist>
-    " />
-
-    <!-- Copy the icon file to the Resources folder -->
-    <Copy SourceFiles="Mirivoice/Assets/mirivoice.icns" 
-          DestinationFolder="$(PublishDir)$(AssemblyName).app/Contents/Resources/" />
-  </Target>
-
   <ItemGroup>
     <Content Include="mirivoice-logo.ico" />
   </ItemGroup>
