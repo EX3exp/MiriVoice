@@ -56,8 +56,8 @@ elif sys.platform == 'darwin':
     os.system("rm LICENSE.txt")
     os.system(
         "sed -i '' \"s/0.0.0/%s/g\" Mirivoice.Desktop/Mirivoice.Desktop.csproj" % (appcast_ver))
-    os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx.10.14-x64")
-    os.system("dotnet msbuild Mirivoice.Desktop/Mirivoice.Desktop.csproj -t:BundleApp -p:Configuration=Release -p:RuntimeIdentifier=osx.10.14-x64 -p:UseAppHost=true -p:OutputPath=../bin/osx-x64/")
+    os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64")
+    os.system("dotnet msbuild Mirivoice.Desktop/Mirivoice.Desktop.csproj -t:BundleApp -p:Configuration=Release -p:RuntimeIdentifier=osx-x64 -p:UseAppHost=true -p:OutputPath=../bin/osx-x64/")
     os.system(
         "cp MiriVoice/Assets/mirivoice.icns bin/osx-x64/publish/MiriVoice.app/Contents/Resources/")
     os.system("rm *.dmg")
