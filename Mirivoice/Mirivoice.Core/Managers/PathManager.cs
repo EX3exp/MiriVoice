@@ -29,7 +29,10 @@ namespace Mirivoice.Mirivoice.Core.Managers
             {
                 Directory.CreateDirectory(RootPath);
             }
-            
+
+            SettingsPath = Path.Combine(DataPath, "settings.yaml");
+            RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
+
             if (OS.IsMacOS())
             {
                 string userHome = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
@@ -46,6 +49,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     }
                 }
                 catch { }
+
             }
             else if (OS.IsLinux())
             {
@@ -90,8 +94,6 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     }
                 }
 
-                SettingsPath = Path.Combine(DataPath, "settings.yaml");
-                RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
             }
         }
         
