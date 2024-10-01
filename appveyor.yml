@@ -38,8 +38,8 @@ artifacts:
   - path: Mirivoice.Desktop\bin\win-x64
     name: MiriVoice-win-x64
     type: zip
-  - path: Mirivoice.Desktop\MiriVoice-osx-x64.dmg
-  - path: Mirivoice.Desktop\MiriVoice-linux-x64.tar.gz
+  - path: MiriVoice-osx-x64.dmg
+  - path: MiriVoice-linux-x64.tar.gz
   - path: Mirivoice.Desktop\appcast.win-x86.xml
   - path: Mirivoice.Desktop\appcast.win-x64.xml
   - path: Mirivoice.Desktop\appcast.linux-x64.xml
