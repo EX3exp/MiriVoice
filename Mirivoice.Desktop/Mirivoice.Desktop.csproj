@@ -3,6 +3,7 @@
     <OutputType>WinExe</OutputType>
     <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
     One for Windows with net8.0-windows TFM, one for MacOS with net8.0-macos and one with net8.0 TFM for Linux.-->
+    <UseAppHost>true</UseAppHost>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -13,6 +14,10 @@
     <RootNamespace>Mirivoice.Desktop</RootNamespace>
     <Company>EX3</Company>
     
+
+  </PropertyGroup>
+    
+  <PropertyGroup>
     <CFBundleName>MiriVoice</CFBundleName> <!-- Also defines .app file name -->
     <CFBundleDisplayName>MiriVoice</CFBundleDisplayName>
     <CFBundleIdentifier>com.ex3.mirivoice</CFBundleIdentifier>
@@ -24,16 +29,14 @@
     <CFBundleIconFile>mirivoice.icns</CFBundleIconFile> <!-- Will be copied from output directory -->
     <NSPrincipalClass>NSApplication</NSPrincipalClass>
     <NSHighResolutionCapable>true</NSHighResolutionCapable>
-
   </PropertyGroup>
-  
-
   <ItemGroup>
     <Content Include="mirivoice-logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="11.1.3" />
+    <PackageReference Include="Dotnet.Bundle" Version="0.9.13" />
     <PackageReference Include="Serilog" Version="4.0.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
