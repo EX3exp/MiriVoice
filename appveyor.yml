@@ -40,11 +40,11 @@ artifacts:
     type: zip
   - path: MiriVoice-osx-x64.dmg
   - path: MiriVoice-linux-x64.tar.gz
-  - path: Mirivoice.Desktop\appcast.win-x86.xml
-  - path: Mirivoice.Desktop\appcast.win-x64.xml
-  - path: Mirivoice.Desktop\appcast.linux-x64.xml
-  - path: Mirivoice.Desktop\appcast.osx-x64.xml
-  - path: Mirivoice.Desktop\changelog.txt
+  - path: appcast.win-x86.xml
+  - path: appcast.win-x64.xml
+  - path: appcast.linux-x64.xml
+  - path: appcast.osx-x64.xml
+  - path: changelog.txt
 deploy:
   - provider: GitHub
     tag: build/$(APPVEYOR_BUILD_VERSION)
