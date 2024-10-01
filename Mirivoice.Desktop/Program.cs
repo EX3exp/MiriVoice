@@ -20,8 +20,9 @@ class Program
         try
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            InitLogging();
             InitMirivoice();
+            InitLogging();
+            
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }
         catch (Exception e)

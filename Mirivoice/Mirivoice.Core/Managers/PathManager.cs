@@ -18,7 +18,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         public bool HomePathIsAscii { get; private set; }
         public bool IsInstalled { get; private set; }
 
-        public string LogFilePath => Path.Combine(DataPath, "Logs", "log.txt");
+        public string LogFilePath => Path.Combine(RootPath, "Logs", "log.txt");
         public string VoicerPath => Path.Combine(RootPath, "Voicers");
         public string AssetsPath => Path.Combine(RootPath, "Assets");
 
