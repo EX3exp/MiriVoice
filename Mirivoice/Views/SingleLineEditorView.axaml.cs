@@ -25,8 +25,9 @@ public partial class SingleLineEditorView : UserControl
         this.FirstUpdate = FirstUpdate;
     }
 
+    bool ShouldPhonemizeWhenOutFocused = false;
 
-    private async void LineTextChanged(object sender, TextChangedEventArgs e)
+    private async void LineTextChanging(object sender, TextChangingEventArgs e)
     {
         
         l.DeActivatePhonemizer = false;
@@ -38,11 +39,11 @@ public partial class SingleLineEditorView : UserControl
         }
         if (l.lastPhonemizedText != l.viewModel.LineText)
         {
-            l.ShouldPhonemize = true;
+            ShouldPhonemizeWhenOutFocused = true;
         }
         if (l.ShouldPhonemize && !l.DeActivatePhonemizer)
         {
-            await Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
+            ShouldPhonemizeWhenOutFocused = true;
         }
         l.viewModel.LineText = viewModel.mTextBoxEditor.CurrentScript;
 
@@ -50,7 +51,13 @@ public partial class SingleLineEditorView : UserControl
 
     private void LineLostFocus(object sender, RoutedEventArgs e)
     {
+        l.viewModel.LineText = viewModel.mTextBoxEditor.CurrentScript;
         //Log.Debug("SingleLineTBox Lost Focus");
+        if (l.lastPhonemizedText != l.viewModel.LineText)
+        {
+            l.DeActivatePhonemizer = false;
+            ShouldPhonemizeWhenOutFocused = true;
+        }
 
         if (FirstUpdate)
         {
@@ -58,12 +65,16 @@ public partial class SingleLineEditorView : UserControl
             Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
             return;
         }
-
+        if (ShouldPhonemizeWhenOutFocused)
+        {
+            l.ShouldPhonemize = true;
+            ShouldPhonemizeWhenOutFocused = false;
+        }
 
         if (! l.DeActivatePhonemizer || l.MResultsCollection.Count == 0 && !string.IsNullOrEmpty(l.viewModel.LineText))
         {
             l.ShouldPhonemize = true;
-
+            return;
         }
 
         

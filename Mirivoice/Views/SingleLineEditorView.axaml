@@ -8,6 +8,6 @@
              x:Class="Mirivoice.SingleLineEditorView">
 	
   <Border>
-<TextBox AcceptsReturn="True" LostFocus="LineLostFocus" GotFocus="LineGotFocus" TextChanged="LineTextChanged" TextWrapping="Wrap" Text="{Binding mTextBoxEditor.CurrentScript, Mode=TwoWay}" IsUndoEnabled="False" Watermark="{DynamicResource singlelinebox.placeholder}" FontSize="15" CornerRadius="0"></TextBox>
+<TextBox AcceptsReturn="True" LostFocus="LineLostFocus" GotFocus="LineGotFocus" TextChanging="LineTextChanging" TextWrapping="Wrap" Text="{Binding mTextBoxEditor.CurrentScript, Mode=TwoWay}" IsUndoEnabled="False" Watermark="{DynamicResource singlelinebox.placeholder}" FontSize="15" CornerRadius="0"></TextBox>
 </Border>
 </UserControl>
