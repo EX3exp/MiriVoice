@@ -36,6 +36,10 @@ public partial class SingleLineEditorView : UserControl
             Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
             return;
         }
+        if (l.lastPhonemizedText != l.viewModel.LineText)
+        {
+            l.ShouldPhonemize = true;
+        }
         if (l.ShouldPhonemize && !l.DeActivatePhonemizer)
         {
             await Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
