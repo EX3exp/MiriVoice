@@ -18,10 +18,10 @@ namespace Mirivoice.Mirivoice.Core.Managers
         public bool HomePathIsAscii { get; private set; }
         public bool IsInstalled { get; private set; }
 
-        public string LogFilePath;
+        public string LogFilePath => Path.Combine(DataPath, "Logs", "log.txt");
         public string VoicerPath => Path.Combine(RootPath, "Voicers");
         public string AssetsPath => Path.Combine(RootPath, "Assets");
-
+        
         public PathManager()
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -50,7 +50,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 catch { }
                 SettingsPath = Path.Combine(DataPath, "settings.yaml");
                 RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
-                LogFilePath = Path.Combine(RootPath, "Logs", "log.txt");
+                
             }
             else if (OS.IsLinux())
             {
@@ -70,7 +70,6 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 HomePathIsAscii = true;
                 SettingsPath = Path.Combine(DataPath, "settings.yaml");
                 RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
-                LogFilePath = Path.Combine(RootPath, "Logs", "log.txt");
             }
             else
             {
@@ -99,7 +98,6 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 }
                 SettingsPath = Path.Combine(DataPath, "settings.yaml");
                 RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
-                LogFilePath = Path.Combine(RootPath, "Logs", "log.txt");
 
             }
         }

@@ -20,16 +20,20 @@ class Program
         try
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            InitMirivoice();
             InitLogging();
+            InitMirivoice();
+            
             
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }
         catch (Exception e)
         {
-            Log.Fatal($"{e.Message}\n{e.StackTrace}");
+            Log.Error($"{e.Message}\n{e.StackTrace}");
         }
-
+        finally
+        {
+            Log.CloseAndFlush();
+        }
 
     }
 
