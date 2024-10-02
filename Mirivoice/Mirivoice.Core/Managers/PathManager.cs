@@ -18,7 +18,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         public bool HomePathIsAscii { get; private set; }
         public bool IsInstalled { get; private set; }
 
-        public string LogFilePath => Path.Combine(RootPath, "Logs", "log.txt");
+        public string LogFilePath;
         public string VoicerPath => Path.Combine(RootPath, "Voicers");
         public string AssetsPath => Path.Combine(RootPath, "Assets");
 
@@ -35,8 +35,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
             if (OS.IsMacOS())
             {
                 string userHome = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                DataPath = Path.Combine(userHome, "Library", "Mirivoice");
-                CachePath = Path.Combine(userHome, "Library", "Caches", "Mirivoice");
+                DataPath = Path.Combine(userHome, "Library", "MiriVoice");
+                CachePath = Path.Combine(userHome, "Library", "Caches", "MiriVoice");
                 HomePathIsAscii = true;
                 try
                 {
@@ -50,6 +50,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 catch { }
                 SettingsPath = Path.Combine(DataPath, "settings.yaml");
                 RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
+                LogFilePath = Path.Combine(RootPath, "Logs", "log.txt");
             }
             else if (OS.IsLinux())
             {
@@ -59,16 +60,17 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 {
                     dataHome = Path.Combine(userHome, ".local", "share");
                 }
-                DataPath = Path.Combine(dataHome, "Mirivoice");
+                DataPath = Path.Combine(dataHome, "MiriVoice");
                 string cacheHome = Environment.GetEnvironmentVariable("XDG_CACHE_HOME");
                 if (string.IsNullOrEmpty(cacheHome))
                 {
                     cacheHome = Path.Combine(userHome, ".cache");
                 }
-                CachePath = Path.Combine(cacheHome, "Mirivoice");
+                CachePath = Path.Combine(cacheHome, "MiriVoice");
                 HomePathIsAscii = true;
                 SettingsPath = Path.Combine(DataPath, "settings.yaml");
                 RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
+                LogFilePath = Path.Combine(RootPath, "Logs", "log.txt");
             }
             else
             {
@@ -97,6 +99,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 }
                 SettingsPath = Path.Combine(DataPath, "settings.yaml");
                 RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
+                LogFilePath = Path.Combine(RootPath, "Logs", "log.txt");
 
             }
         }
