@@ -2,6 +2,8 @@
 
 PROJECT_NAME="MiriVoice"
 OUTPUT_DIR="Mirivoice.Desktop/bin/osx"
+UNIVERSAL_OUTPUT="Mirivoice.Desktop/bin/Universal"
+APP_DIR="Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS"
 
 appversion=$1
 
@@ -16,16 +18,19 @@ build_for_arch() {
 build_for_arch "x64"
 build_for_arch "arm64"
 
-# Create the final output directory
-mkdir -p "$FINAL_OUTPUT_DIR"
+# Create the Universal directory if it doesn't exist
+mkdir -p "$UNIVERSAL_OUTPUT"
 
 # Create universal binary
 echo "Creating universal binary..."
 lipo -create \
-    "/Users/appveyor/projects/mirivoice/Mirivoice.Desktop/bin/osx/osx-x64" \
-    "/Users/appveyor/projects/mirivoice/Mirivoice.Desktop/bin/osx/osx-arm64" \
-    -output "Mirivoice.Desktop/bin/Universal/MiriVoice"
+    "$OUTPUT_DIR/osx-x64/MiriVoice" \
+    "$OUTPUT_DIR/osx-arm64/MiriVoice" \
+    -output "$UNIVERSAL_OUTPUT/MiriVoice"
 
 echo "Universal binary created successfully"
 
-cp -a  /Users/appveyor/projects/mirivoice/Mirivoice.Desktop/bin/Universal/MiriVoice /Users/appveyor/projects/mirivoice/Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS
+# Copy the universal binary to the app bundle
+cp -a "$UNIVERSAL_OUTPUT/MiriVoice" "$APP_DIR"
+
+echo "Binary copied to $APP_DIR"
