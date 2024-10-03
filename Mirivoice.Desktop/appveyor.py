@@ -89,8 +89,7 @@ elif sys.platform == 'darwin':
         "sed -i '' \"s/0.0.0/%s/g\" Mirivoice.Desktop/Mirivoice.Desktop.csproj" % (appcast_ver))
     write_info_plist()
     os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64")
-    os.system("chmod +x Mirivoice.Desktop/build_osx.sh" )
-    os.system("Mirivoice.Desktop/build_osx.sh %s" % (appcast_ver))
+    os.system("dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64 -c Release -o Mirivoice.Desktop/bin/osx-x64 -p:AssemblyVersion=%s" % (appcast_ver))
     os.system("ditto -c -k --keepParent Mirivoice.Desktop/osxbuild/MiriVoice.app Mirivoice.Desktop/osxbuild/MiriVoice.zip")
     os.system("git checkout Mirivoice.Desktop/Mirivoice.Desktop.csproj")
 
