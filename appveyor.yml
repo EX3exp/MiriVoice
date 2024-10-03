@@ -17,7 +17,7 @@ skip_commits:
 skip_tags: true
 configuration: Release
 dotnet_csproj:
-  patch: true
+  patch: false
   file: Mirivoice.Desktop\Mirivoice.Desktop.csproj
   version: '{version}'
   assembly_version: '{version}'
