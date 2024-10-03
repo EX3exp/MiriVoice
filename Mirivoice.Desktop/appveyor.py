@@ -59,7 +59,7 @@ def write_info_plist():
   </dict>
 </plist>'''.replace('@@', appcast_ver)
     
-    with open("Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/Info.plist", 'w') as f:
+    with open("Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.app/Contents/Info.plist", 'w') as f:
         f.write(plist)
 
 if sys.platform == 'win32':
