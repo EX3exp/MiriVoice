@@ -17,6 +17,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <PublishReadyToRun>true</PublishReadyToRun>
     <Company>EX3</Company>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>  
 
 
