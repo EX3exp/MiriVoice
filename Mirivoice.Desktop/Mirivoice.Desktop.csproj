@@ -12,9 +12,7 @@
     <AssemblyName>MiriVoice</AssemblyName>
     <Deterministic>False</Deterministic>
     <RootNamespace>Mirivoice.Desktop</RootNamespace>
-    <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
-    <PublishTrimmed>true</PublishTrimmed>
     <PublishReadyToRun>true</PublishReadyToRun>
     <Company>EX3</Company>
     <Platforms>AnyCPU;x64</Platforms>
