@@ -59,7 +59,7 @@ def write_info_plist():
   </dict>
 </plist>'''.replace('@@', appcast_ver)
     
-    with open("Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.app/Contents/Info.plist", 'w') as f:
+    with open("Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/Info.plist", 'w') as f:
         f.write(plist)
 
 if sys.platform == 'win32':
@@ -90,8 +90,8 @@ elif sys.platform == 'darwin':
     write_info_plist()
     os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64")
     os.system("dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64 -c Release -o Mirivoice.Desktop/bin/osx-x64 -p:AssemblyVersion=%s" % (appcast_ver))
-    os.system("cp -a Mirivoice.Desktop/bin/osx-x64 Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.app")
-    os.system("ditto -c -k --keepParent Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.app Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip")
+    os.system("cp -a Mirivoice.Desktop/bin/osx-x64/ Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS/")
+    os.system("ditto -c -k --keepParent Mirivoice.Desktop/osxbuild/MiriVoice.app Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip")
     os.system("git checkout Mirivoice.Desktop/Mirivoice.Desktop.csproj")
 
     write_appcast("macos", "osx-x64", "MiriVoice-osx-x64.zip")

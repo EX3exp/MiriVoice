@@ -176,7 +176,11 @@ namespace Mirivoice.Mirivoice.Core
                 }
             }
 
-            DeleteExtractedZip(zipFilePath);
+            if (!OS.IsMacOS())
+            {
+                DeleteExtractedZip(zipFilePath); // cannot delete asset on MacOS because it is in app bundle
+            }
+            
         }
 
     }

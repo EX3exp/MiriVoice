@@ -19,7 +19,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         public bool IsInstalled { get; private set; }
 
         public string LogFilePath => Path.Combine(DataPath, "Logs", "log.txt");
-        public string VoicerPath => Path.Combine(RootPath, "Voicers");
+        public string VoicerPath => Path.Combine(DataPath, "Voicers");
         public string AssetsPath => Path.Combine(RootPath, "Assets");
         
         public PathManager()
