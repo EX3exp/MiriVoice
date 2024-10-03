@@ -91,12 +91,10 @@ elif sys.platform == 'darwin':
     os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64")
     os.system("chmod +x Mirivoice.Desktop/build_osx.sh" )
     os.system("Mirivoice.Desktop/build_osx.sh %s" % (appcast_ver))
-    os.system("npm install -g create-dmg")
-    os.system("create-dmg Mirivoice.Desktop/osxbuild/MiriVoice.app")
-    os.system("mv *.dmg MiriVoice-osx-x64.dmg")
+    os.system("ditto -c -k --keepParent Mirivoice.Desktop/osxbuild/MiriVoice.app Mirivoice.Desktop/osxbuild/MiriVoice.zip")
     os.system("git checkout Mirivoice.Desktop/Mirivoice.Desktop.csproj")
 
-    write_appcast("macos", "osx-x64", "MiriVoice-osx-x64.dmg")
+    write_appcast("macos", "osx-x64", "MiriVoice-osx-x64.zip")
 
 else:
     os.system("rm *.xml")

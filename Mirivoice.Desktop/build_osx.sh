@@ -2,8 +2,8 @@
 
 PROJECT_NAME="MiriVoice"
 OUTPUT_DIR="Mirivoice.Desktop/bin/osx"
-UNIVERSAL_OUTPUT="Mirivoice.Desktop/bin/Universal"
-APP_DIR="Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS"
+UNIVERSAL_OUTPUT="Mirivoice.Desktop/bin/osx/Universal"
+APP_DIR="Mirivoice.Desktop/osxbuild/MiriVoice.app"
 
 appversion=$1
 
@@ -30,7 +30,5 @@ lipo -create \
 
 echo "Universal binary created successfully"
 
-# Copy the universal binary to the app bundle
-cp -a "$UNIVERSAL_OUTPUT/MiriVoice" "$APP_DIR"
-
-echo "Binary copied to $APP_DIR"
+mv "$UNIVERSAL_OUTPUT/MiriVoice" "$APP_DIR/Contents/MacOS/"
+echo "Binary moved to $APP_DIR"
