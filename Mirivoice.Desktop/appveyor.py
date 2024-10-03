@@ -90,7 +90,7 @@ elif sys.platform == 'darwin':
     write_info_plist()
     os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64")
     os.system("dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r osx-x64 --self-contained true -o Mirivoice.Desktop/bin/osx-x64 -p:UseAppHost=true -p:AssemblyVersion=%s" % (appcast_ver) )
-    os.system("cp -a  Mirivoice.Desktop/bin/osx-x64/publish/ Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS")    
+    os.system("cp -a  Mirivoice.Desktop/bin/osx-x64/ Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS")    
     os.system("chmod +x Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS/MiriVoice")
     os.system("npm install -g create-dmg")
     os.system("create-dmg Mirivoice.Desktop/osxbuild/MiriVoice.app")
