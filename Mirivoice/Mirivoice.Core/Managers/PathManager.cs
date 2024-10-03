@@ -34,20 +34,10 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
             if (OS.IsMacOS())
             {
-                string userHome = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                DataPath = Path.Combine(userHome, "Library", "MiriVoice");
-                CachePath = Path.Combine(userHome, "Library", "Caches", "MiriVoice");
+                string userHome = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                DataPath = Path.Combine(userHome, "MiriVoice", "Datas");
+                CachePath = Path.Combine(userHome, "MiriVoice", "Caches");
                 HomePathIsAscii = true;
-                try
-                {
-                    // Deletes old cache.
-                    string oldCache = Path.Combine(DataPath, "Cache");
-                    if (Directory.Exists(oldCache))
-                    {
-                        Directory.Delete(oldCache, true);
-                    }
-                }
-                catch { }
                 SettingsPath = Path.Combine(DataPath, "settings.yaml");
                 RecentFilesPath = Path.Combine(DataPath, "recent_files.yaml");
                 
