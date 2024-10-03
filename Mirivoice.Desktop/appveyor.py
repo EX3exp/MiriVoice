@@ -90,7 +90,7 @@ elif sys.platform == 'darwin':
     write_info_plist()
     os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64")
     os.system("dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64 -c Release -o Mirivoice.Desktop/bin/osx-x64 -p:AssemblyVersion=%s" % (appcast_ver))
-    os.system("cp Mirivoice.Desktop/bin/osx-x64 -r Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.app")
+    os.system("cp -a Mirivoice.Desktop/bin/osx-x64 Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.app")
     os.system("ditto -c -k --keepParent Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.app Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip")
     os.system("git checkout Mirivoice.Desktop/Mirivoice.Desktop.csproj")
 
