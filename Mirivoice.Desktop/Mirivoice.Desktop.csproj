@@ -6,6 +6,7 @@
     <UseAppHost>true</UseAppHost>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <ApplicationIcon>mirivoice-logo.ico</ApplicationIcon>
     <AssemblyName>MiriVoice</AssemblyName>
