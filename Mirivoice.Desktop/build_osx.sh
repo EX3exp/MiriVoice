@@ -9,7 +9,7 @@ appversion=$1
 build_for_arch() {
     local arch=$1
     echo "Building for $arch..."
-    dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-$arch -c Release -p:AssemblyVersion=$appversion
+    dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-$arch -c Release -p:AssemblyVersion=$appversion -o "$OUTPUT_DIR/osx-$arch"
 }
 
 # Build for both architectures
@@ -22,10 +22,10 @@ mkdir -p "$FINAL_OUTPUT_DIR"
 # Create universal binary
 echo "Creating universal binary..."
 lipo -create \
-    "$OUTPUT_DIR/osx-x64/publish/$PROJECT_NAME" \
-    "$OUTPUT_DIR/osx-arm64/publish/$PROJECT_NAME" \
+    "$OUTPUT_DIR/osx-x64" \
+    "$OUTPUT_DIR/osx-arm64" \
     -output "$FINAL_OUTPUT_DIR/$PROJECT_NAME"
 
 echo "Universal binary created successfully"
 
-mv "$FINAL_OUTPUT_DIR/$PROJECT_NAME" Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS/
+cp -a  $FINAL_OUTPUT_DIR/$PROJECT_NAME Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS
