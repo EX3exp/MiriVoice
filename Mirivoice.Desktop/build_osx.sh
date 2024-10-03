@@ -2,7 +2,7 @@
 
 PROJECT_NAME="MiriVoice"
 OUTPUT_DIR="Mirivoice.Desktop/bin/osx"
-FINAL_OUTPUT_DIR="Mirivoice.Desktop/bin/Universal"
+
 appversion=$1
 
 # Function to build for a specific architecture
@@ -22,10 +22,10 @@ mkdir -p "$FINAL_OUTPUT_DIR"
 # Create universal binary
 echo "Creating universal binary..."
 lipo -create \
-    "$OUTPUT_DIR/osx-x64" \
-    "$OUTPUT_DIR/osx-arm64" \
-    -output "$FINAL_OUTPUT_DIR/$PROJECT_NAME"
+    "/Users/appveyor/projects/mirivoice/Mirivoice.Desktop/bin/osx/osx-x64" \
+    "/Users/appveyor/projects/mirivoice/Mirivoice.Desktop/bin/osx/osx-arm64" \
+    -output "Mirivoice.Desktop/bin/Universal/MiriVoice"
 
 echo "Universal binary created successfully"
 
-cp -a  $FINAL_OUTPUT_DIR/$PROJECT_NAME Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS
+cp -a  /Users/appveyor/projects/mirivoice/Mirivoice.Desktop/bin/Universal/MiriVoice /Users/appveyor/projects/mirivoice/Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS
