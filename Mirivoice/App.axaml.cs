@@ -34,7 +34,6 @@ public partial class App : Application
     {
 
 
-        //Lang.Resources.Culture = new CultureInfo("ko-KR");
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var args = Environment.GetCommandLineArgs();

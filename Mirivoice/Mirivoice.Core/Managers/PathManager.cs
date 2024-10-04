@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using Serilog;
 
 namespace Mirivoice.Mirivoice.Core.Managers
 {
@@ -20,11 +22,12 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
         public string LogFilePath => Path.Combine(DataPath, "Logs", "log.txt");
         public string VoicerPath => Path.Combine(DataPath, "Voicers");
-        public string AssetsPath => Path.Combine(RootPath, "Assets");
+        public string AssetsPath;
         
         public PathManager()
         {
             RootPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            
             if (!Directory.Exists(RootPath))
             {
                 Directory.CreateDirectory(RootPath);
@@ -34,6 +37,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
             if (OS.IsMacOS())
             {
+                AssetsPath = Path.Combine(RootPath, "Assets");
                 string userHome = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 DataPath = Path.Combine(userHome, "MiriVoice", "Datas");
                 CachePath = Path.Combine(userHome, "MiriVoice", "Caches");
@@ -44,7 +48,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
             }
             else if (OS.IsLinux())
             {
-                string userHome = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                AssetsPath = Path.Combine(RootPath, "Assets");
+                string userHome = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string dataHome = Environment.GetEnvironmentVariable("XDG_DATA_HOME");
                 if (string.IsNullOrEmpty(dataHome))
                 {
@@ -63,6 +68,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
             }
             else
             {
+                AssetsPath = Path.Combine(RootPath, "Assets");
                 string exePath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
                 IsInstalled = File.Exists(Path.Combine(exePath, "installed.txt"));
                 if (!IsInstalled)
@@ -71,7 +77,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 }
                 else
                 {
-                    string dataHome = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                    string dataHome = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                     DataPath = Path.Combine(dataHome, "MiriVoice");
                 }
                 CachePath = Path.Combine(DataPath, "Cache");

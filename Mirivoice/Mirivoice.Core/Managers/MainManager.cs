@@ -35,6 +35,7 @@ namespace Mirivoice.Mirivoice.Core
 
         public void Initialize()
         {
+            Log.Information($"RootPath: {MainManager.Instance.PathM.RootPath}");
             CheckDirs();
             UpdateDefaultVoicers();
             LoadVoicerManager();
@@ -176,11 +177,15 @@ namespace Mirivoice.Mirivoice.Core
                 }
             }
 
-            if (!OS.IsMacOS())
+            try
             {
-                DeleteExtractedZip(zipFilePath); // cannot delete asset on MacOS because it is in app bundle
+                DeleteExtractedZip(zipFilePath); 
             }
-            
+            catch (Exception ex)
+            {
+                Log.Error($"Error deleting extracted zip: {ex.Message}");
+            }
+
         }
 
     }
