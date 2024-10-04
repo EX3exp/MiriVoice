@@ -24,11 +24,26 @@ public partial class App : Application
     public override void Initialize()
     {
         Log.Information("App Initialize");
-        AvaloniaXamlLoader.Load(this);
+        InitMirivoice();
+        InitializeComponent();
         InitializeCulture();
     }
+    public static void InitMirivoice()
+    {
 
+        Log.Information("Mirivoice init");
+        MainManager.Instance.Initialize();
+
+
+    }
     public static string[] Languages = new string[] { "en-US", "ko-KR"};
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    
 
     public override void OnFrameworkInitializationCompleted()
     {

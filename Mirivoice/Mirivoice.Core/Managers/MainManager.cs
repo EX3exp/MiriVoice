@@ -36,6 +36,14 @@ namespace Mirivoice.Mirivoice.Core
         public void Initialize()
         {
             Log.Information($"RootPath: {MainManager.Instance.PathM.RootPath}");
+            Log.Information($"DataPath: {MainManager.Instance.PathM.DataPath}");
+            Log.Information($"CachePath: {MainManager.Instance.PathM.CachePath}");
+            Log.Information($"SettingsPath: {MainManager.Instance.PathM.SettingsPath}");
+            Log.Information($"RecentFilesPath: {MainManager.Instance.PathM.RecentFilesPath}");
+            Log.Information($"LogFilePath: {MainManager.Instance.PathM.LogFilePath}");
+            Log.Information($"VoicerPath: {MainManager.Instance.PathM.VoicerPath}");
+            Log.Information($"AssetsPath: {MainManager.Instance.PathM.AssetsPath}");
+
             CheckDirs();
             UpdateDefaultVoicers();
             LoadVoicerManager();

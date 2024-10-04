@@ -39,7 +39,7 @@ def write_info_plist():
     <key>CFBundleDisplayName</key>
     <string>MiriVoice</string>
     <key>CFBundleIdentifier</key>
-    <string>com.ex3.mirivoice</string>
+    <string>com.ex3exp.mirivoice</string>
     <key>CFBundleVersion</key>
     <string>@@</string>
     <key>CFBundlePackageType</key>
@@ -50,8 +50,6 @@ def write_info_plist():
     <string>MiriVoice</string>
     <key>CFBundleIconFile</key>
     <string>mirivoice.icns</string>
-    <key>CFBundleShortVersionString</key>
-    <string>@@</string>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>NSHighResolutionCapable</key>
@@ -91,6 +89,7 @@ elif sys.platform == 'darwin':
     os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64")
     os.system("dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -r osx-x64 -c Release -o Mirivoice.Desktop/bin/osx-x64 -p:AssemblyVersion=%s" % (appcast_ver))
     os.system("cp -a Mirivoice.Desktop/bin/osx-x64/ Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS/")
+    os.system("chmod +x Mirivoice.Desktop/osxbuild/MiriVoice.app/Contents/MacOS/run.sh")
     os.system("ditto -c -k --keepParent Mirivoice.Desktop/osxbuild/MiriVoice.app Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip")
     os.system("git checkout Mirivoice.Desktop/Mirivoice.Desktop.csproj")
 
