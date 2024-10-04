@@ -1,7 +1,0 @@
-#!/bin/bash
-PROJECT_PATH=$1
-CANONICAL_DIR=`readlink -f $RELATIVE_DIR`
-
-APP_PATH=$CANONICAL_DIR/MiriVoice
-
-"$APP_PATH" --args $PROJECT_PATH
