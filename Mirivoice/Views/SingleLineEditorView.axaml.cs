@@ -52,11 +52,22 @@ public partial class SingleLineEditorView : UserControl
     private void LineLostFocus(object sender, RoutedEventArgs e)
     {
         l.viewModel.LineText = viewModel.mTextBoxEditor.CurrentScript;
-        Log.Information("SingleLineTBox Lost Focus");
+        //Log.Information("SingleLineTBox Lost Focus");
+        //Log.Debug($"lastPhonemizedText={l.lastPhonemizedText} // LineText={l.viewModel.LineText}");
         if (l.lastPhonemizedText != l.viewModel.LineText)
         {
+            //Log.Debug("lastPhonemizedText != l.viewModel.LineText");
             l.DeActivatePhonemizer = false;
             ShouldPhonemizeWhenOutFocused = true;
+            
+        }
+
+        if (ShouldPhonemizeWhenOutFocused)
+        {
+            //Log.Debug("ShouldPhonemizeWhenOutFocused");
+            l.ShouldPhonemize = true;
+            Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
+            ShouldPhonemizeWhenOutFocused = false;
         }
 
         if (FirstUpdate)
@@ -65,11 +76,7 @@ public partial class SingleLineEditorView : UserControl
             Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
             return;
         }
-        if (ShouldPhonemizeWhenOutFocused)
-        {
-            l.ShouldPhonemize = true;
-            ShouldPhonemizeWhenOutFocused = false;
-        }
+        
 
         if (! l.DeActivatePhonemizer || l.MResultsCollection.Count == 0 && !string.IsNullOrEmpty(l.viewModel.LineText))
         {

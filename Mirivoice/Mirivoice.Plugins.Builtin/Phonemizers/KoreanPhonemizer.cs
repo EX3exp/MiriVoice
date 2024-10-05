@@ -183,7 +183,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                     {
                         next = words[i + 1];
                     }
-                    //Log.Debug($"prev: {prev}, curr: {words[i]}, next: {next}");
+                    
                     phonemes.Add(KoreanPhonemizerUtil.Variate(prev, words[i], next));
                     prev = words[i];
 
@@ -203,7 +203,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                     {
                         next = null;
                     }
-
+                    //Log.Debug($"prev: {prev}, curr: {words[i]}, next: {next}");
                     continue;
                 }
                 //Log.Debug("Phonemes: {phonemes}", phonemes);
