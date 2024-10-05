@@ -29,7 +29,11 @@ public partial class SingleLineEditorView : UserControl
 
     private async void LineTextChanging(object sender, TextChangingEventArgs e)
     {
-        
+        if (l is null)
+        {
+            Log.Warning("LineBoxView is null.");
+            return;
+        }
         l.DeActivatePhonemizer = false;
         if (FirstUpdate)
         {
