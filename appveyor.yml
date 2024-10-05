@@ -15,7 +15,7 @@ skip_commits:
     - .github/*
   message: /\[nobuild\]/
 skip_tags: true
-configuration: Release
+configuration: Debug
 dotnet_csproj:
   patch: false
   file: Mirivoice.Desktop\Mirivoice.Desktop.csproj
