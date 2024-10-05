@@ -13,7 +13,7 @@
 [![Getting Started](https://img.shields.io/badge/다운로드-%23f9fc14?style=for-the-badge&logo=windows&logoSize=auto&labelColor=%230d0d0c)](get-started-ko.md)
 
 ### 📁 성우 만들기
-[![VITS2 Support](https://img.shields.io/badge/VITS2_성우_만들기-%231f7a28?style=for-the-badge&logo=windows&logoSize=auto)](..\model-support-doc\VITS2\make-voicer-VITS2-ko.md)
+[![VITS2 Support](https://img.shields.io/badge/VITS2_성우_만들기-%231f7a28?style=for-the-badge&logo=windows&logoSize=auto)](../model-support-doc/VITS2/make-voicer-VITS2-ko.md)
 
 
 

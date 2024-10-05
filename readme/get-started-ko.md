@@ -2,7 +2,7 @@
 [<img src="..\Misc\title.png" height="57"/>](README-ko.md)
 
 📜🧐 :
-[English](..\get-started.md) | [한국어](get-started-ko.md)
+[English](../get-started.md) | [한국어](get-started-ko.md)
 #### [KO]
 
 - ❇️ `미리보이스` 는 **.NET 8** 어플리케이션이에요.

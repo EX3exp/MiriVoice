@@ -13,7 +13,7 @@
 [![Getting Started](https://img.shields.io/badge/Download-%23f9fc14?style=for-the-badge&logo=windows&logoSize=auto&labelColor=%230d0d0c)](get-started.md)
 
 ### 📁 Make Your Voicer
-[![VITS2 Support](https://img.shields.io/badge/Make_VITS2_Voicer-%231f7a28?style=for-the-badge&logo=windows&logoSize=auto)](model-support-doc\VITS2\make-voicer-VITS2.md)
+[![VITS2 Support](https://img.shields.io/badge/Make_VITS2_Voicer-%231f7a28?style=for-the-badge&logo=windows&logoSize=auto)](model-support-doc/VITS2/make-voicer-VITS2.md)
 
 
 
