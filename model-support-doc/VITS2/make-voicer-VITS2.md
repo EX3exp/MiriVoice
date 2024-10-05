@@ -80,7 +80,7 @@ Then compress into `.zip`.
 - We cannot use `.pth` file in `MiriVoice`. We need to convert it into `.onnx` format.
 - 🔽 Click below to export your model into `MiriVoice`'s Voicer format.
 
-    [<img src="https://colab.research.google.com/assets/colab-badge.svg">]("https://colab.research.google.com/github/EX3exp/MiriVoiceSupport-VITS2/blob/main/MiriVoicer_VITS2_Exporter.ipynb)
+    [<img src="https://colab.research.google.com/assets/colab-badge.svg">](https://colab.research.google.com/github/EX3exp/MiriVoiceSupport-VITS2/blob/main/MiriVoicer_VITS2_Exporter.ipynb)
 
 - You will now have `<voicer name>.zip` now, like :
     ```

@@ -82,7 +82,7 @@
 - 우린 `미리보이스`에서 `.pth` 파일을 사용할 수 없어서, `.onnx`로 변환해 주어야 해요.
 - 🔽 아래를 눌러 노트북을 실행하세요. 모델을 `미리보이스`에서 구동되는 성우로 내보낼 거에요.
 
-    [<img src="https://colab.research.google.com/assets/colab-badge.svg">]("https://colab.research.google.com/github/EX3exp/MiriVoiceSupport-VITS2/blob/main/MiriVoicer_VITS2_Exporter.ipynb)
+    [<img src="https://colab.research.google.com/assets/colab-badge.svg">](https://colab.research.google.com/github/EX3exp/MiriVoiceSupport-VITS2/blob/main/MiriVoicer_VITS2_Exporter.ipynb)
 
 - 아래와 같은 `<성우 이름>.zip`이 생겼을 거에요. :
     ```
