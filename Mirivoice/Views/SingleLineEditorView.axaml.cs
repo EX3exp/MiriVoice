@@ -52,7 +52,7 @@ public partial class SingleLineEditorView : UserControl
     private void LineLostFocus(object sender, RoutedEventArgs e)
     {
         l.viewModel.LineText = viewModel.mTextBoxEditor.CurrentScript;
-        //Log.Debug("SingleLineTBox Lost Focus");
+        Log.Information("SingleLineTBox Lost Focus");
         if (l.lastPhonemizedText != l.viewModel.LineText)
         {
             l.DeActivatePhonemizer = false;
