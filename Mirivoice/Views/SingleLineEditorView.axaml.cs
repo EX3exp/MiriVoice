@@ -16,10 +16,11 @@ public partial class SingleLineEditorView : UserControl
     public SingleLineEditorViewModel viewModel;
     bool FirstUpdate = false;
 
-    public SingleLineEditorView(LineBoxView l, bool FirstUpdate = true)
+    public SingleLineEditorView(LineBoxView lineBoxView, bool FirstUpdate = true)
     {
+        this.l = lineBoxView;
         InitializeComponent(l);
-        this.l = l;
+        
         this.pointerExit = false;
         l.DeActivatePhonemizer = false;
         this.FirstUpdate = FirstUpdate;
@@ -29,11 +30,6 @@ public partial class SingleLineEditorView : UserControl
 
     private async void LineTextChanging(object sender, TextChangingEventArgs e)
     {
-        if (l is null)
-        {
-            Log.Warning("LineBoxView is null.");
-            return;
-        }
         l.DeActivatePhonemizer = false;
         if (FirstUpdate)
         {
