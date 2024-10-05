@@ -17,13 +17,13 @@
 - ❇️ 2. Extract `MiriVoice-win-x64.zip`.
 - ❇️ 3. Double click `MiriVoice.exe`.
 
-## 2. Windows 32bit (x84)
+## 2. Windows 32bit (x86)
 - ❇️ 1. Click button to download.
 
-    [![Download](https://img.shields.io/badge/Download-Windows_32bit-blue?style=for-the-badge&logo=windows&logoSize=auto)](https://github.com/EX3exp/MiriVoice/releases/latest/download/MiriVoice-win-x84.zip) 
+    [![Download](https://img.shields.io/badge/Download-Windows_32bit-blue?style=for-the-badge&logo=windows&logoSize=auto)](https://github.com/EX3exp/MiriVoice/releases/latest/download/MiriVoice-win-x86.zip) 
 
 
-- ❇️ 2. Extract `MiriVoice-win-x84.zip`.
+- ❇️ 2. Extract `MiriVoice-win-x86.zip`.
 - ❇️ 3. Double click `MiriVoice.exe`.
 
 ## 3. Mac OS (64bit)

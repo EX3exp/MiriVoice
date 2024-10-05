@@ -17,13 +17,13 @@
 - ❇️ 2. `MiriVoice-win-x64.zip`을 압축 해제합니다.
 - ❇️ 3. `MiriVoice.exe`를 더블 클릭하세요.
 
-## 2. Windows(윈도우) 32bit (x84)
+## 2. Windows(윈도우) 32bit (x86)
 - ❇️ 1. 버튼을 눌러 다운로드합니다.
 
-    [![Download](https://img.shields.io/badge/다운로드-Windows_32bit-blue?style=for-the-badge&logo=windows&logoSize=auto)](https://github.com/EX3exp/MiriVoice/releases/latest/download/MiriVoice-win-x84.zip) 
+    [![Download](https://img.shields.io/badge/다운로드-Windows_32bit-blue?style=for-the-badge&logo=windows&logoSize=auto)](https://github.com/EX3exp/MiriVoice/releases/latest/download/MiriVoice-win-x86.zip) 
 
 
-- ❇️ 2. `MiriVoice-win-x84.zip`을 압축 해제합니다.
+- ❇️ 2. `MiriVoice-win-x86.zip`을 압축 해제합니다.
 - ❇️ 3. `MiriVoice.exe`를 더블 클릭하세요.
 
 ## 3. Mac OS(맥) (64bit)
