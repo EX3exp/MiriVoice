@@ -206,7 +206,19 @@ namespace Mirivoice.Views
         {
             this.v = l.v;
             int voicerIndex = l.viewModel.voicerSelector.CurrentDefaultVoicerIndex;
-            int metaIndex = l.viewModel.voicerSelector.CurrentVoicer.CurrentVoicerMeta.SpeakerId;
+
+            int spkid = l.viewModel.voicerSelector.CurrentVoicer.CurrentVoicerMeta.SpeakerId;
+            int metaIndex = 0;
+            foreach (VoicerMeta v in v.voicerSelector.Voicers[voicerIndex].VoicerMetaCollection)
+            {
+                if (v.SpeakerId == spkid)
+                {
+                    break;
+                }
+                metaIndex++;
+            }
+
+            
 
             InitializeComponent(voicerIndex, metaIndex);
             viewModel.LineText = l.viewModel.LineText;
