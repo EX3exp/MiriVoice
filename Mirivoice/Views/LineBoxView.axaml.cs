@@ -93,8 +93,12 @@ namespace Mirivoice.Views
                 
                 if (value)
                 {
-                    PhonemizeLine();
-                    DeActivatePhonemizer = true;
+                    Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
+                    {
+                        await PhonemizeLine();
+                        _shouldPhonemize = false;
+                        DeActivatePhonemizer = true;
+                    });
                 }
             }
         }
@@ -131,7 +135,7 @@ namespace Mirivoice.Views
                 }
                 else
                 {
-                    await Task.Run(() => viewModel.phonemizer.PhonemizeAsync(textChanged, this, ApplyToCurrentEdit));
+                    await Task.Run(() => viewModel.phonemizer.PhonemizeAsync(textChanged, this));
                     lastPhonemizedText = textChanged;
                 }
 
@@ -157,7 +161,7 @@ namespace Mirivoice.Views
 
         public bool ShouldPhonemizeWhenSelected = false;
 
-        SingleLineEditorView singleLineEditorView;
+        public SingleLineEditorView singleLineEditorView;
         public ObservableCollection<MResult> MResultsCollection { get; set; } = new ObservableCollection<MResult>();
 
         
@@ -549,6 +553,16 @@ namespace Mirivoice.Views
                     }
 
                 }
+                if (singleLineEditorView is not null && lastPhonemizedText is not null && singleLineEditorView.viewModel.mTextBoxEditor.CurrentScript is not null)
+                {
+                    if (!lastPhonemizedText.Equals(singleLineEditorView.viewModel.mTextBoxEditor.CurrentScript))
+                    {
+                        DeActivatePhonemizer = false;
+                        ShouldPhonemize = true;
+                    }
+                }
+                
+
                 if (v.CurrentLineBox != this)
                 {
                     

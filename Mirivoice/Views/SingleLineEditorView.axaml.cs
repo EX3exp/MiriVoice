@@ -28,18 +28,23 @@ public partial class SingleLineEditorView : UserControl
 
     bool ShouldPhonemizeWhenOutFocused = false;
 
-    private async void LineTextChanging(object sender, TextChangingEventArgs e)
+    private void LineTextChanging(object sender, TextChangingEventArgs e)
     {
         l.DeActivatePhonemizer = false;
         if (FirstUpdate)
         {
             FirstUpdate = false;
-            Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
+            l.DeActivatePhonemizer = false;
+            l.ShouldPhonemize = true;
             return;
         }
-        if (l.lastPhonemizedText != l.viewModel.LineText)
+
+        if (l.singleLineEditorView is not null && l.lastPhonemizedText is not null && l.singleLineEditorView.viewModel.mTextBoxEditor.CurrentScript is not null)
         {
-            ShouldPhonemizeWhenOutFocused = true;
+            if (!l.lastPhonemizedText.Equals(l.singleLineEditorView.viewModel.mTextBoxEditor.CurrentScript))
+            {
+                ShouldPhonemizeWhenOutFocused = true;
+            }
         }
         if (l.ShouldPhonemize && !l.DeActivatePhonemizer)
         {
@@ -54,26 +59,30 @@ public partial class SingleLineEditorView : UserControl
         l.viewModel.LineText = viewModel.mTextBoxEditor.CurrentScript;
         //Log.Information("SingleLineTBox Lost Focus");
         //Log.Debug($"lastPhonemizedText={l.lastPhonemizedText} // LineText={l.viewModel.LineText}");
-        if (l.lastPhonemizedText != l.viewModel.LineText)
+        if (l.singleLineEditorView is not null && l.lastPhonemizedText is not null && l.singleLineEditorView.viewModel.mTextBoxEditor.CurrentScript is not null)
         {
-            //Log.Debug("lastPhonemizedText != l.viewModel.LineText");
-            l.DeActivatePhonemizer = false;
-            ShouldPhonemizeWhenOutFocused = true;
-            
+            if (!l.lastPhonemizedText.Equals(l.singleLineEditorView.viewModel.mTextBoxEditor.CurrentScript))
+            {
+                l.DeActivatePhonemizer = false;
+                l.ShouldPhonemize = true;
+            }
         }
+
 
         if (ShouldPhonemizeWhenOutFocused)
         {
             //Log.Debug("ShouldPhonemizeWhenOutFocused");
+            l.DeActivatePhonemizer = false;
             l.ShouldPhonemize = true;
-            Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
+            
             ShouldPhonemizeWhenOutFocused = false;
         }
 
         if (FirstUpdate)
         {
             FirstUpdate = false;
-            Task.Run(() => l.viewModel.phonemizer.PhonemizeAsync(viewModel.mTextBoxEditor.CurrentScript, l));
+            l.DeActivatePhonemizer = false;
+            l.ShouldPhonemize = true;
             return;
         }
         
@@ -99,7 +108,7 @@ public partial class SingleLineEditorView : UserControl
         DataContext = viewModel = new SingleLineEditorViewModel(l.viewModel.LineText);
     }
 
-    public async void SetLine(string text)
+    public void SetLine(string text)
     {
         if (text == null)
         {
