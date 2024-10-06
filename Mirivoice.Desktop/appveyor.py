@@ -65,8 +65,6 @@ if sys.platform == 'win32':
         os.system("git tag build/%s 2>&1" % (appcast_ver))
         os.system("git push origin build/%s 2>&1" % (appcast_ver))
 
-    os.system("del *.xml 2>&1")
-
     os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r win-x86")
     os.system(
         "dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r win-x86 -o Mirivoice.Desktop/bin/win-x86 -p:AssemblyVersion=%s" % (appcast_ver))
@@ -79,9 +77,6 @@ if sys.platform == 'win32':
 
 
 elif sys.platform == 'darwin':
-    os.system("rm *.dmg")
-    os.system("rm *.xml")
-
     os.system("git checkout Mirivoice.Desktop/Mirivoice.Desktop.csproj")
     os.system(
         "sed -i '' \"s/0.0.0/%s/g\" Mirivoice.Desktop/Mirivoice.Desktop.csproj" % (appcast_ver))
@@ -96,8 +91,6 @@ elif sys.platform == 'darwin':
     write_appcast("macos", "osx-x64", "MiriVoice-osx-x64.zip")
 
 else:
-    os.system("rm *.xml")
-
     os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r linux-x64")
     os.system(
         "dotnet publish Mirivoice.Desktop/Mirivoice.Desktop.csproj -c Release -r linux-x64 -o Mirivoice.Desktop/bin/linux-x64 -p:AssemblyVersion=%s" % (appcast_ver))

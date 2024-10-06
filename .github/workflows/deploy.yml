@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - stable
+      #- main
 
 jobs:
   build:
@@ -17,8 +18,7 @@ jobs:
     env:
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      VERSION: 1.0.0.0
-      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      VERSION: 1.0.0.0  # Set the version number here
 
     steps:
       - name: Checkout code
@@ -28,6 +28,9 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Save version to GITHUB_ENV
+        run: echo "VERSION=${{ env.VERSION }}" >> $GITHUB_ENV
 
       - name: Restore dependencies
         run: nuget restore
@@ -72,10 +75,11 @@ jobs:
 
       - name: Create GitHub release for main branch
         if: github.ref == 'refs/heads/main'
+        id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: build/${{env.VERSION}}
-          name: MiriVoice v${{env.VERSION}} Beta
+          tag_name: build/${{ env.VERSION }}  
+          name: MiriVoice v${{ env.VERSION }} Beta
           draft: false
           generate_release_notes: true
           prerelease: true
@@ -84,10 +88,11 @@ jobs:
 
       - name: Create GitHub release for stable branch
         if: github.ref == 'refs/heads/stable'
+        id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: build/${{env.VERSION}}
-          name: MiriVoice v${{env.VERSION}}
+          tag_name: build/${{ env.VERSION }}  
+          name: MiriVoice v${{ env.VERSION }}
           generate_release_notes: true
           draft: false
           prerelease: false
