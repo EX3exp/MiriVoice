@@ -112,3 +112,12 @@ jobs:
             appcast.win-x64.xml
             appcast.linux-x64.xml
             appcast.osx-x64.xml
+          asset_name: |
+            MiriVoice-win-x86.zip
+            MiriVoice-win-x64.zip
+            MiriVoice-osx-x64.zip
+            MiriVoice-linux-x64.tar.gz
+            appcast.win-x86.xml
+            appcast.win-x64.xml
+            appcast.linux-x64.xml
+            appcast.osx-x64.xml
