@@ -13,9 +13,9 @@ def write_appcast(appcast_os, appcast_rid, appcast_file):
     <title>MiriVoice</title>
     <language>en</language>
     <item>
-    <title>MiriVoice %s</title>
+    <title>%s</title>
     <pubDate>%s</pubDate>
-    <enclosure url="https://github.com/EX3exp/MiriVoice/releases/download/build%%2F%s/%s"
+    <enclosure url="https://github.com/EX3exp/MiriVoice/releases/download/%s/%s"
                 sparkle:version="%s"
                 sparkle:shortVersionString="%s"
                 sparkle:os="%s"
@@ -61,9 +61,6 @@ def write_info_plist():
         f.write(plist)
 
 if sys.platform == 'win32':
-    if appcast_ver is not None:
-        os.system("git tag build/%s 2>&1" % (appcast_ver))
-        os.system("git push origin build/%s 2>&1" % (appcast_ver))
 
     os.system("dotnet restore Mirivoice.Desktop/Mirivoice.Desktop.csproj -r win-x86")
     os.system(

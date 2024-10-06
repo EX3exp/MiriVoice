@@ -20,7 +20,7 @@ def main():
     <title>MiriVoice</title>
     <language>en</language>
     <item>
-    <title>MiriVoice %s</title>
+    <title>%s</title>
     <pubDate>%s</pubDate>
     <enclosure url="https://github.com/EX3exp/MiriVoice/releases/download/%s/%s"
                 sparkle:version="%s"
