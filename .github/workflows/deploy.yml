@@ -83,6 +83,15 @@ jobs:
           draft: false
           generate_release_notes: true
           prerelease: true
+          files: |
+            MiriVoice-win-x86.zip
+            MiriVoice-win-x64.zip
+            Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
+            MiriVoice-linux-x64.tar.gz
+            appcast.win-x86.xml
+            appcast.win-x64.xml
+            appcast.linux-x64.xml
+            appcast.osx-x64.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -96,14 +105,7 @@ jobs:
           generate_release_notes: true
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Release Assets
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release_beta.outputs.upload_url || steps.create_release_stable.outputs.upload_url }}
-          asset_path: |
+          files: |
             MiriVoice-win-x86.zip
             MiriVoice-win-x64.zip
             Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
@@ -112,21 +114,7 @@ jobs:
             appcast.win-x64.xml
             appcast.linux-x64.xml
             appcast.osx-x64.xml
-          asset_name: |
-            MiriVoice-win-x86.zip
-            MiriVoice-win-x64.zip
-            MiriVoice-osx-x64.zip
-            MiriVoice-linux-x64.tar.gz
-            appcast.win-x86.xml
-            appcast.win-x64.xml
-            appcast.linux-x64.xml
-            appcast.osx-x64.xml
-          asset_content_type: |
-            application/zip
-            application/zip
-            application/zip
-            application/gzip
-            application/xml
-            application/xml
-            application/xml
-            application/xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      
