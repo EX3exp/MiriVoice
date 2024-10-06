@@ -138,7 +138,7 @@ namespace Mirivoice.ViewModels
                 return null;
             }
             return releases
-                .Where(r => !r.draft && r.prerelease == MainManager.Instance.Setting.UseBeta)
+                .Where(r => !r.draft/* && r.prerelease == MainManager.Instance.Setting.UseBeta */)
                 .OrderByDescending(r => r.id)
                 .FirstOrDefault();
         }
