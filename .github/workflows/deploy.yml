@@ -32,14 +32,11 @@ jobs:
       - name: Restore dependencies
         run: nuget restore
 
-      - name: Build the project
-        run: dotnet build --configuration Release
-
-      - name: Run tests (Windows only)
+      - name: Build and make appcast (Windows only)
         if: matrix.os == 'windows-latest'
         run: python Mirivoice.Desktop/appveyor.py 2>&1
 
-      - name: Run tests (Linux/Mac)
+      - name: Build and make appcast (Linux/Mac)
         if: matrix.os != 'windows-latest'
         run: python3 Mirivoice.Desktop/appveyor.py 2>&1
 
@@ -60,6 +57,10 @@ jobs:
             Mirivoice.Desktop/bin/win-x64/MiriVoice-win-x64.zip
             Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
             MiriVoice-linux-x64.tar.gz
+            appcast.win-x86.xml
+            appcast.win-x64.xml
+            appcast.linux-x64.xml
+            appcast.osx-x64.xml
 
   deploy:
     name: Deploy to GitHub Releases
@@ -102,3 +103,7 @@ jobs:
             Mirivoice.Desktop/bin/win-x64/MiriVoice-win-x64.zip
             Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
             MiriVoice-linux-x64.tar.gz
+            appcast.win-x86.xml
+            appcast.win-x64.xml
+            appcast.linux-x64.xml
+            appcast.osx-x64.xml
