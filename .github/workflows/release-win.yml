@@ -34,7 +34,7 @@ jobs:
         run: nuget restore
 
       - name: Build and make appcast (Windows only)
-        run: python Mirivoice.Desktop/appveyor.py 2>&1
+        run: python Mirivoice.Desktop/deploy.py 2>&1
 
       - name: Zip
         run: |

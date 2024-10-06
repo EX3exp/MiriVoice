@@ -34,7 +34,7 @@ jobs:
         run: nuget restore
 
       - name: Build and make appcast (Linux only)
-        run: python3 Mirivoice.Desktop/appveyor.py 2>&1
+        run: python3 Mirivoice.Desktop/deploy.py 2>&1
 
 
       - name: Release
