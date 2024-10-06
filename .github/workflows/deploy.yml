@@ -121,3 +121,12 @@ jobs:
             appcast.win-x64.xml
             appcast.linux-x64.xml
             appcast.osx-x64.xml
+          asset_content_type: |
+            application/zip
+            application/zip
+            application/zip
+            application/gzip
+            application/xml
+            application/xml
+            application/xml
+            application/xml
