@@ -48,73 +48,105 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: Compress-Archive -Path Mirivoice.Desktop/bin/win-x64/* -DestinationPath MiriVoice-win-x64.zip
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: MiriVoice
-          path: |
-            MiriVoice-win-x86.zip
-            MiriVoice-win-x64.zip
-            Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
-            MiriVoice-linux-x64.tar.gz
-            appcast.win-x86.xml
-            appcast.win-x64.xml
-            appcast.linux-x64.xml
-            appcast.osx-x64.xml
 
-  deploy:
-    name: Deploy to GitHub Releases
-    runs-on: ubuntu-latest
-    needs: build
-    env:
-        VERSION: 1.0.0.0  # Set the version number here
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Create GitHub release for main branch
+      - name: Create Release (Main)
+        id: create_release_main
         if: github.ref == 'refs/heads/main'
-        id: create_release_beta
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: build/${{ env.VERSION }}  
-          name: MiriVoice v${{ env.VERSION }} Beta
-          draft: false
-          generate_release_notes: true
-          prerelease: true
-          files: |
-            MiriVoice-win-x86.zip
-            MiriVoice-win-x64.zip
-            Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
-            MiriVoice-linux-x64.tar.gz
-            appcast.win-x86.xml
-            appcast.win-x64.xml
-            appcast.linux-x64.xml
-            appcast.osx-x64.xml
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create GitHub release for stable branch
-        if: github.ref == 'refs/heads/stable'
-        id: create_release_stable
-        uses: softprops/action-gh-release@v1
         with:
-          tag_name: build/${{ env.VERSION }}  
-          name: MiriVoice v${{ env.VERSION }}
-          generate_release_notes: true
+          tag_name: build/${{ env.VERSION }}
+          release_name: MiriVoice ${{ env.version }} Beta
+          draft: false
+          prerelease: true
+
+      - name: Create Release (Stable)
+        id: create_release_stable
+        if: github.ref != 'refs/heads/main'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: build/${{ env.VERSION }}
+          release_name: MiriVoice ${{ env.version }}
           draft: false
           prerelease: false
-          files: |
+          
+
+      - name: Deploy Release (Main)
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release_main.outputs.upload_url }}
+          asset_path: 
+            | 
+              MiriVoice-win-x86.zip
+              MiriVoice-win-x64.zip
+              Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
+              MiriVoice-linux-x64.tar.gz
+              appcast.win-x86.xml
+              appcast.win-x64.xml
+              appcast.linux-x64.xml
+              appcast.osx-x64.xml
+
+          asset_name: |
             MiriVoice-win-x86.zip
             MiriVoice-win-x64.zip
-            Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
+            MiriVoice-osx-x64.zip
             MiriVoice-linux-x64.tar.gz
             appcast.win-x86.xml
             appcast.win-x64.xml
             appcast.linux-x64.xml
             appcast.osx-x64.xml
+
+          asset_content_type: |
+            application/zip
+            application/zip
+            application/zip
+            application/gzip
+            application/xml
+            application/xml
+            application/xml
+            application/xml
+
+      - name: Deploy Release (Stable)
+        if: github.ref != 'refs/heads/stable'
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release_stable.outputs.upload_url }}
+          asset_path: 
+            | 
+              MiriVoice-win-x86.zip
+              MiriVoice-win-x64.zip
+              Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
+              MiriVoice-linux-x64.tar.gz
+              appcast.win-x86.xml
+              appcast.win-x64.xml
+              appcast.linux-x64.xml
+              appcast.osx-x64.xml
 
-      
+          asset_name: |
+            MiriVoice-win-x86.zip
+            MiriVoice-win-x64.zip
+            MiriVoice-osx-x64.zip
+            MiriVoice-linux-x64.tar.gz
+            appcast.win-x86.xml
+            appcast.win-x64.xml
+            appcast.linux-x64.xml
+            appcast.osx-x64.xml
+
+          asset_content_type: |
+            application/zip
+            application/zip
+            application/zip
+            application/gzip
+            application/xml
+            application/xml
+            application/xml
+            application/xml
+          
