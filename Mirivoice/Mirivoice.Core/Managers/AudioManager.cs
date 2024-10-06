@@ -10,6 +10,8 @@ using Mirivoice.Views;
 using NAudio.Wave;
 using Serilog;
 using NetCoreAudio;
+using Avalonia.Controls;
+using System.Security.Cryptography;
 
 namespace Mirivoice.Mirivoice.Core.Managers
 {
@@ -17,17 +19,18 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
     public class AudioManager
     {
-        private Player _player = new Player();
+        private Player _player = new();
 
         private List<string> audioPaths;
         private int _currentFileIndex;
-        private LineBoxView _;
+
         private readonly MainViewModel v;
         private bool MainViewModelPlaying;
         public bool IsPlaying => _player.Playing;
         public AudioManager(MainViewModel v)
         {
             this.v = v;
+            //Log.Debug($"player: {_player}");
             _player.PlaybackFinished += OnPlaybackStopped; // called when playback is stopped
             audioPaths = new List<string>();
             _currentFileIndex = 0;
@@ -36,16 +39,23 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
         public string SaveToCache(byte[] audioData)
         {
-            string cacheFileName = $"{Guid.NewGuid()}.wav";
-            string cacheFilePath = Path.Combine(MainManager.Instance.PathM.CachePath, cacheFileName);
+            string cacheFilePath = GetUniqueCachePath();
             File.WriteAllBytes(cacheFilePath, audioData);
             return cacheFilePath;
         }
 
-        public string GetUniqueCachePath()
+        public static string GetUniqueCachePath()
         {
-            string cacheFileName = $"{Guid.NewGuid()}.wav";
-            string cacheFilePath = Path.Combine(MainManager.Instance.PathM.CachePath, cacheFileName);
+            string uniquename;
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hash = sha256.ComputeHash(Guid.NewGuid().ToByteArray());
+
+                uniquename = $"{BitConverter.ToString(hash).Replace("-", "").Substring(0, 4)}.wav";
+                // gets the first 4 characters of the hash
+            }
+
+            string cacheFilePath = Path.Combine(MainManager.Instance.PathM.CachePath, uniquename);
             Log.Debug($"Unique cache file path: {cacheFilePath}");
             return cacheFilePath;
         }
@@ -92,7 +102,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
             MainViewModelPlaying = true;
             if (_player != null && _player.Paused)
             {
-                _player.Resume();
+                //Log.Debug("Resuming playback.");
+                await _player.Resume();
                 return;
             }
             List<string> caches = new List<string>();
@@ -120,7 +131,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
                 if (i < startIndex - 1)
                 {
-                    Log.Debug($"[Skipping Cache Generation] Line {l.viewModel.LineNo} is before the start index.");
+                    //Log.Debug($"[Skipping Cache Generation] Line {l.viewModel.LineNo} is before the start index.");
                     continue;
                 }
 
@@ -129,7 +140,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     l.v.StartProgress(0, v.LineBoxCollection.Count - startIndex + 1, "Inference");
                 }
 
-                Log.Debug($"[Generating Cache]");
+                //Log.Debug($"[Generating Cache]");
 
                 // Start inference and add to the task list
                 tasks.Add(Task.Run(async () =>
@@ -248,7 +259,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
             foreach (string cacheName in caches)
             {
-                //Log.Debug($"[Playing Cache] {cacheName}");
+                //Log.Debug($"[Collecting Cache] {cacheName}");
                 audioPaths.Add(cacheName);
 
 
@@ -264,18 +275,24 @@ namespace Mirivoice.Mirivoice.Core.Managers
             PlayNextFile();
         }
 
-        private void PlayNextFile()
+        private async void PlayNextFile()
         {
 
             if (_currentFileIndex < audioPaths.Count)
             {
-                _player.Play(audioPaths[_currentFileIndex]);
+                Log.Information($"Playing cache file: {audioPaths[_currentFileIndex]}");
+                //Log.Debug($"currentLine: {currentLine}");
+                //Log.Debug($"SelectedBtnIndexBeforePlay: {SelectedBtnIndexBeforePlay}");
+                //Log.Debug($"OffsetBeforePlay: {OffsetBeforePlay}");
+                //Log.Debug($"player: {_player}");
+                await _player.Play(audioPaths[_currentFileIndex]);
+
                 v.LineBoxCollection[currentLine].viewModel.IsSelected = true;
 
             }
         }
 
-        public void PlayAudio(string cacheFilePath)
+        public async void PlayAudio(string cacheFilePath)
         {
             if (MainViewModelPlaying)
             {
@@ -285,7 +302,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
             if (File.Exists(cacheFilePath))
             {
                 Log.Debug($"Playing cache file: {cacheFilePath}");
-                _player.Play(cacheFilePath);
+                await _player.Play(cacheFilePath);
             }
             else
             {
@@ -293,10 +310,11 @@ namespace Mirivoice.Mirivoice.Core.Managers
             }
         }
 
-        private void OnPlaybackStopped(object sender, EventArgs e)
+        private void OnPlaybackStopped(object? sender, EventArgs e)
         {
             Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
+                Log.Information("Playback stopped.");
                 if (audioPaths.Count == 0) // when stopped
                 {
                     v.isPlaying = false;

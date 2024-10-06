@@ -9,6 +9,7 @@ using Mirivoice.Commands;
 using Mirivoice.Engines;
 using Mirivoice.Mirivoice.Core;
 using Mirivoice.Mirivoice.Core.Format;
+using Mirivoice.Mirivoice.Core.Managers;
 using Mirivoice.ViewModels;
 using Serilog;
 using System.Collections.Generic;
@@ -105,7 +106,7 @@ namespace Mirivoice.Views
             {
                 return;
             }
-            string line = viewModel.LineText;
+            string line = singleLineEditorView.viewModel.mTextBoxEditor.CurrentScript;
             try
             {
                 
@@ -166,7 +167,7 @@ namespace Mirivoice.Views
             InitializeComponent();
             
             //lockButton = this.FindControl<ToggleButton>("lockButton");
-            _currentCacheName = MainManager.Instance.AudioM.GetUniqueCachePath();
+            _currentCacheName = AudioManager.GetUniqueCachePath();
 
             SetCommands(v);
             mouseEntered = false;
@@ -210,7 +211,7 @@ namespace Mirivoice.Views
             InitializeComponent(voicerIndex, metaIndex);
             viewModel.LineText = l.viewModel.LineText;
             IPAText = l.IPAText;
-            _currentCacheName = MainManager.Instance.AudioM.GetUniqueCachePath();
+            _currentCacheName = AudioManager.GetUniqueCachePath();
 
             
             //lockButton = this.FindControl<ToggleButton>("lockButton");
@@ -254,7 +255,7 @@ namespace Mirivoice.Views
             viewModel.LineText = mLinePrototype.LineText;
             IPAText = mLinePrototype.IPAText;
             viewModel.SetLineNo(index + 1);
-            _currentCacheName = MainManager.Instance.AudioM.GetUniqueCachePath();
+            _currentCacheName = AudioManager.GetUniqueCachePath();
             this.CurrentCacheName = mLinePrototype.cacheName;
             
             
@@ -411,7 +412,7 @@ namespace Mirivoice.Views
                     if (!IsCacheIsVaild)
                     {
                         //Log.Debug("Cache is not valid -- Starting Inference");
-                        CurrentCacheName = MainManager.Instance.AudioM.GetUniqueCachePath();
+                        CurrentCacheName = AudioManager.GetUniqueCachePath();
                         viewModel.voicerSelector.CurrentVoicer.Inference(IPAText, CurrentCacheName, this);
 
                     }

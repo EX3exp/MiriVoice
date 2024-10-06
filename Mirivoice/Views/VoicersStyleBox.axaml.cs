@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using Mirivoice.Mirivoice.Core;
 using Mirivoice.Mirivoice.Core.Format;
+using Mirivoice.Mirivoice.Core.Managers;
 using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers;
 using Mirivoice.ViewModels;
 using System;
@@ -31,7 +32,7 @@ public partial class VoicersStyleBox : UserControl
 
         phrase = voicer.Info.VoicerMetas[metaIndex].Phrase;
         phonemizer = LineBoxViewModel.GetPhonemizer(voicer.Info.LangCode);
-        cachePath = Path.Combine(MainManager.Instance.PathM.CachePath, Guid.NewGuid().ToString() + ".wav");
+        cachePath = AudioManager.GetUniqueCachePath();
         this.voicer = voicer;
         this.v = v;
     }

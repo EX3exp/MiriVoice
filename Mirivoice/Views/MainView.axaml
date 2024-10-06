@@ -92,7 +92,7 @@
 
 									<DataTemplate>
 										<StackPanel  Orientation="Horizontal" Margin="5">
-											<TextBlock Text="{Binding Info.Name}" IsHitTestVisible="{Binding MainWindowGetInput}"  VerticalAlignment="Center" Width="120"/>
+											<TextBlock Text="{Binding Info.Name}" VerticalAlignment="Center" Width="120"/>
 											<ComboBox ItemsSource="{Binding VoicerMetaCollection}" Cursor="Hand"  Width="100" SelectedItem="{Binding CurrentVoicerMeta}" >
 												<ComboBox.ItemTemplate>
 													<DataTemplate>

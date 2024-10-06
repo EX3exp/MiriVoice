@@ -5,7 +5,7 @@ namespace Mirivoice.Commands
 {
     public class AddLineBoxReceiver : MReceiver
     {
-        private MainViewModel v;
+        private readonly MainViewModel v;
         private int LineBoxIndexLastAdded;
         public AddLineBoxReceiver(MainViewModel mainViewModel)
         {
