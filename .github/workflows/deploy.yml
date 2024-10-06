@@ -45,7 +45,7 @@ jobs:
 
       - name: Package win-x86 artifact
         if: matrix.os == 'windows-latest'
-        run: CCompress-Archive -Path Mirivoice.Desktop/bin/win-x86/* -DestinationPath MiriVoice-win-x86.zip
+        run: Compress-Archive -Path Mirivoice.Desktop/bin/win-x86/* -DestinationPath MiriVoice-win-x86.zip
 
       - name: Package win-x64 artifact
         if: matrix.os == 'windows-latest'
