@@ -45,11 +45,11 @@ jobs:
 
       - name: Package win-x86 artifact
         if: matrix.os == 'windows-latest'
-        run: zip -r MiriVoice-win-x86.zip Mirivoice.Desktop/bin/win-x86
+        run: CCompress-Archive -Path Mirivoice.Desktop/bin/win-x86/* -DestinationPath MiriVoice-win-x86.zip
 
       - name: Package win-x64 artifact
         if: matrix.os == 'windows-latest'
-        run: zip -r MiriVoice-win-x64.zip Mirivoice.Desktop/bin/win-x64
+        run: Compress-Archive -Path Mirivoice.Desktop/bin/win-x64/* -DestinationPath MiriVoice-win-x64.zip
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
