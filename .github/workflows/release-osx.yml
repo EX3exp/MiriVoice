@@ -38,7 +38,7 @@ jobs:
 
       - name: Move File
         run: |
-          $VERSION="${{ github.ref_name }}"
+          VERSION=${{ github.ref_name }}
           echo $VERSION
           mv Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip ./MiriVoice-osx-x64.zip
 

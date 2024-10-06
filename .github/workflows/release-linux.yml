@@ -22,7 +22,7 @@ jobs:
 
       - name: Check version
         run: |
-          $TAG=${{ github.ref_name }}
+          TAG=${{ github.ref_name }}
           echo $TAG
 
       - name: Set up .NET Core
