@@ -2,7 +2,7 @@ import os
 import sys
 from datetime import datetime
 
-appcast_ver = os.environ.get('APPVEYOR_BUILD_VERSION')
+appcast_ver = os.environ.get('VERSION')
 
 
 def write_appcast(appcast_os, appcast_rid, appcast_file):
