@@ -75,7 +75,7 @@ jobs:
 
       - name: Create GitHub release for main branch
         if: github.ref == 'refs/heads/main'
-        id: create_release
+        id: create_release_beta
         uses: softprops/action-gh-release@v1
         with:
           tag_name: build/${{ env.VERSION }}  
@@ -88,7 +88,7 @@ jobs:
 
       - name: Create GitHub release for stable branch
         if: github.ref == 'refs/heads/stable'
-        id: create_release
+        id: create_release_stable
         uses: softprops/action-gh-release@v1
         with:
           tag_name: build/${{ env.VERSION }}  
@@ -102,7 +102,7 @@ jobs:
       - name: Upload Release Assets
         uses: actions/upload-release-asset@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release_beta.outputs.upload_url || steps.create_release_stable.outputs.upload_url }}
           asset_path: |
             Mirivoice.Desktop/bin/win-x86/MiriVoice-win-x86.zip
             Mirivoice.Desktop/bin/win-x64/MiriVoice-win-x64.zip
