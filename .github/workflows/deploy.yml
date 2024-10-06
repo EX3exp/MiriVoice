@@ -53,8 +53,8 @@ jobs:
         with:
           name: MiriVoice
           path: |
-            Mirivoice.Desktop/bin/win-x86/MiriVoice-win-x86.zip
-            Mirivoice.Desktop/bin/win-x64/MiriVoice-win-x64.zip
+            MiriVoice-win-x86.zip
+            MiriVoice-win-x64.zip
             Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
             MiriVoice-linux-x64.tar.gz
             appcast.win-x86.xml
@@ -104,8 +104,8 @@ jobs:
         with:
           upload_url: ${{ steps.create_release_beta.outputs.upload_url || steps.create_release_stable.outputs.upload_url }}
           asset_path: |
-            Mirivoice.Desktop/bin/win-x86/MiriVoice-win-x86.zip
-            Mirivoice.Desktop/bin/win-x64/MiriVoice-win-x64.zip
+            MiriVoice-win-x86.zip
+            MiriVoice-win-x64.zip
             Mirivoice.Desktop/osxbuild/MiriVoice-osx-x64.zip
             MiriVoice-linux-x64.tar.gz
             appcast.win-x86.xml
