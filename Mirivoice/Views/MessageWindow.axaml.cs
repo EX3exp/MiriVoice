@@ -89,7 +89,7 @@ public partial class MessageWindow : Window
         msgbox.Closed += delegate { tcs.TrySetResult(res); };
         if (parent != null)
         {
-            msgbox.ShowDialog(parent);
+            await msgbox.ShowDialog(parent);
         }
         else
         {
