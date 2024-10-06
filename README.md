@@ -42,5 +42,5 @@
 )
 
 ##  🔖 News :
-- 🔈2024.10.06 MiriVoice Released with **VITS2** Support!
+- 🔈2024.10.07 MiriVoice Released with **VITS2** Support!
 <br>    Thanks to [@2xxbin](https://github.com/2xxbin) for MacOS Testing & Debugging Support.
