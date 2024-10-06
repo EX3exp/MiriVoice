@@ -73,9 +73,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: build/${{ github.run_number }}
-          release_name: "${{ github.run_number }} Beta"
+          tag_name: build/${{VERSION}}
+          name: MiriVoice v${{VERSION}} Beta
           draft: false
+          generate_release_notes: true
           prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -84,8 +85,9 @@ jobs:
         if: github.ref == 'refs/heads/stable'
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: build/${{ github.run_number }}
-          release_name: "${{ github.run_number }}"
+          tag_name: build/${{VERSION}}
+          name: MiriVoice v${{VERSION}}
+          generate_release_notes: true
           draft: false
           prerelease: false
         env:
