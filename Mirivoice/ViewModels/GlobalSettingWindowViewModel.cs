@@ -57,6 +57,7 @@ namespace Mirivoice.ViewModels
                 MainManager.Instance.Setting.Save();
             }
         }
+        /* Not use beta now
 
         private bool _useBeta;
         public bool UseBeta
@@ -70,6 +71,7 @@ namespace Mirivoice.ViewModels
                 MainManager.Instance.Setting.Save();
             }
         }
+        */
         public GlobalSettingWindowViewModel()
         {
             switch (MainManager.Instance.Setting.Langcode)
@@ -93,7 +95,7 @@ namespace Mirivoice.ViewModels
             {
                 _clearCacheOnQuit = false;
             }
-
+            /*
             if (MainManager.Instance.Setting.UseBeta)
             {
                 _useBeta = true;
@@ -102,6 +104,7 @@ namespace Mirivoice.ViewModels
             {
                 _useBeta = false;
             }
+            */
         }
     }
 }

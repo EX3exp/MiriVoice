@@ -1,0 +1,46 @@
+name: Deploy Release (Linux)
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      VERSION: ${{ github.ref_name }}
+      
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check version
+        run: |
+          $TAG = "${{ github.ref_name }}"
+          echo $TAG
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restore dependencies
+        run: nuget restore
+
+      - name: Build and make appcast (Linux only)
+        run: python3 Mirivoice.Desktop/appveyor.py 2>&1
+
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: true
+          files: |
+            MiriVoice-linux-x64.tar.gz
+            appcast.linux-x64.xml
