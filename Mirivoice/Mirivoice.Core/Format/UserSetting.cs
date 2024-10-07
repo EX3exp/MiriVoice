@@ -10,7 +10,7 @@ namespace Mirivoice.Mirivoice.Core.Format
     {
         public Version Version { get; set; } = new Version(1, 0);
         public string Langcode { get; set; } = null; // ui language
-        public bool ClearCacheOnQuit { get; set; } = false;
+        public bool ClearCacheOnQuit { get; set; } = true;
         public bool UseBeta { get; set; } = true;
         public string SkipUpdate { get; set; } = "";
         public string PlaybackDevice { get; set; } = string.Empty;

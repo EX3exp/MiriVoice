@@ -579,7 +579,10 @@ namespace Mirivoice.ViewModels
 
 
             LineBoxCollection.Clear();
-            CurrentSingleLineEditor.viewModel.mTextBoxEditor.CurrentScript = string.Empty;
+            if (CurrentSingleLineEditor != null)
+            {
+                CurrentSingleLineEditor.viewModel.mTextBoxEditor.CurrentScript = string.Empty;
+            }
             MResultsCollection.Clear();
 
         }
