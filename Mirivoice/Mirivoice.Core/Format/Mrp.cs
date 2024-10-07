@@ -88,6 +88,7 @@ namespace Mirivoice.Mirivoice.Core.Format
             mLines = v.LineBoxCollection.Select(l => new MLinePrototype(l)).ToArray();
             MultEditScript = v.mTextBoxEditor.CurrentScript;
             DefaultVoicerName = v.voicerSelector.CurrentVoicer.Info.Name;
+            DefaultVoicerStyleId = v.voicerSelector.CurrentVoicer.CurrentVoicerMeta.SpeakerId;
         }
 
         public async Task Load(MainViewModel v)
