@@ -206,61 +206,6 @@ namespace Mirivoice.Views
 
 
         
-        public LineBoxView(LineBoxView l)
-        {
-            this.v = l.v;
-            int voicerIndex = l.viewModel.voicerSelector.CurrentDefaultVoicerIndex;
-
-            int spkid = l.viewModel.voicerSelector.CurrentVoicer.CurrentVoicerMeta.SpeakerId;
-            int metaIndex = 0;
-            foreach (VoicerMeta v in v.voicerSelector.Voicers[voicerIndex].VoicerMetaCollection)
-            {
-                if (v.SpeakerId == spkid)
-                {
-                    break;
-                }
-                metaIndex++;
-            }
-
-            
-
-            InitializeComponent(voicerIndex, metaIndex);
-            viewModel.LineText = l.viewModel.LineText;
-            IPAText = l.IPAText;
-            _currentCacheName = AudioManager.GetUniqueCachePath();
-
-            
-            //lockButton = this.FindControl<ToggleButton>("lockButton");
-            SetCommands(v);
-
-            this.MResultsCollection = l.MResultsCollection;
-
-            mouseEntered = false;
-            isDragging = false;
-
-            this.AddHandler(PointerReleasedEvent, OnDragEnd, RoutingStrategies.Tunnel);
-
-            targetIndex = -1;
-
-            string line = viewModel.LineText;
-
-            ShouldPhonemize = false;
-            DeActivatePhonemizer = true;
-
-            if (line != string.Empty)
-            {
-                ShouldPhonemizeWhenSelected = true;
-            }
-            else
-            {
-                ShouldPhonemizeWhenSelected = false;
-            }
-
-
-
-            singleLineEditorView = l.singleLineEditorView;
-
-        }
 
 
         public LineBoxView(MLinePrototype mLinePrototype, MainViewModel v, int index, int voicerIndex, int metaIndex)

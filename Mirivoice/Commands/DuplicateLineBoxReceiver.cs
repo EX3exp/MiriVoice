@@ -1,4 +1,7 @@
-﻿using Mirivoice.Views;
+﻿using Mirivoice.Engines;
+using Mirivoice.Mirivoice.Core;
+using Mirivoice.Mirivoice.Core.Format;
+using Mirivoice.Views;
 using System;
 
 namespace Mirivoice.Commands
@@ -14,11 +17,21 @@ namespace Mirivoice.Commands
 
         public override void DoAction()
         {
-
-            var lineBox = new LineBoxView(l);
+            MLinePrototype mLinePrototype = new MLinePrototype(l);
             int LineNoToBeAdded = Int32.Parse(l.viewModel.LineNo);
 
-            lineBox.viewModel.SetLineNo(LineNoToBeAdded + 1);
+            int spkid = l.viewModel.voicerSelector.CurrentVoicer.CurrentVoicerMeta.SpeakerId;
+            int metaIndex = 0;
+            foreach (VoicerMeta v in l.viewModel.voicerSelector.CurrentVoicer.VoicerMetaCollection)
+            {
+                if (v.SpeakerId == spkid)
+                {
+                    break;
+                }
+                metaIndex++;
+            }
+            var lineBox = new LineBoxView(mLinePrototype, l.v, LineNoToBeAdded + 1, l.viewModel.voicerSelector.CurrentDefaultVoicerIndex, metaIndex);
+            
 
             l.v.LineBoxCollection.Insert(LineNoToBeAdded, lineBox);
             LineBoxIndexLastAdded = LineNoToBeAdded;
