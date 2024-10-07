@@ -186,7 +186,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         }
                         no++;
                     }
-
+                    v.MainWindowGetInput = true;
+                    return;
                 }
                 else
                 {
@@ -223,7 +224,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         }
                         File.WriteAllText(exportPath, sb1.ToString());
                         File.WriteAllText(exportPathNamesSrt, sb2.ToString());
-
+                        v.MainWindowGetInput = true;
                         return;
                     }
 

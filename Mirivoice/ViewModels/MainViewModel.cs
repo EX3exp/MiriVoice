@@ -365,6 +365,7 @@ namespace Mirivoice.ViewModels
         public void StopAudio()
         {
             MainManager.Instance.AudioM.StopAudio();
+            MainWindowGetInput = true;
         }
         public void OnAddButtonClick()
         {
@@ -556,6 +557,8 @@ namespace Mirivoice.ViewModels
 
                 CurrentProjectPath = (string)mainWindow.FindResource("app.defprojectname");
                 mTextBoxEditor.CurrentScript = "";
+
+               
                 
                 CurrentEditIndex = 0;
     
@@ -569,13 +572,14 @@ namespace Mirivoice.ViewModels
                 CurrentProjectPath = (string)mainWindow.FindResource("app.defprojectname");
                 mTextBoxEditor.CurrentScript = "";
                 CurrentEditIndex = 0;
+                MainWindowGetInput = true;
                 MainManager.Instance.cmd.ProjectOpened();
 
             }
 
 
             LineBoxCollection.Clear();
-            CurrentSingleLineEditor = null;
+            CurrentSingleLineEditor.viewModel.mTextBoxEditor.CurrentScript = string.Empty;
             MResultsCollection.Clear();
 
         }
