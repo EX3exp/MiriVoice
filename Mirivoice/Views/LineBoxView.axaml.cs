@@ -261,6 +261,7 @@ namespace Mirivoice.Views
             {
                 // if phonemeEdit is not empty, use phonemeEdit's results
                 singleLineEditorView = new SingleLineEditorView(this, false);
+                ShouldPhonemizeWhenSelected = false;    
             }
             else
             {

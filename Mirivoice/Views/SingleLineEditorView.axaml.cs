@@ -24,6 +24,12 @@ public partial class SingleLineEditorView : UserControl
         this.pointerExit = false;
         l.DeActivatePhonemizer = false;
         this.FirstUpdate = FirstUpdate;
+        if (!FirstUpdate)
+        {
+            l.lastPhonemizedText = l.viewModel.LineText;
+            l.DeActivatePhonemizer = true;
+            l.ShouldPhonemize = false;
+        }
     }
 
     bool ShouldPhonemizeWhenOutFocused = false;
