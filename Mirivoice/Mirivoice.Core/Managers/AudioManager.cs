@@ -97,7 +97,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         /// <param name="exportPerTrack"></param>
         /// <param name="fileName"></param>
         /// <param name="DirPath"></param>
-        public async void PlayAllCacheFiles(int startIndex, bool exportOnlyAndDoNotPlay = false, bool exportPerTrack = true, string fileName = "", string DirPath = "", bool exportSrtInsteadOfAudio = false)
+        public async void PlayAllCacheFiles(int startIndex, bool exportOnlyAndDoNotPlay = false, bool exportPerTrack = true, string fileName = "", string DirPath = "", bool exportSrtInsteadOfAudio = false, bool SelectedOnly=false)
         {
             MainViewModelPlaying = true;
             if (_player != null && _player.Paused)
@@ -110,6 +110,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
             List<string> lines = new List<string>();
             List<string> voicerNames = new List<string>();
 
+            
             int index = 0;
             v.SingleTextBoxEditorEnabled = false;
             v.CurrentEdit.IsEnabled = false;
@@ -125,11 +126,12 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 voicerNames.Add(v.LineBoxCollection[i].viewModel.voicerSelector.CurrentVoicer.Info.Name);
             }
             v.MainWindowGetInput = false;
+            bool skipInference = false;
             for (int i = 0; i < v.LineBoxCollection.Count; ++i)
             {
                 LineBoxView l = v.LineBoxCollection[i];
 
-                if (i < startIndex - 1)
+                if (i < startIndex - 1 || skipInference)
                 {
                     //Log.Debug($"[Skipping Cache Generation] Line {l.viewModel.LineNo} is before the start index.");
                     continue;
@@ -137,7 +139,16 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
                 if (i == startIndex - 1)
                 {
-                    l.v.StartProgress(0, v.LineBoxCollection.Count - startIndex + 1, "Inference");
+                    if (SelectedOnly)
+                    {
+                        l.v.StartProgress(0, 1, "Inference");
+                        skipInference = true;
+                    }
+                    else
+                    {
+                        l.v.StartProgress(0, v.LineBoxCollection.Count - startIndex + 1, "Inference");
+                    }
+                    
                 }
 
                 //Log.Debug($"[Generating Cache]");
@@ -148,6 +159,10 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     await l.StartInference();
 
                     l.v.ProgressProgressbar(1);
+                    if (SelectedOnly)
+                    {
+                        l.v.EndProgress();
+                    }
                 }));
             }
 
@@ -155,7 +170,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
             await Task.WhenAll(tasks);
 
             // Finalize progress
-            if (v.LineBoxCollection.Count - 1 >= startIndex - 1)
+            if (!SelectedOnly && v.LineBoxCollection.Count - 1 >= startIndex - 1)
             {
                 v.LineBoxCollection[v.LineBoxCollection.Count - 1].v.EndProgress();
             }
@@ -164,9 +179,38 @@ namespace Mirivoice.Mirivoice.Core.Managers
             {
 
                 Log.Information("Exporting cache files.");
+                if (SelectedOnly)
+                {
+                    // export selected only
+                    Log.Information("Exporting selected line only.");
+                    
+                    int no = Int32.Parse(v.CurrentLineBox.viewModel.LineNo) - 1;
+
+                    string exportPath = Path.Combine(DirPath, $"{no}_{fileName}.wav");
+                    string cacheName = caches[no];
+                    exportPath = SetSuffixToUnique(exportPath, 1);
+                    Log.Debug($"Exporting {cacheName} to {exportPath}");
+                    // resample to 48000kHz 
+                    using (var reader = new AudioFileReader(cacheName))
+                    {
+                        using (var resampler = new MediaFoundationResampler(reader, new WaveFormat(48000, reader.WaveFormat.Channels)))
+                        {
+                            resampler.ResamplerQuality = 60;
+
+                            WaveFileWriter.CreateWaveFile(exportPath, resampler);
+                        }
+                    }
+                    v.CurrentEdit.IsEnabled = true;
+                    v.SingleTextBoxEditorEnabled = true;
+                    v.MainWindowGetInput = true;
+                    return;
+                }
+
                 if (exportPerTrack)
                 {
                     // export per track
+
+                    
                     int no = 1;
                     foreach (string cacheName in caches)
                     {
@@ -186,6 +230,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         }
                         no++;
                     }
+                    v.CurrentEdit.IsEnabled = true;
+                    v.SingleTextBoxEditorEnabled = true;
                     v.MainWindowGetInput = true;
                     return;
                 }
@@ -224,6 +270,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         }
                         File.WriteAllText(exportPath, sb1.ToString());
                         File.WriteAllText(exportPathNamesSrt, sb2.ToString());
+                        v.CurrentEdit.IsEnabled = true;
+                        v.SingleTextBoxEditorEnabled = true;
                         v.MainWindowGetInput = true;
                         return;
                     }
@@ -254,6 +302,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         }
                     }
                 }
+                v.CurrentEdit.IsEnabled = true;
+                v.SingleTextBoxEditorEnabled = true;
                 v.MainWindowGetInput = true;
                 return;
             }
@@ -286,6 +336,12 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 //Log.Debug($"SelectedBtnIndexBeforePlay: {SelectedBtnIndexBeforePlay}");
                 //Log.Debug($"OffsetBeforePlay: {OffsetBeforePlay}");
                 //Log.Debug($"player: {_player}");
+                if (_player is null)
+                {
+                    _player = new Player();
+                    _player.PlaybackFinished += OnPlaybackStopped;
+                }
+
                 await _player.Play(audioPaths[_currentFileIndex]);
 
                 v.LineBoxCollection[currentLine].viewModel.IsSelected = true;

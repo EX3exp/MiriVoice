@@ -56,6 +56,9 @@
 		An Error occured during export.
 		Please Check Log file for more informations.</system:String>
 	<system:String x:Key="menu.files.export.perLine.desc">Select Directory to export</system:String>
+	<system:String x:Key="menu.files.export.selectedLine">Export selected line's audio (.wav)</system:String>
+	<system:String x:Key="menu.files.export.selectedLine.desc">Set Filename to export</system:String>
+	<system:String x:Key="menu.files.export.selectedLine.noSelected">There's no selected line...</system:String>
 	<system:String x:Key="menu.files.export.merged">Export merged audio (.wav)</system:String>
 	<system:String x:Key="menu.files.export.merged.desc">Set Filename to export</system:String>
 

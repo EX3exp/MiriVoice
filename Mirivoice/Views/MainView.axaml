@@ -36,6 +36,7 @@
 				<MenuItem Header="{DynamicResource menu.files.export}">
 					<MenuItem Header="{DynamicResource menu.files.export.perLine}" Command="{Binding OnExportAudioPerLineClick}"></MenuItem>
 					<MenuItem Header="{DynamicResource menu.files.export.merged}" Command="{Binding OnExportAudioMergedClick}"></MenuItem>
+					<MenuItem Header="{DynamicResource menu.files.export.selectedLine}" Command="{Binding OnExportAudioSelectedClick}"></MenuItem>
 					<Separator/>
 					<MenuItem Header="{DynamicResource menu.files.export.srt}" Command="{Binding OnExportSrtClick}"></MenuItem>
 				</MenuItem>

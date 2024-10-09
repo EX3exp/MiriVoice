@@ -59,7 +59,9 @@
 	<system:String x:Key="menu.files.export.perLine.desc">내보낼 폴더 선택</system:String>
 	<system:String x:Key="menu.files.export.merged">[내보내기] 모든 대사를 '합쳐진 오디오'로 (.wav)</system:String>
 	<system:String x:Key="menu.files.export.merged.desc">내보낼 파일 이름 지정</system:String>
-
+	<system:String x:Key="menu.files.export.selectedLine">[내보내기] 선택된 대사를 오디오로 (.wav)</system:String>
+	<system:String x:Key="menu.files.export.selectedLine.noSelected">선택된 대사가 없어요.</system:String>
+	<system:String x:Key="menu.files.export.selectedLine.desc">내보낼 파일 이름 지정</system:String>
 	<system:String x:Key="menu.files.export.srt">[내보내기] '합쳐진 오디오' 용 자막 파일 (.srt)</system:String>
 	<system:String x:Key="menu.files.export.srt.desc">내보낼 파일 이름 지정</system:String>
 	
