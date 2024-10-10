@@ -12,6 +12,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         private readonly Stack<ICommand> _undoStack = new Stack<ICommand>();
         private readonly Stack<ICommand> _redoStack = new Stack<ICommand>();
         private MainViewModel v;
+        public bool ChangedToDefVoicer = false;
         public bool IsNeedSave = true;
 
 
@@ -27,7 +28,16 @@ namespace Mirivoice.Mirivoice.Core.Managers
         public void ProjectOpened()
         {
             ClearStacks();
-            IsNeedSave = false;
+            if (ChangedToDefVoicer)
+            {
+                IsNeedSave = true;
+                ChangedToDefVoicer = false;
+            }
+            else
+            {
+                IsNeedSave = false;
+            }
+            
             v.OnPropertyChanged(nameof(v.Title));
         }
 

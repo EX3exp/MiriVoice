@@ -12,7 +12,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
     public class VoicerManager
     {
         string[] VoicerDirs;
-        List<string> ValidVoicerDirs;
+        public List<string> ValidVoicerDirs;
 
         public VoicerManager()
         {
@@ -37,11 +37,26 @@ namespace Mirivoice.Mirivoice.Core.Managers
             return null;
         }
 
+        public Voicer FindLastInstalledVoicer()
+        {
+            VoicerInfo voicerInfo;
+            string voicerDir = ValidVoicerDirs.Last();
+            string voicerYamlPath = Path.Combine(voicerDir, "voicer.yaml");
+            var yamlUtf8Bytes = System.Text.Encoding.UTF8.GetBytes(ReadTxtFile(voicerYamlPath));
+            voicerInfo = YamlSerializer.Deserialize<VoicerInfo>(yamlUtf8Bytes);
+            Voicer voicer = new Voicer(voicerInfo);
+            voicer.SetRootPath(voicerDir);
+            return voicer;
+        }
+
         public int FindVoicerIndex(Voicer voicer)
         {
+            Log.Information($"Valid dirs: {ValidVoicerDirs}");
+          
             return ValidVoicerDirs.IndexOf(voicer.RootPath);
         }
-        public Voicer FindVoicerWithNameAndLangCodeAndUUID(string name, string langCode, string uuid)
+
+        public Voicer? FindVoicerWithNameAndLangCodeAndUUID(string name, string langCode, string uuid)
         {
             // priority: langCode > name > uuid
             Voicer FindFirstMatchBy(Func<Voicer, bool> predicate, List<Voicer> voicers)
@@ -120,7 +135,11 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     
                     
                     voicers.Add(voicer);
-                    ValidVoicerDirs.Add(voicerDir);
+                    if (! ValidVoicerDirs.Contains(voicerDir))
+                    {
+                        ValidVoicerDirs.Add(voicerDir);
+                    }
+                    
                 }
                 else
                 {

@@ -103,15 +103,29 @@ namespace Mirivoice.Mirivoice.Core.Format
                 var mLineTasks =this.mLines
                     .Select(async (l, index) =>
                     {
-
-                        int voicerIndex = MainManager.Instance.VoicerM.FindVoicerIndex(
-                        MainManager.Instance.VoicerM.FindVoicerWithNameAndLangCodeAndUUID(l.voicerName, l.langCode, l.voicerUuid)
-                        );
+                        int voicerIndex;
+                        Voicer voicer = MainManager.Instance.VoicerM.FindVoicerWithNameAndLangCodeAndUUID(l.voicerName, l.langCode, l.voicerUuid);
+                        if (voicer != null)
+                        {
+                             voicerIndex = MainManager.Instance.VoicerM.FindVoicerIndex(
+                                voicer
+                            );
+                        }
+                        else
+                        {
+                            Log.Information($"[Mrp load] voicer not exists, use first voicer instead.");
+                            voicerIndex = 0;
+                            MainManager.Instance.cmd.ChangedToDefVoicer = true;
+                        }
                         int spkid = l.voicerStyleId;
                         int metaIndex = 0;
-                        foreach (VoicerMeta v in v.voicerSelector.Voicers[voicerIndex].VoicerMetaCollection)
+
+                        v.voicerSelector.UpdateVoicerCollection();
+                        Log.Debug($"voicerIndex = {voicerIndex}, Voicers = {v.voicerSelector.Voicers}");
+                        foreach (VoicerMeta v_ in v.voicerSelector.Voicers[voicerIndex].VoicerMetaCollection)
                         {
-                            if (v.SpeakerId == spkid)
+                            
+                            if (v_.SpeakerId == spkid)
                             {
                                 break;
                             }
@@ -136,6 +150,7 @@ namespace Mirivoice.Mirivoice.Core.Format
                 if (defVoicer == null)
                 {
                     Log.Warning($"Non-Existing Voicer: {this.DefaultVoicerName}. Using Current Default Voicer instead.");
+                    MainManager.Instance.cmd.ChangedToDefVoicer = true;
                 }
                 else
                 {
@@ -145,8 +160,6 @@ namespace Mirivoice.Mirivoice.Core.Format
                 }
 
                 
-
-                MainManager.Instance.cmd.ProjectOpened();
             }, DispatcherPriority.Send);
             await Dispatcher.UIThread.InvokeAsync(() =>
             {

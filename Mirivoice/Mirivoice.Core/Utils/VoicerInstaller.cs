@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
+using DynamicData;
 using Mirivoice;
 using Mirivoice.Mirivoice.Core.Format;
 using Mirivoice.ViewModels;
@@ -59,11 +61,22 @@ namespace Mirivoice.Mirivoice.Core.Utils
             {
                 Log.Information($"Installing voicer from {p}");
                 // Currently it puts suffix to the directory name if it already exists, but if the bug in VoicerSelector.cs is fixed, it should be changed to overwrite the existing directory(to update Voicer).
-                var result = await v.ShowTaskWindow("menu.tools.voicerinstall", "menu.tools.voicerinstall", Install(MakeDirectoryUnique(p)), "menu.tools.voicerinstall.process", "menu.tools.voicerinstall.success", "menu.tools.voicerinstall.failed");
+                string finalPath = MakeDirectoryUnique(p);
+                var result = await v.ShowTaskWindow("menu.tools.voicerinstall", "menu.tools.voicerinstall", Install(finalPath), "menu.tools.voicerinstall.process", "menu.tools.voicerinstall.success", "menu.tools.voicerinstall.failed");
+
+                string dirName = System.IO.Path.GetFileNameWithoutExtension(finalPath);
+                string extPath = System.IO.Path.Combine(basePath, dirName);
+                if (! MainManager.Instance.VoicerM.ValidVoicerDirs.Contains(extPath))
+                {
+                    MainManager.Instance.VoicerM.ValidVoicerDirs.Add(extPath);
+                    v.voicerSelector.Voicers.Add(MainManager.Instance.VoicerM.FindLastInstalledVoicer());
+                }
+                
                 Log.Information($"Voicer installed.");
             }
+
             Log.Information($"Refresh Voicers");
-            v.voicerSelector.UpdateVoicerCollection();
+
             foreach (LineBoxView l in v.LineBoxCollection)
             {
                 l.viewModel.voicerSelector.UpdateVoicerCollection();
@@ -85,12 +98,13 @@ namespace Mirivoice.Mirivoice.Core.Utils
             {
                 Overwrite = true,
             };
+            string extPath;
             using (var archive = ArchiveFactory.Open(path, readerOptions))
             {
                 var touches = new List<string>();
                 int total = archive.Entries.Count();
                 int count = 0;
-                bool hasVoicerYaml = archive.Entries.Any(e => Path.GetFileName(e.Key) == kVoicerYaml);
+                bool hasVoicerYaml = archive.Entries.Any(e => System.IO.Path.GetFileName(e.Key) == kVoicerYaml);
                 if (!hasVoicerYaml)
                 {
                     await v.ShowConfirmWindow("menu.tools.voicerinstall.error");
@@ -98,8 +112,8 @@ namespace Mirivoice.Mirivoice.Core.Utils
                     return false;
                 }
 
-                string dirName = Path.GetFileNameWithoutExtension(path);
-                string extPath = Path.Combine(basePath, dirName);
+                string dirName = System.IO.Path.GetFileNameWithoutExtension(path);
+                extPath = System.IO.Path.Combine(basePath, dirName);
                 Directory.CreateDirectory(extPath);
                 foreach (var entry in archive.Entries)
                 {
@@ -108,15 +122,20 @@ namespace Mirivoice.Mirivoice.Core.Utils
                         // Prevent zipSlip attack
                         continue;
                     }
-                    var filePath = Path.Combine(extPath, entry.Key);
-                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    var filePath = System.IO.Path.Combine(extPath, entry.Key);
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(filePath));
                     if (!entry.IsDirectory)
                     {
-                        entry.WriteToFile(Path.Combine(extPath, entry.Key), extractionOptions);
+                        entry.WriteToFile(System.IO.Path.Combine(extPath, entry.Key), extractionOptions);
                     }
                 }
                 
             }
+            
+            
+            
+           
+
             return true;
         }
 
