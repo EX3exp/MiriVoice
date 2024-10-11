@@ -38,8 +38,10 @@
 ## ❤️ Support MiriVoice
 - Developing TTS Models sometimes requires money💸... <br> Be MiriVoice's supporter for more free finetuning models, various models support, etc!
 
-    [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/inthe6788f
+    -  [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/inthe6788f
 )
+
+    - [Toonation (투네이션)](https://toon.at/donate/ex3exp)
 
 ##  🔖 News :
 - 🔈2024.10.07 MiriVoice Released with **VITS2** Support!
