@@ -38,8 +38,13 @@
 ## ❤️ 미리보이스 후원하기
 - TTS 모델 제작엔 때로 돈이 많이 들어가곤 해요💸... <br> 더 많은 무료 파인튜닝 모델 제작, 더 많은 모델 지원을 위해 미리보이스를 후원해 주세요!
 
-    - [Toonation (투네이션)](https://toon.at/donate/ex3exp)
-    -  [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/inthe6788f
+    <img src="..\Misc\krw.png" height="50"/> <img src="..\Misc\miri-supportus-art-by-Commet_혜성_@comet_utau.gif" height="50"/> [!["Toonation (투네이션)"](../Misc/toonation.png)](https://toon.at/donate/ex3exp)
+
+    <img src="..\Misc\usd.png" height="50"/> <img src="..\Misc\miri-supportus-art-by-Commet_혜성_@comet_utau.gif" height="50"/> [!["Buy Me A Coffee"](../Misc/buymecoffee.png)](https://buymeacoffee.com/inthe6788f
 )
+
+
+    🎨 art by = Comet/혜성 (@comet_utau)
+
 
     
