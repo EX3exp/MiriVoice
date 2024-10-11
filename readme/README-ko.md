@@ -44,7 +44,7 @@
 )
 
 
-    🎨 art by = Comet/혜성 (@comet_utau)
+    🎨 art by = Comet/혜성 (@comet_UTAU)
 
 
     
