@@ -254,7 +254,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                             {
                                 prosodyType = ProsodyType.Space;
                             }
-                            results[index] = new MResultPrototype(word.Trim(), phoneme.Trim(), editable, prosodyType);
+                            results[index] = new MResultPrototype(words[index].Trim(), phoneme.Trim(), editable, prosodyType);
                         }
                         else
                         {
@@ -267,11 +267,11 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                             {
                                 Log.Error($"[Variated Sentence({words.Length})] - [Sentence length({variatedWords.Length})] mismatch");
 
-                                results[index] = new MResultPrototype(word.Trim(), phoneme.Trim(), editable, ProsodyType.Undefined);
+                                results[index] = new MResultPrototype(variatedWords[index].Trim(), phoneme.Trim(), editable, ProsodyType.Undefined);
                             }
                             else
                             {
-                                results[index] = new MResultPrototype(word.Trim(), phoneme.Trim(), editable, ProsodyType.Undefined);
+                                results[index] = new MResultPrototype(words[index].Trim(), phoneme.Trim(), editable, ProsodyType.Undefined);
                             }
                         }
                         
@@ -329,8 +329,8 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
 
                     if (next is not null && IsPunctuation(next.Phoneme) && endPuncs.Contains(next.Phoneme))
                     {
-                        Log.Debug($"Next is punctuation: {next.Phoneme}");
-                        Log.Debug($"Current: {mResultPrototype.Phoneme}");
+                        //Log.Debug($"Next is punctuation: {next.Phoneme}");
+                        //Log.Debug($"Current: {mResultPrototype.Phoneme}");
                         mResultPrototype.ProsodyType = (int)ProsodyType.Eos;
                     }
                     if (i == results.Count - 1 && prev is not null && prev.ProsodyType != (int)ProsodyType.Eos)

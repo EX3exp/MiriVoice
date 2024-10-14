@@ -386,10 +386,12 @@ namespace Mirivoice.Mirivoice.Core.Managers
         {
             Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
+
                 Log.Information("Playback stopped.");
+                v.isPlaying = false;
                 if (audioPaths.Count == 0) // when stopped
                 {
-                    v.isPlaying = false;
+                    
                     if (!_player.Paused)
                     {
                         v.EnableGlobalPlay = true;
@@ -457,6 +459,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 audioPaths.Clear();
                 v.MainWindowGetInput = true;
                 MainViewModelPlaying = false;
+                v.isPlaying = false;
             }
 
         }

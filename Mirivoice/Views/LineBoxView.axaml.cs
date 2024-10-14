@@ -127,6 +127,10 @@ namespace Mirivoice.Views
                     v.OnPropertyChanged(nameof(v.SingleTextBoxEditorEnabled));
                     
                 }
+                if (!lastPhonemizedText.Equals(textChanged))
+                {
+                    IsCacheIsVaild = false;
+                }
                 if (viewModel.phonemizer is null)
                 {
                     Log.Error("Skip Phonemizing: phonemizer is null");
@@ -135,13 +139,14 @@ namespace Mirivoice.Views
                 {
                     Log.Warning("Skip Phonemizing: phonemizer is not null, but LineText is empty");
                 }
-                else if (IsCacheIsVaild)
-                {
-                    Log.Information("Skip Phonemizing: Cache is valid");
-                }
+                
                 else if (lastPhonemizedText.Equals(textChanged))
                 {
                     Log.Information("Skip Phonemizing: text is not changed");
+                }
+                else if (IsCacheIsVaild)
+                {
+                    Log.Information("Skip Phonemizing: Cache is valid");
                 }
                 else
                 {
