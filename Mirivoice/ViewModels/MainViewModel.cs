@@ -501,7 +501,7 @@ namespace Mirivoice.ViewModels
             else
             {
                 isPlaying = false;
-                EnableGlobalPlay = true;
+                EnableGlobalPlay = false;
                 Log.Information("Pause Button Clicked - preview");
             }
         }
@@ -637,6 +637,7 @@ namespace Mirivoice.ViewModels
             MainManager.Instance.AudioM.StopAudio();
             StopButtonEnabled = false;
             EnableGlobalPlay = true;
+            EnablePreviewPlay = true;
         }
 
         public void OnAddBoxesButtonClick()
@@ -1005,7 +1006,7 @@ namespace Mirivoice.ViewModels
         }
 
         public override void OnVoicerChanged(Voicer value) { }
-
+        public override void OnStyleChanged() { }
         public override void OnVoicerCultureChanged(CultureInfo culture) { }
 
     }

@@ -283,6 +283,7 @@ namespace Mirivoice.Views
                 singleLineEditorView = new SingleLineEditorView(this);
             }
             ResetExpEditor(v.voicerSelector.CurrentVoicer.Info.Type);
+            viewModel.OnStyleChanged();
         }
         // Commands
         public MCommand DelLineBoxCommand { get; set; }

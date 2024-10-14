@@ -1,7 +1,4 @@
 ﻿using Mirivoice.Mirivoice.Core.Format;
-using Mirivoice.ViewModels;
-using Serilog;
-using System;
 
 namespace Mirivoice.Commands
 {
@@ -20,7 +17,7 @@ namespace Mirivoice.Commands
 
         public override void UpdateProperties()
         {
-            Log.Debug("[Updating Properties] -- {obj}", obj);
+            //Log.Debug("[Updating Properties] -- {obj}", obj);
             v.NotProcessingSetProsodyCommand = true; // prevent recursion loop
             v.Prosody = obj;
         }

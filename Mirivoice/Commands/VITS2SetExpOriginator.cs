@@ -1,8 +1,4 @@
-﻿using Mirivoice.Engines;
-using Mirivoice.Mirivoice.Core.Format;
-using Mirivoice.ViewModels;
-using Serilog;
-using System;
+﻿using Mirivoice.ViewModels;
 
 namespace Mirivoice.Commands
 {
@@ -29,7 +25,7 @@ namespace Mirivoice.Commands
 
         public override void UpdateProperties()
         {
-            Log.Debug("[Updating Properties] -- {obj}", obj);
+            //Log.Debug("[Updating Properties] -- {obj}", obj);
             switch (type)
             {
                 case ExpVITS2.Speed:

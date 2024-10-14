@@ -9,7 +9,7 @@ namespace Mirivoice.ViewModels
         public override MTextBoxEditor mTextBoxEditor { get; set; }
         public override void OnVoicerChanged(Voicer value) { }
         public override void OnVoicerCultureChanged(CultureInfo culture) { }
-
+        public override void OnStyleChanged() { }
         public SingleLineEditorViewModel(string line=""): base(line, false)
         {
 

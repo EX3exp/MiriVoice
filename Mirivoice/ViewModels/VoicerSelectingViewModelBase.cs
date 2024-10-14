@@ -19,6 +19,7 @@ namespace Mirivoice.ViewModels
         public string _currentScript;
         public bool NotProcessingSetScriptCommand = false;
         protected string lastScript;
+        public abstract void OnStyleChanged();
         public virtual VoicerSelector voicerSelector { get; set; }
         public virtual MTextBoxEditor mTextBoxEditor { get; set; }
         public VoicerSelectingViewModelBase(bool useVoicerSelector=false)

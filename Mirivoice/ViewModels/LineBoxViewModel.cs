@@ -32,7 +32,7 @@ namespace Mirivoice.ViewModels
             }
         }
 
-        private string _langCode;  
+        private string _langCode;
         public string LangCode
         {
             get => _langCode;
@@ -91,7 +91,7 @@ namespace Mirivoice.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref _lineText, value);
                 OnPropertyChanged(nameof(LineText));
-                
+
             }
         }
 
@@ -134,7 +134,7 @@ namespace Mirivoice.ViewModels
         {
             get => _icon;
 
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref _icon, value);
                 OnPropertyChanged(nameof(Icon));
@@ -147,6 +147,8 @@ namespace Mirivoice.ViewModels
         {
             //Log.Debug($"OnVoicerChanged: {voicer.NickAndStyle}");
             VoicerInfo vInfo = voicer.Info;
+            voicer.SetLineBoxViewModel(this);
+            
             
             if (phonemizer is null)
             {
@@ -154,7 +156,7 @@ namespace Mirivoice.ViewModels
             }
             if (lastType is not null && lastType != voicer.Info.Type)
             {
-                Log.Debug("Type Changed: {0}", voicer.Info.Type);
+                //Log.Debug("Type Changed: {0}", voicer.Info.Type);
                 l.ResetExpEditor(voicer.Info.Type);
             }
 
@@ -164,18 +166,52 @@ namespace Mirivoice.ViewModels
             VoicerType = voicer.Info.Type;
             if (vInfo.Icon != null && vInfo.Icon != string.Empty)
             {
-                string voicerIconPath = Path.Combine(voicer.RootPath,
-                vInfo.Icon.Replace('/', Path.DirectorySeparatorChar));
-                if (!File.Exists(voicerIconPath))
+                string voicerIconPath = null;
+                if (voicer.CurrentVoicerMeta.StyleIcon is not null)
+                {
+                    voicerIconPath = Path.Combine(voicer.RootPath,
+                    voicer.CurrentVoicerMeta.StyleIcon.Replace('/', Path.DirectorySeparatorChar));
+                    // try to get icon from style
+                    if (voicerIconPath is not null && !File.Exists(voicerIconPath))
+                    {
+                        voicerIconPath = Path.Combine(voicer.RootPath,
+                        vInfo.Icon.Replace('/', Path.DirectorySeparatorChar));
+                    }
+                }
+                else
+                {
+                    voicerIconPath = Path.Combine(voicerSelector.CurrentVoicer.RootPath,
+                        vInfo.Icon.Replace('/', Path.DirectorySeparatorChar));
+                }
+                
+
+                // try to get icon from voicer
+                if (voicerIconPath is not null &&  !File.Exists(voicerIconPath))
                 {
                     return;
                 }
-
-                Icon
+                if (voicerIconPath is not null)
+                {
+                    Icon
                 = new ImageBrush(new Bitmap(voicerIconPath))
                 {
                     Stretch = Stretch.UniformToFill,
                 };
+                }
+                else
+                {
+                    var uri = new Uri("avares://Mirivoice.Main/Assets/default_icon.bmp");
+                    var assets = AssetLoader.Open(uri);
+
+                    using (var stream = assets)
+                    {
+                        var bitmap = new Bitmap(stream);
+                        Icon = new ImageBrush(bitmap)
+                        {
+                            Stretch = Stretch.UniformToFill
+                        };
+                    }
+                }
 
             }
             else
@@ -193,7 +229,77 @@ namespace Mirivoice.ViewModels
                 }
             }
         }
+        public override void OnStyleChanged()
+        {
+            Log.Information("OnStyleChanged");
+            VoicerInfo vInfo = voicerSelector.CurrentVoicer.Info;
+            if (vInfo.Icon != null && vInfo.Icon != string.Empty)
+            {
+                string voicerIconPath = null;
+                if (voicerSelector.CurrentVoicer.CurrentVoicerMeta.StyleIcon is not null)
+                {
+                    voicerIconPath = Path.Combine(voicerSelector.CurrentVoicer.RootPath,
+                    voicerSelector.CurrentVoicer.CurrentVoicerMeta.StyleIcon.Replace('/', Path.DirectorySeparatorChar));
+                    // try to get icon from style
+                    if (voicerIconPath is not null && !File.Exists(voicerIconPath))
+                    {
+                        voicerIconPath = Path.Combine(voicerSelector.CurrentVoicer.RootPath,
+                        vInfo.Icon.Replace('/', Path.DirectorySeparatorChar));
+                    }
+                }
+                else
+                {
+                    voicerIconPath = Path.Combine(voicerSelector.CurrentVoicer.RootPath,
+                        vInfo.Icon.Replace('/', Path.DirectorySeparatorChar));
+                }
 
+                
+                // try to get icon from voicer
+                if (voicerIconPath is not null && !File.Exists(voicerIconPath))
+                {
+                    return;
+                }
+                if (voicerIconPath is not null)
+                {
+                    Icon
+                = new ImageBrush(new Bitmap(voicerIconPath))
+                {
+                    Stretch = Stretch.UniformToFill,
+                };
+                }
+                else
+                {
+                    var uri = new Uri("avares://Mirivoice.Main/Assets/default_icon.bmp");
+                    var assets = AssetLoader.Open(uri);
+
+                    using (var stream = assets)
+                    {
+                        var bitmap = new Bitmap(stream);
+                        Icon = new ImageBrush(bitmap)
+                        {
+                            Stretch = Stretch.UniformToFill
+                        };
+                    }
+                }
+
+                OnPropertyChanged(nameof(Icon));
+            }
+            else
+            {
+                var uri = new Uri("avares://Mirivoice.Main/Assets/default_icon.bmp");
+                var assets = AssetLoader.Open(uri);
+
+                using (var stream = assets)
+                {
+                    var bitmap = new Bitmap(stream);
+                    Icon = new ImageBrush(bitmap)
+                    {
+                        Stretch = Stretch.UniformToFill
+                    };
+                }
+                OnPropertyChanged(nameof(Icon));
+            }
+        }
         bool cultureChangedFirst = false;
         public override void OnVoicerCultureChanged(CultureInfo culture)
         {

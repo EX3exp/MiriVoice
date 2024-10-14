@@ -1,6 +1,7 @@
 ﻿using Mirivoice.Commands;
 using Mirivoice.Engines;
 using Mirivoice.Engines.TTS;
+using Mirivoice.ViewModels;
 using Mirivoice.Views;
 using ReactiveUI;
 using Serilog;
@@ -51,6 +52,7 @@ namespace Mirivoice.Mirivoice.Core.Format
 
         private VoicerMeta _currentVoicerMeta;
         private VoicerMeta lastVoicerMeta;
+        private LineBoxViewModel lv;
 
         private bool Undobackuped = false;
 
@@ -67,6 +69,14 @@ namespace Mirivoice.Mirivoice.Core.Format
             Engine.Init(this);
         }
 
+        public void SetLineBoxViewModel(LineBoxViewModel lv)
+        {
+            this.lv = lv;
+            if (lv is not null)
+            {
+                lv.OnStyleChanged();
+            }
+        }
         public void Inference(string ipaText, string cacheFilePath, LineBoxView l)
         {
             //Log.Debug("[Infer Started] --- ipaText");
@@ -129,6 +139,11 @@ namespace Mirivoice.Mirivoice.Core.Format
                     }
                     this.RaiseAndSetIfChanged(ref _currentVoicerMeta, value);
                     this.RefreshNickAndStyle();
+                    
+                    if (lv is not null)
+                    {
+                        lv.OnStyleChanged();
+                    }
                     OnPropertyChanged(nameof(NickAndStyle));
                     OnPropertyChanged(nameof(CurrentVoicerMeta));
 

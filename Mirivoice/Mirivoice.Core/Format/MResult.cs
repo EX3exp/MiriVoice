@@ -50,6 +50,7 @@ namespace Mirivoice.Mirivoice.Core.Format
         int lastProsodyIndex;
         public override MTextBoxEditor mTextBoxEditor { get; set; }
 
+        public override void OnStyleChanged() { }
         private ImageBrush _bosIcon;
         public ImageBrush BosIcon
         {

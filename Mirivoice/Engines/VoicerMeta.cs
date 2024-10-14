@@ -24,10 +24,10 @@ namespace Mirivoice.Engines
         public string Phrase { get; set; } = "";
         public string Description { get; set; } = "";
         
-        
+        public string StyleIcon { get; set; } = "";
 
 
-        
+
 
         public VoicerMeta()
         {

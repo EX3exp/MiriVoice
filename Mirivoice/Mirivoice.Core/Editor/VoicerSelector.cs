@@ -33,15 +33,17 @@ namespace Mirivoice.Mirivoice.Core.Editor
                 {
                     this.RaiseAndSetIfChanged(ref _currentVoicer, value);
                     _currentVoicer.RefreshNickAndStyle();
+                    v.OnStyleChanged();
                     OnPropertyChanged(nameof(CurrentVoicer));
                     v._currentDefaultVoicerIndex = Voicers.IndexOf(value);
                     OnPropertyChanged(nameof(CurrentDefaultVoicerIndex));
-
+                    
                 }
                 
             }
         }
 
+        
         
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -119,6 +121,7 @@ namespace Mirivoice.Mirivoice.Core.Editor
                     }
                     updatedVoicer.CurrentVoicerMeta = updatedVoicer.VoicerMetaCollection[metaIndex];
                     updatedVoicer.RefreshNickAndStyle();
+
                     
                     voicersToUpdate.Add(new VoicerUpdate(updatedVoicer, updatedVoicerIndex));
 
@@ -223,6 +226,9 @@ namespace Mirivoice.Mirivoice.Core.Editor
                 this.RaiseAndSetIfChanged(ref _currentDefaultVoicerIndex, value);
                 _currentVoicer = Voicers[_currentDefaultVoicerIndex];
                 _currentVoicer.RefreshNickAndStyle();
+                v.OnStyleChanged();
+                
+                
 
                 v.OnVoicerChanged(_currentVoicer);
                 OnPropertyChanged(nameof(CurrentVoicer));

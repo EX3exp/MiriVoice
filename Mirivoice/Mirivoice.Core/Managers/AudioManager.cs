@@ -390,7 +390,11 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 if (audioPaths.Count == 0) // when stopped
                 {
                     v.isPlaying = false;
-                    v.EnableGlobalPlay = true;
+                    if (!_player.Paused)
+                    {
+                        v.EnableGlobalPlay = true;
+                    }
+                    
                     v.EnablePreviewPlay = true;
                     if (!MainViewModelPlaying)
                     {
