@@ -427,14 +427,21 @@ namespace Mirivoice.ViewModels
                 if (value)
                 {
                     SingleTextBoxEditorEnabled = false;
-                    CurrentEdit.IsEnabled = false;
+                    if (CurrentEdit is not null)
+                    {
+                        CurrentEdit.IsEnabled = false;
+                    }
+                    
                 }
                 else
                 {
                     // audio stop
                     
                     SingleTextBoxEditorEnabled = true;
-                    CurrentEdit.IsEnabled = true;
+                    if (CurrentEdit is not null)
+                    {
+                        CurrentEdit.IsEnabled = true;
+                    }
                     MainManager.Instance.AudioM.PauseAudio();
                 }
                 OnPropertyChanged(nameof(isPlaying));

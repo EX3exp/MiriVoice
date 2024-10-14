@@ -32,7 +32,7 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          brew install nuget
+          sudo apt install nuget
           nuget restore
 
       - name: Build and make appcast (Linux only)
