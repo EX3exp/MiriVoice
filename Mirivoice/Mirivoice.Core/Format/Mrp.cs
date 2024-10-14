@@ -56,6 +56,7 @@ namespace Mirivoice.Mirivoice.Core.Format
         public int voicerStyleId { get; set; }
         public string IPAText { get; set; }
         public string cacheName { get; set; }
+        public MExpressionsWrapper Exp { get; set; } = new MExpressionsWrapper();
 
         [YamlConstructor]
         public MLinePrototype()
@@ -75,7 +76,7 @@ namespace Mirivoice.Mirivoice.Core.Format
             {
                 cacheName = l.CurrentCacheName;
             }
-            
+            this.Exp = l.Exp;
         }
     }
 
@@ -127,6 +128,7 @@ namespace Mirivoice.Mirivoice.Core.Format
                 foreach (var m in mLines)
                 {
                     m.PhonemeEdit = BasePhonemizer.SetUpProsody(null, m.PhonemeEdit.ToList(), false);
+                    m.Exp = new MExpressionsWrapper();
                 }
             }
 

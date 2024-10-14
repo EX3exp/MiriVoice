@@ -26,6 +26,8 @@ namespace Mirivoice.Views
         private bool mouseEntered;
         private bool isDragging;
 
+        public MExpressionsWrapper Exp = new MExpressionsWrapper();
+        public UserControl ExpressionEditor { get; set; }
         public readonly MainViewModel v;
         private bool dragInit;
 
@@ -208,7 +210,7 @@ namespace Mirivoice.Views
             singleLineEditorView = new SingleLineEditorView(this);
 
             singleLineEditorView.SetLine(line);
-
+            ResetExpEditor(v.voicerSelector.CurrentVoicer.Info.Type);
 
 
         }
@@ -220,15 +222,14 @@ namespace Mirivoice.Views
         public LineBoxView(MLinePrototype mLinePrototype, MainViewModel v, int index, int voicerIndex, int metaIndex, bool isDuplicating)
         {
             this.v = v;
-            
             InitializeComponent(voicerIndex, metaIndex);
             viewModel.LineText = mLinePrototype.LineText;
             IPAText = mLinePrototype.IPAText;
             viewModel.SetLineNo(index + 1);
             _currentCacheName = AudioManager.GetUniqueCachePath();
             this.CurrentCacheName = mLinePrototype.cacheName;
-            
-            
+            Exp = mLinePrototype.Exp;
+
             //lockButton = this.FindControl<ToggleButton>("lockButton");
             SetCommands(v);
 
@@ -281,7 +282,7 @@ namespace Mirivoice.Views
                 // if phonemeEdit is empty, use newly phonemized one
                 singleLineEditorView = new SingleLineEditorView(this);
             }
-            
+            ResetExpEditor(v.voicerSelector.CurrentVoicer.Info.Type);
         }
         // Commands
         public MCommand DelLineBoxCommand { get; set; }
@@ -342,6 +343,20 @@ namespace Mirivoice.Views
             }
         }
 
+        MExpressionsWrapper lastExp = new MExpressionsWrapper();
+
+        public void ResetExpEditor(string voicerMetaType )
+        {
+            switch (voicerMetaType)
+            {
+                case "VITS2": //TODO resolve hardcoding
+                    ExpressionEditor = new ExpressionEditViewVITS2(this);
+                    break;
+                default:
+                    ExpressionEditor = null;
+                    break;
+            }
+        }
         public async Task StartInference()
         {
             if (viewModel.voicerSelector.CurrentVoicer is null)
@@ -379,6 +394,11 @@ namespace Mirivoice.Views
                         Log.Debug("meta changed");
                         IsCacheIsVaild = false;
                     }
+                    if (lastExp != Exp)
+                    {
+                        Log.Debug("exp changed");
+                        IsCacheIsVaild = false;
+                    }
                     if (!System.IO.Path.Exists(CurrentCacheName))
                     {
                         IsCacheIsVaild = false;
@@ -392,6 +412,7 @@ namespace Mirivoice.Views
                     }
 
                     lastInferencedVoicerMeta = viewModel.voicerSelector.CurrentVoicer.CurrentVoicerMeta;
+                    lastExp = Exp;
                 }
                 else
                 {
@@ -461,6 +482,11 @@ namespace Mirivoice.Views
         private void OnDragStart(object sender, RoutedEventArgs e)
         {
             viewModel.IsSelected = true;
+            if (v.CurrentEdit is null)
+            {
+                v.CurrentEdit = new PhonemeEditView();
+                v.OnPropertyChanged(nameof(v.CurrentEdit));
+            }
 
             if (!mouseEntered)
             {

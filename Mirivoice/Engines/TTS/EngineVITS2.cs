@@ -126,7 +126,7 @@ public class EngineVITS2 : BaseEngine
         return interspersed;
     }
 
-    public override void Inference(string ipaText, string cacheFilePath, int spkid)
+    public override void Inference(string ipaText, string cacheFilePath, int spkid, MExpressionsWrapper expression)
     {
         if (!init)
         {
@@ -160,9 +160,9 @@ public class EngineVITS2 : BaseEngine
 
             // scales array
             Tensor<float> scalesTensor = new DenseTensor<float>(3);
-            scalesTensor[0] = 0.667f; // noise_scale
-            scalesTensor[1] = 1.0f; // length_scale. If increased, the speed of the speech will be faster
-            scalesTensor[2] = 0.8f; // noise_scale_w
+            scalesTensor[0] = expression.VITS2Noise1; // Noise1 / noise_scale
+            scalesTensor[1] = expression.VITS2Speed; // Speed / length_scale. If increased, the speed of the speech will be faster
+            scalesTensor[2] = expression.VITS2Noise2; // Noise2 / noise_scale_w
 
 
             var inputs = new List<NamedOnnxValue>

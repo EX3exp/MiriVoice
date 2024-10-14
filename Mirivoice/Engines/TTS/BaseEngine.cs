@@ -30,7 +30,7 @@ namespace Mirivoice.Engines.TTS
             }
         }
 
-        public virtual void Inference(string ipaText, string cacheFilePath, int spkid)
+        public virtual void Inference(string ipaText, string cacheFilePath, int spkid, MExpressionsWrapper expression)
         {
 
         }

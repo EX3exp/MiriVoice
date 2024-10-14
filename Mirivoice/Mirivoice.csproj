@@ -82,6 +82,9 @@
     <Compile Update="Views\LineBoxView.axaml.cs">
       <DependentUpon>LineBoxView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\ExpressionEditViewVITS2.axaml.cs">
+      <DependentUpon>ExpressionEditViewVITS2.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\PhonemeEditView.axaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>PhonemeEditView.axaml</DependentUpon>

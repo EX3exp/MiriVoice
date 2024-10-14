@@ -20,6 +20,7 @@ namespace Mirivoice.Commands
 
 
         private SingleLineEditorView lastEditor;
+
         public DelLineBoxReceiver(MainViewModel mainViewModel, LineBoxView l)
         {
             this.l = l;
@@ -45,6 +46,12 @@ namespace Mirivoice.Commands
                 v.CurrentSingleLineEditor = null;
                 lastResults = new ObservableCollection<MResult>(l.MResultsCollection);
                 v.MResultsCollection.Clear();
+                
+               if (v.CurrentEditIndex == 1)
+                {
+                    v.CurrentEdit = null;
+                    v.OnPropertyChanged(nameof(v.CurrentEdit));
+                }
             }
 
             RefreshLineNos(control);
@@ -64,6 +71,12 @@ namespace Mirivoice.Commands
                 l.MResultsCollection = lastResults;
                 v.MResultsCollection = lastResults;
                 v.OnPropertyChanged(nameof(v.MResultsCollection));
+                if (v.CurrentEditIndex == 1)
+                {
+                    v.CurrentEdit = l.ExpressionEditor;
+                    v.OnPropertyChanged(nameof(v.CurrentEdit));
+                }
+
             }
         }
 

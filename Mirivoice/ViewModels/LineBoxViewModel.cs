@@ -2,6 +2,7 @@
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using Mirivoice.Engines;
 using Mirivoice.Mirivoice.Core;
 using Mirivoice.Mirivoice.Core.Editor;
 using Mirivoice.Mirivoice.Core.Format;
@@ -141,7 +142,7 @@ namespace Mirivoice.ViewModels
         }
 
         public BasePhonemizer phonemizer;
-
+        string lastType;
         public override void OnVoicerChanged(Voicer voicer)
         {
             //Log.Debug($"OnVoicerChanged: {voicer.NickAndStyle}");
@@ -151,7 +152,12 @@ namespace Mirivoice.ViewModels
             {
                 phonemizer = GetPhonemizer(voicerSelector.CurrentVoicer.Info.LangCode);
             }
-            
+            if (lastType is not null && lastType != voicer.Info.Type)
+            {
+                Log.Debug("Type Changed: {0}", voicer.Info.Type);
+                l.ResetExpEditor(voicer.Info.Type);
+            }
+
             l.IsCacheIsVaild = false;
 
             LangCode = voicer.Info.LangCode.ToUpper().Substring(0, 2);

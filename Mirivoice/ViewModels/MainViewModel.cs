@@ -256,6 +256,8 @@ namespace Mirivoice.ViewModels
         private int _valueProgressbar;
 
         private int _currentEditIndex;
+
+
         public int CurrentEditIndex
         {
             get => _currentEditIndex;
@@ -272,7 +274,28 @@ namespace Mirivoice.ViewModels
                 switch (_currentEditIndex)
                 {
                     case 0:
-                        CurrentEdit = new PhonemeEditView();
+                        if (CurrentLineBox is not null)
+                        {
+                            CurrentEdit = new PhonemeEditView();
+                            
+                        }
+                        else
+                        {
+                            CurrentEdit = null;
+                        }
+
+                        this.OnPropertyChanged(nameof(CurrentEdit));
+                        break;
+                    case 1:
+                        if (CurrentLineBox is not null)
+                        {
+                            CurrentEdit = CurrentLineBox.ExpressionEditor;
+                            
+                        }
+                        else
+                        {
+                            CurrentEdit = null;
+                        }
                         this.OnPropertyChanged(nameof(CurrentEdit));
                         break;
                     default:

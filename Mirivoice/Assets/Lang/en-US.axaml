@@ -27,10 +27,11 @@
 	<system:String x:Key="singlelinebox.placeholder">(Line is empty)</system:String>
 
 	<system:String x:Key="edits.phoneme">Phonemes</system:String>
-	<!--
 	<system:String x:Key="edits.expression">Expressions</system:String>
-	<system:String x:Key="edits.expression.speed">Speed</system:String>
-	
+	<system:String x:Key="edits.expression.speedVITS2">Speed</system:String>
+	<system:String x:Key="edits.expression.noise1VITS2">Noise Scale</system:String>
+	<system:String x:Key="edits.expression.noise2VITS2">Noise Weight</system:String>
+	<!--
 	<system:String x:Key="edits.pitch">Pitch</system:String>
 	-->
 	<!-- Menu -->
