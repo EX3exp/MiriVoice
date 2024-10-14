@@ -627,6 +627,7 @@ namespace Mirivoice.ViewModels
         public MainViewModel(MainWindow window) : base(true)
         {
             MainManager.Instance.AudioM = new AudioManager(this);
+            MainManager.Instance.IconM = new IconManager();
             MainManager.Instance.cmd.SetMainViewModel(this);
             
             

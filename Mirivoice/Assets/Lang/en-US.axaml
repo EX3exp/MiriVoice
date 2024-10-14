@@ -38,6 +38,8 @@
 	<system:String x:Key="menu.files.title">Files</system:String>
 	
 	<system:String x:Key="menu.files.open">Open...</system:String>
+	<system:String x:Key="menu.files.open.upgrade">Project file is newer than software. 
+	Please upgrade MiriVoice!</system:String>
 	<system:String x:Key="menu.files.recent">Recent...</system:String>
 	<system:String x:Key="menu.files.openFailed">An Error occured during open file. 
 	Please Check Log file for more informations.</system:String>

@@ -1,5 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Mirivoice.Mirivoice.Core.Format;
+using Mirivoice.ViewModels;
 
 namespace Mirivoice;
 

@@ -42,35 +42,35 @@ namespace Mirivoice.Commands
         }
         public void ClearRedoMemento()
         {
-            Log.Debug("[Clearing redo memento]");
+            //Log.Debug("[Clearing redo memento]");
             _redoMemento.states.Clear();
         }
         public void RestoreFromUndoMemento()
         {
-            Log.Debug($"Restoring from undo memento: {_undoMemento}, obj: {obj}");
+            //Log.Debug($"Restoring from undo memento: {_undoMemento}, obj: {obj}");
             
             _redoMemento.states.Push(obj);
             obj = _undoMemento.states.Pop();
             UpdateProperties();
-            Log.Debug("redo Memento: {memento}", _redoMemento);
+            //Log.Debug("redo Memento: {memento}", _redoMemento);
         }
 
         public void Backup(T backup)
         {
-            Log.Debug($"Backup: {backup}");
+            //Log.Debug($"Backup: {backup}");
             this.backup = backup;
             _undoMemento.states.Push(backup);
         }
 
         public void BackupRedo(T backup)
         {
-            Log.Debug($"Backup Redo: {backup}");
+            //Log.Debug($"Backup Redo: {backup}");
             _redoMemento.states.Push(backup);
         }
         
         public void RestoreFromRedoMemento()
         {
-            Log.Debug($"Restoring from memento: {_redoMemento}");
+            //Log.Debug($"Restoring from memento: {_redoMemento}");
             _undoMemento.states.Push(obj);
             obj = _redoMemento.states.Pop();
             UpdateProperties();
@@ -80,7 +80,7 @@ namespace Mirivoice.Commands
 
         public virtual void UpdateProperties()
         {
-            Log.Information("Updating Properties -- {obj}", obj);
+            //Log.Information("Updating Properties -- {obj}", obj);
             // update ui here
             throw new NotImplementedException();
         }

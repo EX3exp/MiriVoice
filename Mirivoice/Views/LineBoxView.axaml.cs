@@ -133,8 +133,17 @@ namespace Mirivoice.Views
                 {
                     Log.Warning("Skip Phonemizing: phonemizer is not null, but LineText is empty");
                 }
+                else if (IsCacheIsVaild)
+                {
+                    Log.Information("Skip Phonemizing: Cache is valid");
+                }
+                else if (lastPhonemizedText.Equals(textChanged))
+                {
+                    Log.Information("Skip Phonemizing: text is not changed");
+                }
                 else
                 {
+                    Log.Debug("Phonemizing: {0}", textChanged);
                     await Task.Run(() => viewModel.phonemizer.PhonemizeAsync(textChanged, this));
                     lastPhonemizedText = textChanged;
                 }
@@ -208,7 +217,7 @@ namespace Mirivoice.Views
         
 
 
-        public LineBoxView(MLinePrototype mLinePrototype, MainViewModel v, int index, int voicerIndex, int metaIndex)
+        public LineBoxView(MLinePrototype mLinePrototype, MainViewModel v, int index, int voicerIndex, int metaIndex, bool isDuplicating)
         {
             this.v = v;
             
@@ -226,8 +235,12 @@ namespace Mirivoice.Views
             if (mLinePrototype.PhonemeEdit is not null || mLinePrototype.PhonemeEdit.Length > 0)
             {
                 this.MResultsCollection = new ObservableCollection<MResult>(
-                    mLinePrototype.PhonemeEdit.Select(m => new MResult(m)).ToArray()
+                    mLinePrototype.PhonemeEdit.Select(m => new MResult(m, this)).ToArray()
                     );
+                if (!isDuplicating)
+                {
+                    UpdateMResultsCollection();
+                }
                 ShouldPhonemize = false;
             }
             else
@@ -345,8 +358,7 @@ namespace Mirivoice.Views
                     DeActivatePhonemizer = false;
                     ShouldPhonemize = true;
 
-                    Task<string> res = viewModel.phonemizer.ConvertToIPA(viewModel.LineText, DispatcherPriority.ApplicationIdle);
-                    IPAText = await res;
+                    await viewModel.phonemizer.GenerateIPAAsync(this);
                 }
 
                 if (viewModel.voicerSelector.CurrentVoicer is not null)
@@ -513,6 +525,7 @@ namespace Mirivoice.Views
                 {
                     
                     v.CurrentSingleLineEditor = singleLineEditorView;
+                    UpdateMResultsCollection();
                     Log.Debug("CurrentLineBox: {0}", v.CurrentLineBox);
                     Log.Debug("CurrentSingleLineTextBox: {0}", v.CurrentSingleLineEditor);
 

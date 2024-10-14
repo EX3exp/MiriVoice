@@ -106,15 +106,15 @@ namespace Mirivoice.Mirivoice.Core.Format
 
                     lastVoicerMeta = _currentVoicerMeta;
 
-                    Log.Debug("CurrentVoicerMeta: {value}", value);
+                    //Log.Debug("CurrentVoicerMeta: {value}", value);
 
-                    Log.Debug($"CurrentVoicerMeta: {value.Style}");
-                    Log.Debug($"lastVoicerMeta: {lastVoicerMeta.Style}");
+                    //Log.Debug($"CurrentVoicerMeta: {value.Style}");
+                    //Log.Debug($"lastVoicerMeta: {lastVoicerMeta.Style}");
                     if (!NotProcessingSetVoicerMetaCommand)
                     {
                         if (!Undobackuped)
                         {
-                            Log.Debug($"Backup: {lastVoicerMeta}");
+                            //Log.Debug($"Backup: {lastVoicerMeta}");
                             SetVoicerMetaCommand.Backup(lastVoicerMeta);
                             Undobackuped = true;
                         }

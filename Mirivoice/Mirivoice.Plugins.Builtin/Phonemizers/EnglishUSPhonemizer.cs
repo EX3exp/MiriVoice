@@ -1,4 +1,5 @@
-﻿using Mirivoice.Mirivoice.Plugins.Builtin.IPAConverters;
+﻿using Mirivoice.Mirivoice.Core.Format;
+using Mirivoice.Mirivoice.Plugins.Builtin.IPAConverters;
 using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers.Utils;
 using System.Collections.Generic;
 using System.Text;
@@ -55,15 +56,17 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
             return words.ToArray();
         }
 
-        protected override string ToPhoneme(string word, out bool isEditable)
+        protected override string ToPhoneme(string word, out bool isEditable, out ProsodyType prosodyType)
         {
             if (word.Trim() == string.Empty)
             {
 
                 isEditable = false;
+                prosodyType = ProsodyType.None;
                 return word;
             }
             isEditable = true;
+            prosodyType = ProsodyType.Undefined;
             return EnglishUSPhonemizerUtil.WordToArpabet(word); // k ae t 
         }
     }

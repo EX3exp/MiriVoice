@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using VYaml.Annotations;
 using VYaml.Serialization;
+using Mirivoice.Mirivoice.Core.Format;
+using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers;
 
 namespace Mirivoice.Mirivoice.Core.Format
 {
@@ -20,6 +22,7 @@ namespace Mirivoice.Mirivoice.Core.Format
         public string Word { get; set; }
         public string Phoneme { get; set; }
         public bool IsEditable { get; set; }
+        public int ProsodyType { get; set; } = -1;
 
         [YamlConstructor]
         public MResultPrototype() { }
@@ -28,6 +31,15 @@ namespace Mirivoice.Mirivoice.Core.Format
             Word = mResult.Word;
             Phoneme = mResult.mTextBoxEditor.CurrentScript;
             IsEditable = mResult.IsEditable;
+            ProsodyType = mResult.Prosody;
+        }
+
+        public MResultPrototype(string word, string phoneme, bool isEditable, ProsodyType prosodyType )
+        {
+            Word = word;
+            Phoneme = phoneme;
+            IsEditable = isEditable;
+            ProsodyType = (int)prosodyType;
         }
     }
 
@@ -76,6 +88,8 @@ namespace Mirivoice.Mirivoice.Core.Format
         public string MultEditScript { get; set; } = "";
         public string DefaultVoicerName { get; set; } = "";
         public int DefaultVoicerStyleId { get; set; } = 0;
+        [YamlIgnore]
+        public Version CurrentVersion = new Version(0, 2);
 
         [YamlConstructor]
         public Mrp()
@@ -84,17 +98,37 @@ namespace Mirivoice.Mirivoice.Core.Format
         }
         public Mrp(MainViewModel v)
         {
-            Version = new Version(0, 1); // mirivoice 1.0.0
+            Version = CurrentVersion;
             mLines = v.LineBoxCollection.Select(l => new MLinePrototype(l)).ToArray();
             MultEditScript = v.mTextBoxEditor.CurrentScript;
             DefaultVoicerName = v.voicerSelector.CurrentVoicer.Info.Name;
             DefaultVoicerStyleId = v.voicerSelector.CurrentVoicer.CurrentVoicerMeta.SpeakerId;
         }
 
+        
+
         public async Task Load(MainViewModel v)
         {
             Log.Information("Loading Project");
+            
+            if (Version > CurrentVersion)
+            {
+                var res = await v.ShowConfirmWindow("menu.files.open.upgrade");
+                return;
+            }
             v.project = this;
+
+            if (Version < CurrentVersion)
+            {
+                Log.Information($"Upgrading project from {Version} to {CurrentVersion}.");
+            }
+            if (Version < new Version(0, 2))
+            {
+                foreach (var m in mLines)
+                {
+                    m.PhonemeEdit = BasePhonemizer.SetUpProsody(null, m.PhonemeEdit.ToList(), false);
+                }
+            }
 
             LineBoxView[] lines = new LineBoxView[mLines.Length];
 
@@ -131,7 +165,7 @@ namespace Mirivoice.Mirivoice.Core.Format
                             }
                             metaIndex++;
                         }
-                        lines[index] = new LineBoxView(l, v, index, voicerIndex, metaIndex);
+                        lines[index] = new LineBoxView(l, v, index, voicerIndex, metaIndex, false);
 
                     });
 

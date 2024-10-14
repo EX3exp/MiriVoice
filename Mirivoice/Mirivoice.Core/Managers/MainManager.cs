@@ -24,6 +24,8 @@ namespace Mirivoice.Mirivoice.Core
 
         public VoicerManager VoicerM = new VoicerManager();
 
+        public IconManager IconM;// will be initialized in MainViewModel
+
         public AudioManager AudioM; // will be initialized in MainViewModel
 
         public int DefaultVoicerIndex = 0;
@@ -48,6 +50,7 @@ namespace Mirivoice.Mirivoice.Core
             UpdateDefaultVoicers();
             LoadVoicerManager();
             LoadSetting();
+            
             InitializationTask = Task.Run(() => {
                 Log.Information("MainManager Initialize Start");
             });

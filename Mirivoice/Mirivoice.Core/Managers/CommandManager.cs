@@ -56,7 +56,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         }
         public void ExecuteCommand(ICommand command)
         {
-            //Log.Debug("======== ExecuteCommand ========");
+            Log.Debug("======== ExecuteCommand ========");
             command.Execute(false);
             _undoStack.Push(command);
             _redoStack.Clear();
@@ -71,7 +71,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         StreamWriter writer = new StreamWriter("filePath", false, Encoding.UTF8);
         public void Undo()
         {
-            //Log.Debug("======== Undo ========");
+            Log.Debug("======== Undo ========");
             if (_undoStack.Count > 0)
             {
                 var command = _undoStack.Pop();
@@ -89,7 +89,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
         public void Redo()
         {
-            //Log.Debug("======== Redo ========");
+            Log.Debug("======== Redo ========");
             if (_redoStack.Count > 0)
             {
                 var command = _redoStack.Pop();

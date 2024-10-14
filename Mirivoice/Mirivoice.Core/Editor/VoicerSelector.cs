@@ -228,8 +228,9 @@ namespace Mirivoice.Mirivoice.Core.Editor
                 OnPropertyChanged(nameof(CurrentVoicer));
                 OnPropertyChanged(nameof(CurrentDefaultVoicerIndex));
 
-                if (lastCulture != new CultureInfo(CurrentVoicer.Info.LangCode))
+                if (! lastCulture.Equals(new CultureInfo(CurrentVoicer.Info.LangCode)))
                 {
+                    Log.Debug($"Culture Changed: {lastCulture} -> {new CultureInfo(CurrentVoicer.Info.LangCode)}");
                     CultureChanged = true;
                     v.OnVoicerCultureChanged(new CultureInfo(CurrentVoicer.Info.LangCode));
                 }

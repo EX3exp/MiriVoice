@@ -38,6 +38,32 @@
                                          VerticalAlignment="Center" MaxLines="1" TextAlignment="Center" UndoLimit="0" CornerRadius="0"
                                          HorizontalAlignment="Stretch" FontSize="22" IsEnabled="{Binding IsEditable}"
                                          MinHeight="48"/>
+								<Border  CornerRadius="0">
+									<ComboBox SelectedIndex="{Binding Prosody, Mode=TwoWay}">
+										<ComboBoxItem>
+											<Panel>
+												<Rectangle MinWidth="50" Margin="0 0 0 0" MinHeight="48" Fill="{Binding BosIcon}" />
+											</Panel>
+										</ComboBoxItem>
+										<ComboBoxItem>
+											<Panel>
+												<Rectangle MinWidth="50" Margin="0 0 0 0" MinHeight="48" Fill="{Binding NonIcon}" />
+											</Panel>
+										</ComboBoxItem>
+										<ComboBoxItem>
+											<Panel>
+												<Rectangle MinWidth="50" Margin="0 0 0 0" MinHeight="48" Fill="{Binding SpaceIcon}" />
+											</Panel>
+										</ComboBoxItem>
+										<ComboBoxItem>
+											<Panel>
+												<Rectangle MinWidth="50" Margin="0 0 0 0" MinHeight="48" Fill="{Binding EosIcon}" />
+											</Panel>
+										</ComboBoxItem>
+									</ComboBox>
+									
+								</Border>
+
 							</StackPanel>
 						</Border>
 					</DataTemplate>

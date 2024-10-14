@@ -30,7 +30,7 @@ namespace Mirivoice.Commands
                 }
                 metaIndex++;
             }
-            var lineBox = new LineBoxView(mLinePrototype, l.v, LineNoToBeAdded + 1, l.viewModel.voicerSelector.CurrentDefaultVoicerIndex, metaIndex);
+            var lineBox = new LineBoxView(mLinePrototype, l.v, LineNoToBeAdded + 1, l.viewModel.voicerSelector.CurrentDefaultVoicerIndex, metaIndex, true);
             
 
             l.v.LineBoxCollection.Insert(LineNoToBeAdded, lineBox);

@@ -15,6 +15,7 @@ namespace Mirivoice.ViewModels
         public bool NotProcessingSetDefVoicerCommand = false;
         protected int lastDefaultVoicerIndex;
 
+
         public string _currentScript;
         public bool NotProcessingSetScriptCommand = false;
         protected string lastScript;

@@ -147,7 +147,11 @@ namespace Mirivoice.ViewModels
             //Log.Debug($"OnVoicerChanged: {voicer.NickAndStyle}");
             VoicerInfo vInfo = voicer.Info;
             
-            phonemizer = GetPhonemizer(voicer.Info.LangCode);
+            if (phonemizer is null)
+            {
+                phonemizer = GetPhonemizer(voicerSelector.CurrentVoicer.Info.LangCode);
+            }
+            
             l.IsCacheIsVaild = false;
 
             LangCode = voicer.Info.LangCode.ToUpper().Substring(0, 2);
@@ -187,10 +191,17 @@ namespace Mirivoice.ViewModels
         bool cultureChangedFirst = false;
         public override void OnVoicerCultureChanged(CultureInfo culture)
         {
-            if (LineText == lineTextBeforeChangedCulture && cultureChangedFirst)
+            phonemizer = GetPhonemizer(voicerSelector.CurrentVoicer.Info.LangCode); // get phonemizer
+            if (lineTextBeforeChangedCulture is not null && LineText is not null &&
+                LineText.Equals(lineTextBeforeChangedCulture))
             {
-                l.ShowBackUp = true; // restore backup MResults
-                cultureChangedFirst = false;
+                if (cultureChangedFirst)
+                {
+                    l.ShowBackUp = true; // restore backup MResults
+                    cultureChangedFirst = false;
+                }
+                
+                
             }
             else
             {

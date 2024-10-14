@@ -10,6 +10,11 @@
 	
 	<system:String x:Key="app.beforeExit">프로젝트가 저장되지 않았어요. 저장할까요?</system:String>
 	<system:String x:Key="app.openproject">프로젝트 열기</system:String>
+	<system:String x:Key="menu.files.open.upgrade">
+		프로젝트의 버전이 소프트웨어의 버전보다 높아요.
+		MiriVoice를 업데이트해 주세요! 
+	</system:String>
+	
 	<system:String x:Key="app.saveproject">프로젝트 저장</system:String>
 	
 	<system:String x:Key="app.defprojectname">새 프로젝트</system:String>

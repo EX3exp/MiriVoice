@@ -9,6 +9,7 @@ using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers;
 using Mirivoice.ViewModels;
 using System;
 using System.IO;
+using Serilog;
 namespace Mirivoice;
 
 
@@ -45,6 +46,11 @@ public partial class VoicersStyleBox : UserControl
 
     public async void OnSamplePlayButtonClick(object sender, RoutedEventArgs e)
     {
+        if (phrase is null || phrase.Trim().Equals(string.Empty))
+        {
+            Log.Warning("Current phrase is null or empty. Skip sample play.");
+            return;
+        }
         if (MainManager.Instance.AudioM.IsPlaying)
         {
             v.StopAudio();

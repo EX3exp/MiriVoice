@@ -24,7 +24,7 @@ namespace Mirivoice.Commands
             if (!isRedoing)
             {
                 _originator.ClearRedoMemento();
-                //_originator.PrintMemento();
+                _originator.PrintMemento();
                 
                 //Log.Debug($"-- exec");
             }
@@ -37,7 +37,7 @@ namespace Mirivoice.Commands
                 }
                 //Log.Debug($"-- Redoing");
                 _originator.RestoreFromRedoMemento();
-                //_originator.PrintMemento();
+                _originator.PrintMemento();
             }
         }
 
@@ -65,7 +65,7 @@ namespace Mirivoice.Commands
             {
                 //Log.Debug("--- Undo blocked");
             }
-            //_originator.PrintMemento();
+            _originator.PrintMemento();
         }
     }
     }
