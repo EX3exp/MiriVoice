@@ -31,7 +31,9 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Restore dependencies
-        run: nuget restore
+        run: |
+          brew install nuget
+          nuget restore
 
       - name: Build and make appcast (Linux only)
         run: python3 Mirivoice.Desktop/deploy.py 2>&1
