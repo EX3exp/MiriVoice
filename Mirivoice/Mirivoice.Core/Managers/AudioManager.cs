@@ -323,7 +323,9 @@ namespace Mirivoice.Mirivoice.Core.Managers
             v.LinesViewerOffset = new Avalonia.Vector(0, 104 * (startIndex - 1));
             currentLine = startIndex - 1;
 
+
             PlayNextFile();
+            
         }
 
         private async void PlayNextFile()
@@ -342,9 +344,22 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     _player.PlaybackFinished += OnPlaybackStopped;
                 }
 
-                await _player.Play(audioPaths[_currentFileIndex]);
+                if (!File.Exists(audioPaths[_currentFileIndex]))
+                {
+                    StopAudio();
+                    v.MainWindowGetInput = true;
+                    v.CurrentEdit.IsEnabled = true;
+                    v.SingleTextBoxEditorEnabled = true;
 
-                v.LineBoxCollection[currentLine].viewModel.IsSelected = true;
+                }
+                else
+                {
+                    await _player.Play(audioPaths[_currentFileIndex]);
+
+                    v.LineBoxCollection[currentLine].viewModel.IsSelected = true;
+                }
+                
+
 
             }
         }
@@ -375,6 +390,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 if (audioPaths.Count == 0) // when stopped
                 {
                     v.isPlaying = false;
+                    v.EnableGlobalPlay = true;
+                    v.EnablePreviewPlay = true;
                     if (!MainViewModelPlaying)
                     {
                         return;
@@ -404,7 +421,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     Log.Information("All cache files have been played.");
 
                     v.isPlaying = false;
-
+                    v.EnableGlobalPlay = true;
+                    v.EnablePreviewPlay = true;
                     v.LineBoxCollection[currentLine - 1].viewModel.IsSelected = false;
                     v.LineBoxCollection[SelectedBtnIndexBeforePlay].viewModel.IsSelected = true;
                     v.LinesViewerOffset = new Avalonia.Vector(0, OffsetBeforePlay);

@@ -167,8 +167,10 @@
 
 					</ContentControl>
 					<StackPanel  Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
-						
-						<ToggleButton Focusable="False" Cursor="Hand"  Grid.Row="0" Command="{Binding OnPlayButtonClick}" Background="DarkOliveGreen" Width="140" Height="70">
+						<ToggleButton Focusable="False" Cursor="Hand"  Grid.Row="0"  IsEnabled="{Binding EnablePreviewPlay}" Command="{Binding OnPreviewButtonClick}" Background="DarkOliveGreen" Width="140" Height="40">
+							<Path Data="{StaticResource speaker_regular}" Fill="Wheat" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</ToggleButton>
+						<ToggleButton Focusable="False" Cursor="Hand"  Grid.Row="0" IsEnabled="{Binding LockGlobalPlay}" Command="{Binding OnPlayButtonClick}" Background="DarkOliveGreen" Width="140" Height="70">
 							<Path Data="{StaticResource play_circle_regular}" Fill="Wheat" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 						</ToggleButton>
 						<Button Focusable="False" Cursor="Hand"  Grid.Row="0" Command="{Binding OnStopButtonClick}" IsEnabled="{Binding StopButtonEnabled}" Background="DarkOliveGreen" Width="140" Height="70">

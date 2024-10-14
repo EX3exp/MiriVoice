@@ -257,7 +257,27 @@ namespace Mirivoice.ViewModels
 
         private int _currentEditIndex;
 
+        private bool _enableGlobalPlay = true;
+        public bool EnableGlobalPlay
+        {
+            get => _enableGlobalPlay;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _enableGlobalPlay, value);
+                OnPropertyChanged(nameof(EnableGlobalPlay));
+            }
+        }
 
+        private bool _enablePreviewPlay = true;
+        public bool EnablePreviewPlay
+        {
+            get => _enablePreviewPlay;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _enablePreviewPlay, value);
+                OnPropertyChanged(nameof(EnablePreviewPlay));
+            }
+        }
         public int CurrentEditIndex
         {
             get => _currentEditIndex;
@@ -441,14 +461,48 @@ namespace Mirivoice.ViewModels
                 }
                 
                 isPlaying = true;
+                EnablePreviewPlay = false;
                 MainManager.Instance.AudioM.PlayAllCacheFiles(currentLineBoxIndex);
                 Log.Information("Play Button Clicked");
             }
             else
             {
                 isPlaying = false;
-                
+                EnablePreviewPlay = true;
                 Log.Information("Pause Button Clicked");
+            }
+        }
+
+        public void OnPreviewButtonClick()
+        {
+            
+            StopButtonEnabled = true;
+            if (!isPlaying)
+            {
+                int currentLineBoxIndex;
+                if (CurrentLineBox == null)
+                {
+                    if (LineBoxCollection.Count == 0)
+                    {
+                        return;
+                    }
+                    currentLineBoxIndex = 1;
+                }
+                else
+                {
+                    currentLineBoxIndex = Int32.Parse(CurrentLineBox.viewModel.LineNo);
+                }
+
+                isPlaying = true;
+                EnableGlobalPlay = false;
+                MainManager.Instance.AudioM.PlayAllCacheFiles(currentLineBoxIndex, false, true, "", "", false, true);
+                Log.Information("Play Button Clicked - preview");
+            }
+            else
+            {
+                isPlaying = false;
+                EnableGlobalPlay = true;
+                Log.Information("Pause Button Clicked - preview");
             }
         }
         IStorageFolder LastExportPath;
@@ -582,6 +636,7 @@ namespace Mirivoice.ViewModels
             isPlaying = false;
             MainManager.Instance.AudioM.StopAudio();
             StopButtonEnabled = false;
+            EnableGlobalPlay = true;
         }
 
         public void OnAddBoxesButtonClick()
