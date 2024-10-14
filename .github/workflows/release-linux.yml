@@ -38,7 +38,7 @@ jobs:
           mono /usr/local/bin/nuget.exe help
           echo 'alias nuget="mono /usr/local/bin/nuget.exe"' >> ~/.bashrc
           source ~/.bashrc
-          nuget restore
+          mono /usr/local/bin/nuget.exe restore
 
       - name: Build and make appcast (Linux only)
         run: python3 Mirivoice.Desktop/deploy.py 2>&1
