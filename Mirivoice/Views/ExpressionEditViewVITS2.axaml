@@ -8,27 +8,27 @@
              x:Class="Mirivoice.ExpressionEditViewVITS2">
 
 	<Border BorderBrush="DarkSlateGray" BorderThickness="1" Background="Gray">
-		<ScrollViewer AllowAutoHide="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+		<ScrollViewer AllowAutoHide="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
 			<StackPanel Background="White">
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="{DynamicResource edits.expression.speedVITS2} " MaxLines="2" TextWrapping="Wrap" TextElement.FontWeight="Bold" Foreground="DarkSlateGray" TextAlignment="Center" Width="50" FontSize="14" Margin="13 15 15 15" />
 					
 					<NumericUpDown Value="{Binding VITS2Speed}" Minimum="{Binding MinSpeed}" Maximum="{Binding MaxSpeed}" HorizontalContentAlignment="Center" TextElement.FontSize="15" ParsingNumberStyle="Integer"  Increment="1" Margin="13 5 15 5" />
-					<Slider PointerPressed="ClearVITS2Speed" Value="{Binding VITS2Speed}" Minimum="{Binding MinSpeed}" Width="300" Maximum="{Binding MaxSpeed}" SmallChange="1" LargeChange="10" Margin="13 5 15 5" />
+					<Slider PropertyChanged="OnChangedSpeed" TickFrequency="1" PointerPressed="ClearVITS2Speed" Value="{Binding VITS2Speed}" Minimum="{Binding MinSpeed}" MinWidth="320" Maximum="{Binding MaxSpeed}" Margin="13 5 15 5" />
 					
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="{DynamicResource edits.expression.noise1VITS2} " MaxLines="2" TextWrapping="Wrap" TextElement.FontWeight="Bold" Foreground="DarkSlateGray" TextAlignment="Center" Width="50" FontSize="14" Margin="13 15 15 15" />
 
 					<NumericUpDown Value="{Binding VITS2Noise1}" Minimum="{Binding MinNoise1}" Maximum="{Binding MaxNoise1}" HorizontalContentAlignment="Center" TextElement.FontSize="15" ParsingNumberStyle="Integer"  Increment="1" Margin="13 5 15 5" />
-					<Slider PointerPressed="ClearVITS2Noise1" Value="{Binding VITS2Noise1}" Minimum="{Binding MinNoise1}" Width="300" Maximum="{Binding MaxNoise1}" SmallChange="1" LargeChange="10" Margin="13 5 15 5" />
+					<Slider PropertyChanged="OnChangedNoise1" TickFrequency="1" PointerPressed="ClearVITS2Noise1" Value="{Binding VITS2Noise1}" Minimum="{Binding MinNoise1}" MinWidth="320" Maximum="{Binding MaxNoise1}" Margin="13 5 15 5" />
 
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="{DynamicResource edits.expression.noise2VITS2} " MaxLines="2" TextWrapping="Wrap" TextElement.FontWeight="Bold" Foreground="DarkSlateGray" TextAlignment="Center" Width="50" FontSize="14" Margin="13 15 15 15" />
 					
 					<NumericUpDown Value="{Binding VITS2Noise2}" Minimum="{Binding MinNoise2}" Maximum="{Binding MaxNoise2}" HorizontalContentAlignment="Center" TextElement.FontSize="15" ParsingNumberStyle="Integer"  Increment="1" Margin="13 5 15 5" />
-					<Slider PointerPressed="ClearVITS2Noise2" Value="{Binding VITS2Noise2}" Minimum="{Binding MinNoise2}" Width="300" Maximum="{Binding MaxNoise2}" SmallChange="1" LargeChange="10" Margin="13 5 15 5" />
+					<Slider PropertyChanged="OnChangedNoise2" TickFrequency="1" PointerPressed="ClearVITS2Noise2" Value="{Binding VITS2Noise2}" Minimum="{Binding MinNoise2}" MinWidth="320" Maximum="{Binding MaxNoise2}"  Margin="13 5 15 5" />
 
 				</StackPanel>
 			</StackPanel>

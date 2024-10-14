@@ -95,6 +95,11 @@ namespace Mirivoice.Commands
                     v.CurrentSingleLineEditor = null;
                     v.MResultsCollection.Clear();
                 }
+                if (v.CurrentEditIndex == 1)
+                {
+                    v.CurrentEdit = null;
+                    v.OnPropertyChanged(nameof(v.CurrentEdit));
+                }
                 v.OnPropertyChanged(nameof(v.CurrentSingleLineEditor));
                 v.LineBoxCollection.RemoveAt(i);
             }
