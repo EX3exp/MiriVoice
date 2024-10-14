@@ -32,7 +32,8 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          sudo apt install nuget
+          sudo apt-get update -y
+          sudo apt-get install -y nuget
           nuget restore
 
       - name: Build and make appcast (Linux only)
