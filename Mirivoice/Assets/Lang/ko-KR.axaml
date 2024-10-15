@@ -111,6 +111,7 @@
 	<system:String x:Key="menu.help.title">도움말</system:String>
 	<system:String x:Key="menu.help.update">업데이트 확인</system:String>
 	<system:String x:Key="menu.help.github">GitHub 방문</system:String>
+	<system:String x:Key="menu.help.openLogDir">로그 폴더 열기...</system:String>
 	
 	<!--editor body 1 -->
 	<system:String x:Key="editor.input.mult.title">대사 입력란</system:String>

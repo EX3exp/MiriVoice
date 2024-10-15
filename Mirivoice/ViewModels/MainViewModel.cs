@@ -182,6 +182,10 @@ namespace Mirivoice.ViewModels
             }
         }
 
+        public async void OnOpenLogDirClick()
+        {
+            OS.OpenFolder(MainManager.Instance.PathM.LogFolderPath);
+        }
         public async Task OnOpenButtonClick()
         {
             if (MainManager.Instance.cmd.IsNeedSave)

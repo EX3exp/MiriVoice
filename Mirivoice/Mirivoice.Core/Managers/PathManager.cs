@@ -21,6 +21,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         public bool IsInstalled { get; private set; }
 
         public string LogFilePath => Path.Combine(DataPath, "Logs", "log.txt");
+        public string LogFolderPath => Path.Combine(DataPath, "Logs");
         public string VoicerPath => Path.Combine(DataPath, "Voicers");
         public string AssetsPath;
         

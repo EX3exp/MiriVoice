@@ -107,6 +107,7 @@
 	<system:String x:Key="menu.help.title">Help</system:String>
 	<system:String x:Key="menu.help.update">Check Updates</system:String>
 	<system:String x:Key="menu.help.github">Visit GitHub</system:String>
+	<system:String x:Key="menu.help.openLogDir">Open Log Directory...</system:String>
 	
 	<!--editor body 1 -->
 	<system:String x:Key="editor.input.mult.title">Lines Input</system:String>
