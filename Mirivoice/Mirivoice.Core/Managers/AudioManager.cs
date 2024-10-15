@@ -81,6 +81,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 return reader.TotalTime;
             }
         }
+
+        
         List<string> GetAllCacheFiles()
         {
             return Directory.GetFiles(MainManager.Instance.PathM.CachePath, "*.wav").ToList();
@@ -89,6 +91,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
         private double OffsetBeforePlay;
         private int offset = 0;
         private int currentLine;
+
+        public bool PlayingOneShot = false;
         /// <summary>
         /// Note that startIndex is same as lineNo (starts from 1, not 0)
         /// </summary>
@@ -113,7 +117,11 @@ namespace Mirivoice.Mirivoice.Core.Managers
             
             int index = 0;
             v.SingleTextBoxEditorEnabled = false;
-            v.CurrentEdit.IsEnabled = false;
+            if (v.CurrentEdit is not null)
+            {
+                v.CurrentEdit.IsEnabled = false;
+            }
+            
             var tasks = new List<Task>();
 
             caches.Clear();
@@ -133,7 +141,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
                 if (i < startIndex - 1 || skipInference)
                 {
-                    //Log.Debug($"[Skipping Cache Generation] Line {l.viewModel.LineNo} is before the start index.");
+                    Log.Debug($"[Skipping Cache Generation] Line {l.viewModel.LineNo} is before the start index.");
                     continue;
                 }
 
@@ -200,7 +208,10 @@ namespace Mirivoice.Mirivoice.Core.Managers
                             WaveFileWriter.CreateWaveFile(exportPath, resampler);
                         }
                     }
-                    v.CurrentEdit.IsEnabled = true;
+                    if (v.CurrentEdit is not null)
+                    {
+                        v.CurrentEdit.IsEnabled = true;
+                    }
                     v.SingleTextBoxEditorEnabled = true;
                     v.MainWindowGetInput = true;
                     return;
@@ -230,7 +241,11 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         }
                         no++;
                     }
-                    v.CurrentEdit.IsEnabled = true;
+                    if (v.CurrentEdit is not null)
+                    {
+                        v.CurrentEdit.IsEnabled = true;
+                    }
+                    
                     v.SingleTextBoxEditorEnabled = true;
                     v.MainWindowGetInput = true;
                     return;
@@ -270,7 +285,12 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         }
                         File.WriteAllText(exportPath, sb1.ToString());
                         File.WriteAllText(exportPathNamesSrt, sb2.ToString());
-                        v.CurrentEdit.IsEnabled = true;
+
+                        if (v.CurrentEdit is not null)
+                        {
+                            v.CurrentEdit.IsEnabled = true;
+                        }
+
                         v.SingleTextBoxEditorEnabled = true;
                         v.MainWindowGetInput = true;
                         return;
@@ -302,15 +322,19 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         }
                     }
                 }
-                v.CurrentEdit.IsEnabled = true;
+                if (v.CurrentEdit is not null)
+                {
+                    v.CurrentEdit.IsEnabled = true;
+                }
                 v.SingleTextBoxEditorEnabled = true;
                 v.MainWindowGetInput = true;
                 return;
             }
 
+            audioPaths.Clear();
             foreach (string cacheName in caches)
             {
-                //Log.Debug($"[Collecting Cache] {cacheName}");
+                Log.Debug($"[Collecting Cache] {cacheName}");
                 audioPaths.Add(cacheName);
 
 
@@ -323,14 +347,49 @@ namespace Mirivoice.Mirivoice.Core.Managers
             v.LinesViewerOffset = new Avalonia.Vector(0, 104 * (startIndex - 1));
             currentLine = startIndex - 1;
 
+            if (SelectedOnly)
+            {
+                PlayingOneShot = true;
+                if (_player is null)
+                {
+                    _player = new Player();
+                    _player.PlaybackFinished += OnPlaybackStopped;
+                }
 
-            PlayNextFile();
+
+                if (!File.Exists(audioPaths[0]))
+                {
+
+                    v.MainWindowGetInput = true;
+                    if (v.CurrentEdit is not null)
+                    {
+                        v.CurrentEdit.IsEnabled = true;
+                    }
+                    v.SingleTextBoxEditorEnabled = true;
+
+                }
+                else
+                {
+
+                    await _player.Play(audioPaths[0]);
+
+                    v.LineBoxCollection[currentLine].viewModel.IsSelected = true;
+
+                }
+
+                return;
+            }
+            else
+            {
+                PlayNextFile();
+            }
+            
             
         }
 
         private async void PlayNextFile()
         {
-
+            
             if (_currentFileIndex < audioPaths.Count)
             {
                 Log.Information($"Playing cache file: {audioPaths[_currentFileIndex]}");
@@ -344,19 +403,25 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     _player.PlaybackFinished += OnPlaybackStopped;
                 }
 
+                
                 if (!File.Exists(audioPaths[_currentFileIndex]))
                 {
                     StopAudio();
                     v.MainWindowGetInput = true;
-                    v.CurrentEdit.IsEnabled = true;
+                    if (v.CurrentEdit is not null)
+                    {
+                        v.CurrentEdit.IsEnabled = true;
+                    }
                     v.SingleTextBoxEditorEnabled = true;
 
                 }
                 else
                 {
+                    
                     await _player.Play(audioPaths[_currentFileIndex]);
 
                     v.LineBoxCollection[currentLine].viewModel.IsSelected = true;
+                    
                 }
                 
 
@@ -386,9 +451,17 @@ namespace Mirivoice.Mirivoice.Core.Managers
         {
             Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
-
                 Log.Information("Playback stopped.");
-                v.isPlaying = false;
+                
+                if (PlayingOneShot)
+                {
+                    Log.Information("One-shot playback stopped.");
+                    StopAudio();
+
+                    return;
+                }
+                
+                
                 if (audioPaths.Count == 0) // when stopped
                 {
                     
@@ -415,6 +488,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 v.LineBoxCollection[currentLine].viewModel.IsSelected = false;
                 v.LinesViewerOffset = new Avalonia.Vector(0, v.LinesViewerOffset.Y + 104);
 
+                
                 currentLine++;
                 _currentFileIndex++;
 
@@ -426,6 +500,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 {
                     Log.Information("All cache files have been played.");
 
+                    v.OnStopButtonClick();
                     v.isPlaying = false;
                     v.EnableGlobalPlay = true;
                     v.EnablePreviewPlay = true;
@@ -451,7 +526,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
         public void StopAudio()
         {
 
-
+            PlayingOneShot = false;
             if (_player is not null)
             {
                 _player.Stop();
