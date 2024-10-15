@@ -83,7 +83,8 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.IPAConverters
             if (KoreanPhonemizerUtil.IsHangeul(phoneme))
             {
 
-                var splited = KoreanPhonemizerUtil.Separate(phoneme);
+                string phoneme_ = KoreanPhonemizerUtil.Variate(null, phoneme, null);
+                var splited = KoreanPhonemizerUtil.Separate(phoneme_);
                 string firstConsonant = (string)splited[0];
 
                 if ( isFirstPhoneme && (firstConsonant == "ㄱ" || firstConsonant == "ㄷ" || firstConsonant == "ㅂ"))
