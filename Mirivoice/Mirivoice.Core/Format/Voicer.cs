@@ -92,11 +92,15 @@ namespace Mirivoice.Mirivoice.Core.Format
                 Log.Error("Engine is not initialized.");
                 return;
             }
-            Log.Debug($"speed: {l.Exp.VITS2Speed}, noise1: {l.Exp.VITS2Noise1}, noise2: {l.Exp.VITS2Noise2}");
-            Engine.Inference(ipaText, cacheFilePath, sid, l.Exp);
             if (l != null)
             {
+                Log.Debug($"speed: {l.Exp.VITS2Speed}, noise1: {l.Exp.VITS2Noise1}, noise2: {l.Exp.VITS2Noise2}");
+                Engine.Inference(ipaText, cacheFilePath, sid, l.Exp);
                 l.IsCacheIsVaild = true;
+            }
+            else
+            {
+                Engine.Inference(ipaText, cacheFilePath, sid, new MExpressionsWrapper());
             }
         }
 

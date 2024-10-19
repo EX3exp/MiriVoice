@@ -133,6 +133,7 @@ public class EngineVITS2 : BaseEngine
             Log.Error("EngineVITS2 is not initialized.");
             return;
         }
+
         Tensor<long> phonemeIds = GetText($"{configVITS2._pad}{ipaText}");
 
             // expand dimensions
