@@ -34,7 +34,7 @@
 						
 								<DataTemplate>
 									<StackPanel  Orientation="Horizontal" Margin="5" >
-										<TextBlock Text="{Binding Info.Name}" VerticalAlignment="Center" Width="100"/>
+										<TextBlock FontFamily="{DynamicResource NormalFont}" FontWeight="Bold" Text="{Binding Info.Name}" VerticalAlignment="Center" Width="100"/>
 										<ComboBox ItemsSource="{Binding VoicerMetaCollection}" Cursor="Hand"  SelectedItem="{Binding CurrentVoicerMeta}"  >
 											<ComboBox.ItemTemplate>
 												<DataTemplate>
@@ -51,13 +51,13 @@
 
 				<StackPanel Margin="0 0 0 0"  Grid.Column="3" Grid.ColumnSpan="6" Grid.Row="0">
 
-					<TextBlock  Text="{Binding voicerSelector.CurrentVoicer.NickAndStyle, Mode=TwoWay}" Height="40" Margin="13 0 0 0" TextAlignment="Left" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  LineHeight="40"  FontSize="15" ></TextBlock>
+					<TextBlock FontFamily="{DynamicResource NormalFont}" FontWeight="Bold" Text="{Binding voicerSelector.CurrentVoicer.NickAndStyle, Mode=TwoWay}" Height="40" Margin="13 0 0 0" TextAlignment="Left" TextTrimming="CharacterEllipsis" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  LineHeight="40"  FontSize="16" ></TextBlock>
 
 				</StackPanel>
 
 				<StackPanel Margin="0 3 0 0"  Grid.Column="3" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" >
 
-					<TextBlock Height="64" Margin="13 5 0 0" Text="{Binding LineText, Mode=OneWay}" TextAlignment="Left" TextTrimming="WordEllipsis" xml:space="preserve" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  FontSize="15" ></TextBlock>
+					<TextBlock FontFamily="{DynamicResource LineFont}" Height="64" Margin="13 5 0 0" Text="{Binding LineText, Mode=OneWay}" TextAlignment="Left" TextTrimming="WordEllipsis" xml:space="preserve" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" HorizontalAlignment="Left"  FontSize="15" ></TextBlock>
 					
 				</StackPanel>
 

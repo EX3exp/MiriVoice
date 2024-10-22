@@ -84,7 +84,7 @@
 
 
 						<StackPanel  Margin="13 20 13 30" Grid.ColumnSpan="3" Grid.Row="0" >
-							<TextBlock  Text="{DynamicResource editor.input.mult.defaultVoicerName}" FontSize="15"></TextBlock>
+							<TextBlock Text="{DynamicResource editor.input.mult.defaultVoicerName}" FontSize="15"></TextBlock>
 						</StackPanel>
 
 					</StackPanel>
@@ -95,7 +95,7 @@
 
 									<DataTemplate>
 										<StackPanel  Orientation="Horizontal" Margin="5">
-											<TextBlock Text="{Binding Info.Name}" VerticalAlignment="Center" Width="120"/>
+											<TextBlock FontFamily="{DynamicResource NormalFont}" FontWeight="Bold" Text="{Binding Info.Name}" VerticalAlignment="Center" Width="120"/>
 											<ComboBox ItemsSource="{Binding VoicerMetaCollection}" Cursor="Hand"  Width="100" SelectedItem="{Binding CurrentVoicerMeta}" >
 												<ComboBox.ItemTemplate>
 													<DataTemplate>
@@ -112,13 +112,13 @@
 					</Grid>
 
 					<StackPanel Margin="13 20 13 30" Grid.Row="3" VerticalAlignment="Top">
-						<TextBlock  Text="{DynamicResource editor.input.mult.title}" FontSize="15" Grid.Row="3">
+						<TextBlock Text="{DynamicResource editor.input.mult.title}" FontSize="15" Grid.Row="3">
 
 						</TextBlock>
 
 					</StackPanel>
 
-					<Grid Margin="13 20 13 30" Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Top" >
+					<Grid Margin="13 25 13 30" Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Top" >
 
 						
 						<TextBox Margin="0 25 0 0" IsHitTestVisible="{Binding MainWindowGetInput}" x:Name="multEditTBox" AcceptsReturn="True" Text="{Binding mTextBoxEditor.CurrentScript, Mode=TwoWay}" IsUndoEnabled="False" TextWrapping="Wrap" MaxHeight="200"  Watermark="{DynamicResource editor.input.mult.desc}" MinHeight="100" FontSize="15"/>

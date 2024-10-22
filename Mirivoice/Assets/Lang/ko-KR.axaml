@@ -2,7 +2,11 @@
 	xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
-
+	<FontFamily x:Key="DefaultFont">avares://Mirivoice.Main/Assets/Fonts/Pretendard-1.3.9/public/static/alternative#Pretendard</FontFamily>
+	<FontFamily x:Key="NormalFont">avares://Mirivoice.Main/Assets/Fonts/SUITE-ttf#SUITE</FontFamily>
+	<FontFamily x:Key="LineFont">avares://Mirivoice.Main/Assets/Fonts/학교안심 그림일기#Hakgyoansim Geurimilgi</FontFamily>
+	<FontFamily x:Key="VoicerNameFont">avares://Mirivoice.Main/Assets/Fonts/Jua#Jua</FontFamily>
+	
 	<system:String x:Key="app.yes">네</system:String>
 	<system:String x:Key="app.no">아니요</system:String>
 	<system:String x:Key="app.cancel">취소</system:String>

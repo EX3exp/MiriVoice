@@ -18,5 +18,4 @@
 		<KeyBinding Gesture="Ctrl + N" Command="{Binding OnNewButtonClick}" />
 	</Window.KeyBindings>
 	<views:MainView />
-
 </Window>

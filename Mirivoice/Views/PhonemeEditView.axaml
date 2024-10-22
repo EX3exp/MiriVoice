@@ -22,9 +22,10 @@
 						<Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
 							<StackPanel>
 								<!-- Word displayed on the first line -->
-								<TextBlock x:Name="WordTextBlock"
+								<TextBlock x:Name="WordTextBlock" 
 										   TextElement.Foreground="Wheat"
-										   FontSize="22"
+										   FontSize="23"
+										   FontWeight="Bold"
 										   MaxLines="1"
 										   LineHeight="48"
 										   Background="DarkOliveGreen"

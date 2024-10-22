@@ -20,7 +20,7 @@
 				<Grid Grid.Column="0" Margin="15 15 10 10"  HorizontalAlignment="Stretch" >
 					<StackPanel>
 						<StackPanel HorizontalAlignment="Right" Margin="5 10 10 0" >
-							<Path Width="36" Height="36" Margin="0 0 20 0" Data="{StaticResource person_voice_regular}" Fill="Bisque" Stretch="Uniform"/>
+							<Path Width="36" Height="36" Margin="0 0 20 0" Data="{StaticResource person_voice_regular}" Fill="LightGreen" Stretch="Uniform"/>
 						</StackPanel>
 						
 						
@@ -43,7 +43,7 @@
 				</Grid>
 				<Grid Grid.Column="1"  Margin="10 5 5 5">
 					<StackPanel VerticalAlignment="Stretch" Width="300" >
-						<TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="15" Text="{DynamicResource voicers.readme}" FontSize="14" Margin="15 30 10 10" FontWeight="Bold" ></TextBlock>
+						<TextBlock FontWeight="Bold" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="15" Text="{DynamicResource voicers.readme}" FontSize="14" Margin="15 30 10 10" ></TextBlock>
 						<Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="15 0 0 0">
 							<ScrollViewer BorderBrush="LightGray" Height="250" BorderThickness="1" AllowAutoHide="False"  Margin="15 15 15 15" Focusable="True"  HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Visible" >
 
@@ -96,7 +96,7 @@
 				</Grid>
 				<Grid Grid.Column="3"  Margin="10 5 5 5">
 					<StackPanel VerticalAlignment="Stretch" Width="300" >
-						<TextBlock Tapped="OnVoicerWebClicked" Cursor="Hand" Height="124" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="26" MaxLines="4" Text="{Binding Name}" FontSize="45"  Margin="15 30 10 10" Padding="10 10 10 10" FontWeight="Bold" ></TextBlock>
+						<TextBlock Tapped="OnVoicerWebClicked" Cursor="Hand" Height="124" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="40" MaxLines="4" Text="{Binding Name}" FontSize="45"  Margin="15 30 10 10" Padding="10 10 10 10" FontWeight="Bold" FontFamily="{DynamicResource VoicerNameFont}" ></TextBlock>
 						<TextBlock VerticalAlignment="Center"  TextWrapping="Wrap" Foreground="DarkOliveGreen" LineHeight="15" Text="{DynamicResource voicers.styles}" FontSize="14" Margin="15 30 10 10" FontWeight="Bold" ></TextBlock>
 						<Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Margin="15 0 0 0">
 							<ScrollViewer BorderBrush="LightGray" Height="126" BorderThickness="1"   AllowAutoHide="False"  Margin="0 0 0 0" Focusable="True"  HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Visible" >
