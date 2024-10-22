@@ -6,7 +6,7 @@
 
 `미리보이스`는 모두를 위한 **무료** 오픈소스 TTS 엔진이에요.
 
-<img src="..\Misc\app_preview.jpg" height="210"/>
+<img src="..\Misc\app_preview_v2.jpg" height="220"/>
 
 ### 📁 미리보이스 다운로드
 

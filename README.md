@@ -6,7 +6,7 @@
 
 `MiriVoice` is **Free**, Open-Source TTS Engine Application for all.
 
-<img src="Misc\app_preview.jpg" height="210"/>
+<img src="Misc\app_preview_v2.jpg" height="220"/>
 
 ### 📁 Download MiriVoice
 
