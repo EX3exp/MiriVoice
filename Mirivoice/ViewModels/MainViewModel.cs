@@ -212,32 +212,35 @@ namespace Mirivoice.ViewModels
 
         public async Task OpenProject(string path)
         {
-            if (File.Exists(path))
+            await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
             {
-                Log.Information($"Opening project: {path}");
-                var yamlUtf8Bytes = System.Text.Encoding.UTF8.GetBytes(MainManager.Instance.ReadTxtFile(path));
-                Mrp mrp = YamlSerializer.Deserialize<Mrp>(yamlUtf8Bytes);
-                try
+                if (File.Exists(path))
                 {
-                    await mrp.Load(this);
-                    project = mrp;
-                    CurrentProjectPath = path;
-                    RecentFiles.AddRecentFile(CurrentProjectPath, this);
-                    OnPropertyChanged(nameof(RecentMenuCollection));
-                    MainManager.Instance.cmd.ProjectOpened();
-                    OnPropertyChanged(nameof(Title));
-                }
-                catch (Exception e)
-                {
-                    Log.Error($"[Failed to load project]{e.ToString}: {e.Message} \n>> traceback: \n\t{e.StackTrace}");
-                    var res = await ShowConfirmWindow("app.openFailed");
-                }
+                    Log.Information($"Opening project: {path}");
+                    var yamlUtf8Bytes = System.Text.Encoding.UTF8.GetBytes(MainManager.Instance.ReadTxtFile(path));
+                    Mrp mrp = YamlSerializer.Deserialize<Mrp>(yamlUtf8Bytes);
+                    try
+                    {
+                        await mrp.Load(this);
+                        project = mrp;
+                        CurrentProjectPath = path;
+                        RecentFiles.AddRecentFile(CurrentProjectPath, this);
+                        OnPropertyChanged(nameof(RecentMenuCollection));
+                        MainManager.Instance.cmd.ProjectOpened();
+                        OnPropertyChanged(nameof(Title));
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error($"[Failed to load project]{e.ToString}: {e.Message} \n>> traceback: \n\t{e.StackTrace}");
+                        var res = await ShowConfirmWindow("app.openFailed");
+                    }
 
-            }
-            else
-            {
-                var res = await ShowConfirmWindow("menu.files.recent.openFailed");
-            }
+                }
+                else
+                {
+                    var res = await ShowConfirmWindow("menu.files.recent.openFailed");
+                }
+            });
         }
         public ObservableCollection<MResult> MResultsCollection { get; set; } = new ObservableCollection<MResult>();
 
@@ -594,7 +597,20 @@ namespace Mirivoice.ViewModels
                 string path = file.Path.LocalPath;
                 try
                 {
-                    MainManager.Instance.AudioM.PlayAllCacheFiles(1, true, false, System.IO.Path.GetFileNameWithoutExtension(path), System.IO.Path.GetDirectoryName(path), false, true);
+                    int currentLineBoxIndex;
+                    if (CurrentLineBox == null)
+                    {
+                        if (LineBoxCollection.Count == 0)
+                        {
+                            return;
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        currentLineBoxIndex = Int32.Parse(CurrentLineBox.viewModel.LineNo);
+                    }
+                    MainManager.Instance.AudioM.PlayAllCacheFiles(currentLineBoxIndex, true, true, System.IO.Path.GetFileNameWithoutExtension(path), System.IO.Path.GetDirectoryName(path), false, true);
                 }
                 catch (Exception e)
                 {
