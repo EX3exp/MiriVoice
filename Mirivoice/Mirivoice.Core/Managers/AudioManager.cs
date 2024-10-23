@@ -195,7 +195,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                     int no = Int32.Parse(v.CurrentLineBox.viewModel.LineNo) - 1;
 
                     string exportPath = Path.Combine(DirPath, $"{no}_{fileName}.wav");
-                    string cacheName = caches[no];
+                    string cacheName = caches[0];
                     exportPath = SetSuffixToUnique(exportPath, 1);
                     Log.Debug($"Exporting {cacheName} to {exportPath}");
                     // resample to 48000kHz 
