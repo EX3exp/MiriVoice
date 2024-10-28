@@ -10,12 +10,12 @@
         Icon="/Assets/mirivoice-logo.ico" 
         Title="{Binding Title}">
 	<Window.KeyBindings>
-		<KeyBinding Gesture="Ctrl + Z" Command="{Binding Undo}" />
-		<KeyBinding Gesture="Ctrl + Y" Command="{Binding Redo}" />
-		<KeyBinding Gesture="Ctrl + O" Command="{Binding OnOpenButtonClicked}" />
-		<KeyBinding Gesture="Ctrl + S" Command="{Binding OnSaveButtonClick}" />
-		<KeyBinding Gesture="Ctrl + Shift + S" Command="{Binding OnSaveAsButtonClick}" />
-		<KeyBinding Gesture="Ctrl + N" Command="{Binding OnNewButtonClick}" />
+		<KeyBinding Gesture="{Binding UndoGesture}" Command="{Binding Undo}" />
+		<KeyBinding Gesture="{Binding RedoGesture}" Command="{Binding Redo}" />
+		<KeyBinding Gesture="{Binding OpenGesture}" Command="{Binding OnOpenButtonClicked}" />
+		<KeyBinding Gesture="{Binding SaveGesture}" Command="{Binding OnSaveButtonClick}" />
+		<KeyBinding Gesture="{Binding SaveAsGesture}" Command="{Binding OnSaveAsButtonClick}" />
+		<KeyBinding Gesture="{Binding NewGesture}" Command="{Binding OnNewButtonClick}" />
 	</Window.KeyBindings>
 	<views:MainView />
 </Window>

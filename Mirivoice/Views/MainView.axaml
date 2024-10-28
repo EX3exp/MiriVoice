@@ -24,14 +24,14 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="{DynamicResource menu.files.title }">
-				<MenuItem Header="{DynamicResource menu.files.new}" Command="{Binding OnNewButtonClick}" InputGesture="Ctrl+N"/>
+				<MenuItem Header="{DynamicResource menu.files.new}" Command="{Binding OnNewButtonClick}" InputGesture="{Binding NewGesture}"/>
 				<Separator/>
-				<MenuItem Header="{DynamicResource menu.files.open}" Command="{Binding OnOpenButtonClick}" InputGesture="Ctrl+O"/>
+				<MenuItem Header="{DynamicResource menu.files.open}" Command="{Binding OnOpenButtonClick}" InputGesture="{Binding OpenGesture}"/>
 				<MenuItem Header="{DynamicResource menu.files.recent}" ItemsSource="{Binding RecentMenuCollection}">
 					
 				</MenuItem>
-				<MenuItem Header="{DynamicResource menu.files.save}" Command="{Binding OnSaveButtonClick}" InputGesture="Ctrl+S"/>
-				<MenuItem Header="{DynamicResource menu.files.saveas}" Command="{Binding OnSaveAsButtonClick}" InputGesture="Ctrl+Shift+S"/>
+				<MenuItem Header="{DynamicResource menu.files.save}" Command="{Binding OnSaveButtonClick}" InputGesture="{Binding SaveGesture}"/>
+				<MenuItem Header="{DynamicResource menu.files.saveas}" Command="{Binding OnSaveAsButtonClick}" InputGesture="{Binding SaveAsGesture}"/>
 				<Separator/>
 				<MenuItem Header="{DynamicResource menu.files.export}">
 					<MenuItem Header="{DynamicResource menu.files.export.perLine}" Command="{Binding OnExportAudioPerLineClick}"></MenuItem>
@@ -46,8 +46,8 @@
 
 
 			<MenuItem Header="{DynamicResource menu.project.title}">
-				<MenuItem Header="{DynamicResource menu.project.undo}" InputGesture="Ctrl+Z" Command="{Binding Undo}"></MenuItem>
-				<MenuItem Header="{DynamicResource menu.project.redo}" InputGesture="Ctrl+Y" Command="{Binding Redo}"></MenuItem>
+				<MenuItem Header="{DynamicResource menu.project.undo}" InputGesture="{Binding UndoGesture}" Command="{Binding Undo}"></MenuItem>
+				<MenuItem Header="{DynamicResource menu.project.redo}" InputGesture="{Binding RedoGesture}" Command="{Binding Redo}"></MenuItem>
 				<Separator/>
 				<MenuItem Header="{DynamicResource menu.project.pref}" IsEnabled="False"></MenuItem>
 				<Separator/>

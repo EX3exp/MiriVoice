@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Input;
 using Avalonia.Platform.Storage;
 using global::Mirivoice.Views;
 using Mirivoice.Commands;
@@ -26,6 +27,7 @@ namespace Mirivoice.ViewModels
     public class MainViewModel : VoicerSelectingViewModelBase
     {
         MainWindow mainWindow;
+        
         public static FilePickerFileType MiriVoiceProject { get; } = new("MiriVoice Project File")
         {
             Patterns = new[] { "*.mrp" },
@@ -729,6 +731,7 @@ namespace Mirivoice.ViewModels
 
         }
 
+        
 
         public MainViewModel(MainWindow window) : base(true)
         {
@@ -740,6 +743,7 @@ namespace Mirivoice.ViewModels
             LoadRecentFIles();
             
             SetCommands();
+            SetGestures();
 
             SingleTextBoxEditorEnabled = false;
             IsVisibleProgressbar = false;
@@ -939,6 +943,36 @@ namespace Mirivoice.ViewModels
                 OnPropertyChanged(nameof(RecentMenuCollection));
             }
             RecentFiles.UpdateUI(this); // update UI
+        }
+
+        // Key gestures
+        public KeyGesture UndoGesture { get; set; }
+        public KeyGesture RedoGesture { get; set; }
+        public KeyGesture OpenGesture { get; set; }
+        public KeyGesture SaveGesture { get; set; }
+        public KeyGesture SaveAsGesture { get; set; }
+        public KeyGesture NewGesture { get; set; }
+
+        void SetGestures()
+        {
+            if (OS.IsWindows() || OS.IsLinux())
+            {
+                UndoGesture = new KeyGesture(Key.Z, KeyModifiers.Control);
+                RedoGesture = new KeyGesture(Key.Y, KeyModifiers.Control);
+                OpenGesture = new KeyGesture(Key.O, KeyModifiers.Control);
+                SaveGesture = new KeyGesture(Key.S, KeyModifiers.Control);
+                SaveAsGesture = new KeyGesture(Key.S, KeyModifiers.Control | KeyModifiers.Shift);
+                NewGesture = new KeyGesture(Key.N, KeyModifiers.Control);
+            }
+            else // MacOS
+            {
+                UndoGesture = new KeyGesture(Key.Z, KeyModifiers.Meta);
+                RedoGesture = new KeyGesture(Key.Y, KeyModifiers.Meta);
+                OpenGesture = new KeyGesture(Key.O, KeyModifiers.Meta);
+                SaveGesture = new KeyGesture(Key.S, KeyModifiers.Meta);
+                SaveAsGesture = new KeyGesture(Key.S, KeyModifiers.Meta | KeyModifiers.Shift);
+                NewGesture = new KeyGesture(Key.N, KeyModifiers.Meta);
+            }
         }
         // Commands
         public MCommand AddLineBoxCommand { get; set; }
