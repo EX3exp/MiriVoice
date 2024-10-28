@@ -7,9 +7,8 @@ using Mirivoice.Mirivoice.Core.Format;
 using Mirivoice.Mirivoice.Core.Managers;
 using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers;
 using Mirivoice.ViewModels;
-using System;
-using System.IO;
 using Serilog;
+using System.IO;
 namespace Mirivoice;
 
 

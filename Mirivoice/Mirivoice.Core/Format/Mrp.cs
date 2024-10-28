@@ -83,7 +83,7 @@ namespace Mirivoice.Mirivoice.Core.Format
     [YamlObject]    
     public partial class Mrp
     {
-        public Version Version { get; set; } = new Version(0, 1);
+        public Version Version { get; set; } = new Version(0, 2);
 
         public MLinePrototype[] mLines { get; set; } = new MLinePrototype[0];
         public string MultEditScript { get; set; } = "";

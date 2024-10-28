@@ -989,9 +989,6 @@ namespace Mirivoice.ViewModels
 
             addLineBoxesReceiver = new AddLineBoxesReceiver(this);
             AddLineBoxesCommand = new MCommand(addLineBoxesReceiver);
-
-
-
         }
 
 
