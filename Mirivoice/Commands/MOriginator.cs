@@ -3,6 +3,7 @@ using System;
 
 namespace Mirivoice.Commands
 {
+    [Obsolete("This class will be obsolete, use ICommand instead")]
     public class MOriginator<T>
     {
         protected T obj;

@@ -10,12 +10,8 @@ namespace Mirivoice.Mirivoice.Core.Editor
     public partial class MTextBoxEditor : ReactiveObject, INotifyPropertyChanged
     {
         string _currentScript;
-        string lastScript;
         VoicerSelectingViewModelBase v;
-        bool init = false;
-
-        public MementoCommand<string> TextBoxEditCommand { get; set; }
-        TextBoxEditOriginator textBoxEditOriginator;
+        bool IsFirstExec = true;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,28 +25,18 @@ namespace Mirivoice.Mirivoice.Core.Editor
         {
             //Log.Debug("MTextBoxEditor Constructor -- default");
             this._currentScript = string.Empty;
-            this.lastScript = string.Empty;
-            init = false;
         }
-
-        public MTextBoxEditor(VoicerSelectingViewModelBase v, ref string _currentScript, ref string lastScript)
+        public TextBoxEditCommand textBoxEditCommand;
+        public MTextBoxEditor(VoicerSelectingViewModelBase v, string _currentScript)
         {
             //Log.Debug("MTextBoxEditor Constructor");
             this.v = v;
             
             this._currentScript = _currentScript;
-            this.lastScript = lastScript;
-            textBoxEditOriginator = new TextBoxEditOriginator(v, ref _currentScript);
-            TextBoxEditCommand = new MementoCommand<string>(textBoxEditOriginator);
             
-
-            init = true;
         }
 
-
-
-
-        bool Undobackuped = false;
+        public bool DonotExecCommand = false;
 
         public string CurrentScript
         {
@@ -60,51 +46,17 @@ namespace Mirivoice.Mirivoice.Core.Editor
             }
             set
             {
-                if (!init)
+                if (IsFirstExec)
                 {
-                    //Log.Debug("MTextBoxEditor not fully initialized");
-                    return;
+                    textBoxEditCommand = new TextBoxEditCommand(v);
+                    IsFirstExec = false;
                 }
+
                 
-                if ( value != null)
-                {
-                    if (value == _currentScript)
-                    {
-                        Log.Debug("CurrentScript was same as lastScript");
-                        return;
-                    }
-                    lastScript = _currentScript;
-
-                    //Log.Debug("CurrentScript: {value}", value);
-
-                    //Log.Debug($"LastScript: {lastScript}");
-                    //Log.Debug($"NotProCessingCommand: {v.NotProcessingSetScriptCommand}");
-
-
-                    if (!v.NotProcessingSetScriptCommand)
-                    {
-                        if (!Undobackuped)
-                        {
-                            //Log.Debug($"backup : {lastScript}");
-
-                            TextBoxEditCommand.Backup(lastScript);
-                            Undobackuped = true;
-                        }
-                        MainManager.Instance.cmd.ExecuteCommand(TextBoxEditCommand);
-
-                        Undobackuped = false;
-                    }
-                    else
-                    {
-                        v.NotProcessingSetScriptCommand = false;
-
-                    }
-                    this.RaiseAndSetIfChanged(ref _currentScript, value);
-
-                    OnPropertyChanged(nameof(CurrentScript));
-                }
-
-
+                this.RaiseAndSetIfChanged(ref _currentScript, value);
+                if (!DonotExecCommand) 
+                    MainManager.Instance.cmd.ExecuteCommand(textBoxEditCommand);
+                OnPropertyChanged(nameof(CurrentScript));
             }
         }
 

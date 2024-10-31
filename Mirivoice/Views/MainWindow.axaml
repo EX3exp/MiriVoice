@@ -17,5 +17,5 @@
 		<KeyBinding Gesture="{Binding SaveAsGesture}" Command="{Binding OnSaveAsButtonClick}" />
 		<KeyBinding Gesture="{Binding NewGesture}" Command="{Binding OnNewButtonClick}" />
 	</Window.KeyBindings>
-	<views:MainView />
+
 </Window>

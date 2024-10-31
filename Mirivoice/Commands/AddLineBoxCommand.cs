@@ -3,21 +3,20 @@ using Mirivoice.Views;
 
 namespace Mirivoice.Commands
 {
-    public class AddLineBoxReceiver : MReceiver
+    public class AddLineBoxCommand : ICommand
     {
         private readonly MainViewModel v;
         private int LineBoxIndexLastAdded;
-        public AddLineBoxReceiver(MainViewModel mainViewModel)
+        public AddLineBoxCommand(MainViewModel mainViewModel)
         {
             v = mainViewModel;
         }
 
-        public override void DoAction()
+        public void Execute(bool isRedoing)
         {
-
-            var lineBox = new LineBoxView(v); 
+            var lineBox = new LineBoxView(v);
             int LineNoToBeAdded = v.LineBoxCollection.Count + 1;
-        
+
             lineBox.viewModel.SetLineNo(LineNoToBeAdded);
             lineBox.ShouldPhonemizeWhenSelected = true;
 
@@ -26,7 +25,7 @@ namespace Mirivoice.Commands
             lineBox.ScrollToEnd();
         }
 
-        public override void UndoAction()
+        public void UnExecute()
         {
             if (LineBoxIndexLastAdded < 0)
                 return;
@@ -35,6 +34,7 @@ namespace Mirivoice.Commands
             LineBoxIndexLastAdded -= 1;
 
         }
+
 
 
     }

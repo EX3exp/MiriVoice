@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace Mirivoice.Commands
 {
-    public class DelLineBoxReceiver : MReceiver
+    public class DelLineBoxCommand : ICommand
     {
         private MainViewModel v;
         private LineBoxView l;
@@ -21,13 +21,13 @@ namespace Mirivoice.Commands
 
         private SingleLineEditorView lastEditor;
 
-        public DelLineBoxReceiver(MainViewModel mainViewModel, LineBoxView l)
+        public DelLineBoxCommand(MainViewModel mainViewModel, LineBoxView l)
         {
             this.l = l;
             v = mainViewModel;
         }
 
-        public override void DoAction()
+        public void Execute(bool isRedoing)
         {
             lastLineBox = l; // backup
             LineBoxIndexLastDeleted = Int32.Parse(l.viewModel.LineNo) - 1;
@@ -36,7 +36,7 @@ namespace Mirivoice.Commands
             RefreshLineNos(control);
 
 
-            
+
 
             v.LineBoxCollection.RemoveAt(RemoveIndex);
 
@@ -46,8 +46,8 @@ namespace Mirivoice.Commands
                 v.CurrentSingleLineEditor = null;
                 lastResults = new ObservableCollection<MResult>(l.MResultsCollection);
                 v.MResultsCollection.Clear();
-                
-               if (v.CurrentEditIndex == 1)
+
+                if (v.CurrentEditIndex == 1)
                 {
                     v.CurrentEdit = null;
                     v.OnPropertyChanged(nameof(v.CurrentEdit));
@@ -56,12 +56,10 @@ namespace Mirivoice.Commands
 
             RefreshLineNos(control);
             v.OnPropertyChanged(nameof(v.CurrentSingleLineEditor));
-
         }
 
-        public override void UndoAction()
+        public void UnExecute()
         {
-            
             v.LineBoxCollection.Insert(LineBoxIndexLastDeleted, lastLineBox);
             RefreshLineNos(control);
             if (lastEditor != null)
@@ -79,6 +77,7 @@ namespace Mirivoice.Commands
 
             }
         }
+        
 
         void RefreshLineNos(ItemsControl i)
         {

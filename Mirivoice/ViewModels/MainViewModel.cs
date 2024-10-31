@@ -419,13 +419,7 @@ namespace Mirivoice.ViewModels
             MainManager.Instance.AudioM.StopAudio();
             MainWindowGetInput = true;
         }
-        public void OnAddButtonClick()
-        {
-            MainManager.Instance.DefaultVoicerIndex = voicerSelector.CurrentDefaultVoicerIndex;
-            MainManager.Instance.DefaultMetaIndex = voicerSelector.Voicers[voicerSelector.CurrentDefaultVoicerIndex]
-                .VoicerMetaCollection.IndexOf(voicerSelector.Voicers[voicerSelector.CurrentDefaultVoicerIndex].CurrentVoicerMeta);
-            MainManager.Instance.cmd.ExecuteCommand(AddLineBoxCommand);
-        }
+        
 
         private bool _isPlaying;
         public bool isPlaying {
@@ -669,15 +663,7 @@ namespace Mirivoice.ViewModels
             EnablePreviewPlay = true;
         }
 
-        public void OnAddBoxesButtonClick()
-        {
-            addLineBoxesReceiver.SetScript(mTextBoxEditor.CurrentScript);
-            MainManager.Instance.DefaultVoicerIndex = voicerSelector.CurrentDefaultVoicerIndex;
-            MainManager.Instance.DefaultMetaIndex = voicerSelector.Voicers[voicerSelector.CurrentDefaultVoicerIndex]
-                .VoicerMetaCollection.IndexOf(voicerSelector.Voicers[voicerSelector.CurrentDefaultVoicerIndex].CurrentVoicerMeta);
-            
-            MainManager.Instance.cmd.ExecuteCommand(AddLineBoxesCommand);
-        }
+        
 
         public void OnUpdateCheckButtonClick()
         {
@@ -975,20 +961,9 @@ namespace Mirivoice.ViewModels
             }
         }
         // Commands
-        public MCommand AddLineBoxCommand { get; set; }
-        AddLineBoxReceiver addLineBoxReceiver;
-
-        public MCommand AddLineBoxesCommand { get; set; }
-        AddLineBoxesReceiver addLineBoxesReceiver;
-
-
         void SetCommands()
         {
-            addLineBoxReceiver = new AddLineBoxReceiver(this);
-            AddLineBoxCommand = new MCommand(addLineBoxReceiver);
 
-            addLineBoxesReceiver = new AddLineBoxesReceiver(this);
-            AddLineBoxesCommand = new MCommand(addLineBoxesReceiver);
         }
 
 

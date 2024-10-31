@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace Mirivoice.Commands
 {
-    public class AddLineBoxesReceiver : MReceiver
+    public class AddLineBoxesCommand : ICommand
     {
         private MainViewModel v;
         private int InitialEndOfLineBoxCollection;
@@ -20,23 +20,19 @@ namespace Mirivoice.Commands
         int DefaultVoicerMetaOriginal;
         
 
-        public AddLineBoxesReceiver(MainViewModel mainViewModel)
+        public AddLineBoxesCommand(MainViewModel mainViewModel)
         {
             v = mainViewModel;
             InitialEndOfLineBoxCollection = v.LineBoxCollection.Count - 1; // if undo, remove all lineboxes after this index
 
             DefaultVoicerOriginal = MainManager.Instance.DefaultVoicerIndex;
             DefaultVoicerMetaOriginal = MainManager.Instance.DefaultMetaIndex;
-        }
 
-        public void SetScript(string newscript) // should be called when script is changed
-        {
-            script = newscript;
+            script = v.mTextBoxEditor.CurrentScript;
             InitialEndOfLineBoxCollection = v.LineBoxCollection.Count - 1; // if undo, remove all lineboxes after this index
-            
         }
 
-        public override void DoAction()
+        public void Execute(bool isRedoing)
         {
             string pattern = @"\[(?<nickname>[^\]]+)\](?:\s*\((?<style>[^\)]+)\))?";
             var regex = new Regex(pattern);
@@ -72,7 +68,7 @@ namespace Mirivoice.Commands
                 }
                 else
                 {
-                    
+
                     AddLineBox(line.Trim());
                     results.Add(line.Trim());
                 }
@@ -81,14 +77,21 @@ namespace Mirivoice.Commands
 
             MainManager.Instance.DefaultVoicerIndex = DefaultVoicerOriginal;
             MainManager.Instance.DefaultMetaIndex = DefaultVoicerMetaOriginal;
+        }
+
+        public void SetScript(string newscript) // should be called when script is changed
+        {
+            script = newscript;
+            InitialEndOfLineBoxCollection = v.LineBoxCollection.Count - 1; // if undo, remove all lineboxes after this index
             
         }
 
-        public override void UndoAction()
+
+        public void UnExecute()
         {
             for (int i = v.LineBoxCollection.Count - 1; i > InitialEndOfLineBoxCollection; i--)
             {
-                
+
 
                 if (v.CurrentLineBox == v.LineBoxCollection[i])
                 {
@@ -104,7 +107,6 @@ namespace Mirivoice.Commands
                 v.LineBoxCollection.RemoveAt(i);
             }
         }
-        
 
 
 

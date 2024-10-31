@@ -65,9 +65,10 @@ public partial class App : Application
                     
                 }
             }
-            mainviewModel.OnPropertyChanged((mainviewModel.Title));
+            mainWindow.Content = new MainView(mainviewModel);
             mainWindow.DataContext = mainviewModel;
-            desktop.MainWindow = mainWindow; 
+            mainviewModel.OnPropertyChanged((mainviewModel.Title));
+            desktop.MainWindow = mainWindow;
         }
         
         base.OnFrameworkInitializationCompleted();

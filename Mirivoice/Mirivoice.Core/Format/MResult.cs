@@ -46,8 +46,6 @@ namespace Mirivoice.Mirivoice.Core.Format
         public string Word { get; set; }
 
         public int _currentProsodyIndex;
-        public bool NotProcessingSetProsodyCommand = false;
-        int lastProsodyIndex;
         public override MTextBoxEditor mTextBoxEditor { get; set; }
 
         public override void OnStyleChanged() { }
@@ -99,6 +97,9 @@ namespace Mirivoice.Mirivoice.Core.Format
 
         bool UndobackupedProsody = false;
 
+        bool IsFirstExec = true;
+        public bool DonotExecCommand = false;
+        SetProsodyCommand setProsodyCommand;
         public int Prosody
         {
             get
@@ -111,29 +112,18 @@ namespace Mirivoice.Mirivoice.Core.Format
                 {
                     return;
                 }
-                lastProsodyIndex = _prosody;
-
-                
-
-                if (NotProcessingSetProsodyCommand)
+                if (IsFirstExec)
                 {
-                    if (!UndobackupedProsody)
-                    {
+                    
+                    IsFirstExec = false;
+                }
 
-
-                        setProsodyCommand.Backup(lastProsodyIndex);
-                        UndobackupedProsody = true;
-                    }
+                setProsodyCommand = new SetProsodyCommand(this);
+                this.RaiseAndSetIfChanged(ref _prosody, value);
+                if (!DonotExecCommand)
+                    
                     MainManager.Instance.cmd.ExecuteCommand(setProsodyCommand);
 
-                    UndobackupedProsody = false;
-                }
-                else
-                {
-                    NotProcessingSetProsodyCommand = false;
-
-                }
-                this.RaiseAndSetIfChanged(ref _prosody, value);
                 
                 OnPropertyChanged(nameof(Prosody));
 
@@ -155,7 +145,6 @@ namespace Mirivoice.Mirivoice.Core.Format
             Prosody = (int)prosodyType;
             SetIcons();
             this.l = l;
-            SetCommands();
         }
 
         public MResult(MResultPrototype mResultPrototype, LineBoxView l) : base(mResultPrototype.Phoneme, false)
@@ -165,7 +154,6 @@ namespace Mirivoice.Mirivoice.Core.Format
             this.Prosody = mResultPrototype.ProsodyType;
             SetIcons();
             this.l = l;
-            SetCommands();
         }
 
         void SetIcons()
@@ -176,14 +164,6 @@ namespace Mirivoice.Mirivoice.Core.Format
             SpaceIcon = MainManager.Instance.IconM.SpaceIcon;
         }
 
-        MOriginator<int> setProsodyOriginator;
-        MementoCommand<int> setProsodyCommand;
-        void SetCommands()
-        {
-            setProsodyOriginator = new SetProsodyOriginator(ref _prosody, this);
-            setProsodyCommand = new MementoCommand<int>(setProsodyOriginator);
-            NotProcessingSetProsodyCommand = true;
-        }
         public override void OnVoicerChanged(Voicer value) { }
         public override void OnVoicerCultureChanged(CultureInfo culture) { }
 

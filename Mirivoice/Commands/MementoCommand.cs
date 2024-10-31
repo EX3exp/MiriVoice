@@ -1,7 +1,9 @@
 ﻿using Serilog;
+using System;
 
 namespace Mirivoice.Commands
 {
+    [Obsolete("This class will be obsolete, use ICommand with Memento instead")]
     public class MementoCommand<T> : ICommand
     {
         // Handles undo/redo in combobox, textbox, etc.

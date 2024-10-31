@@ -16,7 +16,7 @@ namespace Mirivoice.ViewModels
         protected int lastDefaultVoicerIndex;
 
 
-        public string _currentScript;
+        public string _currentScript = string.Empty;
         public bool NotProcessingSetScriptCommand = false;
         protected string lastScript;
         public abstract void OnStyleChanged();
@@ -39,7 +39,7 @@ namespace Mirivoice.ViewModels
             }
             
 
-            mTextBoxEditor = new MTextBoxEditor(this, ref _currentScript, ref lastScript);
+            mTextBoxEditor = new MTextBoxEditor(this, _currentScript);
             mTextBoxEditor.CurrentScript = string.Empty; // save undo history
         }
 
@@ -61,8 +61,7 @@ namespace Mirivoice.ViewModels
             }
 
 
-            mTextBoxEditor = new MTextBoxEditor(this, ref _currentScript, ref lastScript);
-            mTextBoxEditor.CurrentScript = string.Empty; // save undo history
+            mTextBoxEditor = new MTextBoxEditor(this, _currentScript);
         }
         public abstract void OnVoicerChanged(Voicer value);
         public abstract void OnVoicerCultureChanged(CultureInfo culture);
@@ -86,7 +85,7 @@ namespace Mirivoice.ViewModels
             _currentScript = initText;
             lastScript = initText;
             //Log.Debug($"VoicerSelectingViewModelBase Constructor -- using MTextBoxEditor {initText}, {_currentScript}");
-            mTextBoxEditor = new MTextBoxEditor(this, ref _currentScript, ref lastScript);
+            mTextBoxEditor = new MTextBoxEditor(this, _currentScript);
         }
 
     }

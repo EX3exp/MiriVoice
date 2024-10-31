@@ -6,16 +6,16 @@ using System;
 
 namespace Mirivoice.Commands
 {
-    public class DuplicateLineBoxReceiver : MReceiver
+    public class DuplicateLineBoxCommand : ICommand
     {
         private LineBoxView l;
         private int LineBoxIndexLastAdded;
-        public DuplicateLineBoxReceiver(LineBoxView l)
+        public DuplicateLineBoxCommand(LineBoxView l)
         {
             this.l = l;
         }
 
-        public override void DoAction()
+        public void Execute(bool isRedoing)
         {
             MLinePrototype mLinePrototype = new MLinePrototype(l);
             int LineNoToBeAdded = Int32.Parse(l.viewModel.LineNo);
@@ -31,7 +31,7 @@ namespace Mirivoice.Commands
                 metaIndex++;
             }
             var lineBox = new LineBoxView(mLinePrototype, l.v, LineNoToBeAdded + 1, l.viewModel.voicerSelector.CurrentDefaultVoicerIndex, metaIndex, true);
-            
+
 
             l.v.LineBoxCollection.Insert(LineNoToBeAdded, lineBox);
             LineBoxIndexLastAdded = LineNoToBeAdded;
@@ -39,8 +39,7 @@ namespace Mirivoice.Commands
             RefreshLineNos();
 
         }
-
-        public override void UndoAction()
+        public void UnExecute()
         {
             if (LineBoxIndexLastAdded < 0)
                 return;

@@ -27,6 +27,8 @@ namespace Mirivoice.Commands
             return states.Pop();
         }
 
+        public bool CanPop => states.Count > 0;
+
         public int Count => states.Count;
         public override string ToString()
         {

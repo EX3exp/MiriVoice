@@ -291,28 +291,19 @@ namespace Mirivoice.Views
             viewModel.OnStyleChanged();
         }
         // Commands
-        public MCommand DelLineBoxCommand { get; set; }
-        DelLineBoxReceiver delLineBoxReceiver;
-        
+
         public MCommand SwapLineBoxCommand { get; set; }
         SwapLineBoxReceiver swapLineBoxReceiver;
 
-        public MCommand DuplicateLineBoxCommand { get; set; }
-        DuplicateLineBoxReceiver duplicateLineBoxReceiver;
         //public MCommand LockLineBoxCommand { get; set; }
         //LockLineBoxReceiver lockLineBoxReceiver;
 
 
         public void SetCommands(MainViewModel v)
         {
-            delLineBoxReceiver = new DelLineBoxReceiver(v, this);
-            DelLineBoxCommand = new MCommand(delLineBoxReceiver);
 
             swapLineBoxReceiver = new SwapLineBoxReceiver(v);
             SwapLineBoxCommand = new MCommand(swapLineBoxReceiver);
-
-            duplicateLineBoxReceiver = new DuplicateLineBoxReceiver(this);
-            DuplicateLineBoxCommand = new MCommand(duplicateLineBoxReceiver);
             //lockLineBoxReceiver = new LockLineBoxReceiver(this);
             //LockLineBoxCommand = new MCommand(lockLineBoxReceiver);
         }
@@ -462,12 +453,14 @@ namespace Mirivoice.Views
 
         private void OnDeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            MainManager.Instance.cmd.ExecuteCommand(DelLineBoxCommand);
+            DelLineBoxCommand delLineBoxCommand = new DelLineBoxCommand(v, this);
+            MainManager.Instance.cmd.ExecuteCommand(delLineBoxCommand);
             
         }
 
         private void OnDuplicateButtonClick(object sender, RoutedEventArgs e)
         {
+            DuplicateLineBoxCommand DuplicateLineBoxCommand = new DuplicateLineBoxCommand(this);
             MainManager.Instance.cmd.ExecuteCommand(DuplicateLineBoxCommand);
         }
 
