@@ -67,8 +67,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 v.OnPropertyChanged(nameof(v.Title));
             }
         }
-        string filePath = "";
-        StreamWriter writer = new StreamWriter("filePath", false, Encoding.UTF8);
+
         public void Undo()
         {
             //Log.Debug("======== Undo ========");
