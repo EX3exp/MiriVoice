@@ -189,7 +189,6 @@ namespace Mirivoice.Views
             //lockButton = this.FindControl<ToggleButton>("lockButton");
             _currentCacheName = AudioManager.GetUniqueCachePath();
 
-            SetCommands(v);
             mouseEntered = false;
             isDragging = false;
 
@@ -236,7 +235,6 @@ namespace Mirivoice.Views
             Exp = mLinePrototype.Exp;
 
             //lockButton = this.FindControl<ToggleButton>("lockButton");
-            SetCommands(v);
 
             if (mLinePrototype.PhonemeEdit is not null || mLinePrototype.PhonemeEdit.Length > 0)
             {
@@ -292,21 +290,12 @@ namespace Mirivoice.Views
         }
         // Commands
 
-        public MCommand SwapLineBoxCommand { get; set; }
-        SwapLineBoxReceiver swapLineBoxReceiver;
+        
 
         //public MCommand LockLineBoxCommand { get; set; }
         //LockLineBoxReceiver lockLineBoxReceiver;
 
 
-        public void SetCommands(MainViewModel v)
-        {
-
-            swapLineBoxReceiver = new SwapLineBoxReceiver(v);
-            SwapLineBoxCommand = new MCommand(swapLineBoxReceiver);
-            //lockLineBoxReceiver = new LockLineBoxReceiver(this);
-            //LockLineBoxCommand = new MCommand(lockLineBoxReceiver);
-        }
 
         public void ScrollToEnd()
         {
@@ -704,9 +693,10 @@ namespace Mirivoice.Views
                     
                     if (v.LineBoxCollection.IndexOf(this) != targetIndex )
                     {
-                        
-                        swapLineBoxReceiver.SetLineBoxesIdx(v.LineBoxCollection.IndexOf(this), targetIndex);
-                        
+
+
+                        SwapLineBoxCommand SwapLineBoxCommand = new SwapLineBoxCommand(v);
+                        SwapLineBoxCommand.SetLineBoxesIdx(v.LineBoxCollection.IndexOf(this), targetIndex);
                         MainManager.Instance.cmd.ExecuteCommand(SwapLineBoxCommand);
                     }
                 }
