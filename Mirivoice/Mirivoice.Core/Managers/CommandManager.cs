@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Mirivoice.ViewModels;
+using System.Linq;
 
 namespace Mirivoice.Mirivoice.Core.Managers
 {
@@ -18,6 +19,11 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
         public CommandManager()
         {
+        }
+
+        public bool IsAlreadyExecuted(ICommand target)
+        {
+            return _undoStack.Count > 0 && _undoStack.Peek() == target;
         }
         public void SetMainViewModel(MainViewModel v)
         {

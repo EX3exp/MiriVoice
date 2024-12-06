@@ -6,7 +6,6 @@ namespace Mirivoice.Commands
 {
     public class SetProsodyCommand : ICommand
     {
-        // TODO
         private MResult v;
 
         int undoMem;
