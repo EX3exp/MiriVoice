@@ -120,94 +120,47 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                 List<string> phonemes = new List<string>();
                 string prev = null;
                 string next = null;
-                bool nextIsBlank = false;
 
-                if (words.Count > 1)
+                for (int i = 0; i < words.Count; ++i)
                 {
-                    if (words[1] == " " || IsPunctuation(words[1])) 
-                        {
-                        if (words.Count > 2)
-                        {
-
-                            next = words[2];
-                        }
-                        else
-                        {
-                            next = null;
-                        }
-                    }
-                    else
+                    string word = words[i];
+                    if (i > 0)
                     {
-                        next = words[1];
-                    }
-                    
-
-                }
-
-                
-
-
-                for (int i = 0; i < charArr.Length; i++)
-                {
-                    if (words[i] == " " || IsPunctuation(words[i]))
-                    {
-                        phonemes.Add(words[i]);
-
-                        continue;
-                    }
-                    else if  ( !KoreanPhonemizerUtil.IsHangeul(words[i]))
-                    {
-                        prev = null;
-                        if (words.Count > i + 2 && KoreanPhonemizerUtil.IsHangeul(words[i + 2]))
+                        prev = words[i - 1];
+                        if (prev.Trim() == string.Empty || IsPunctuation(prev))
                         {
-                            if (words.Count > i + 3 && (words[i + 2] == " " || IsPunctuation(words[i + 2])))
-                            {
-                                prev = words[i + 1];
-                                next = words[i + 3];
-                            }
-                            else
-                            {
-                                next = words[i + 2];
-                            }
-                              
+                            prev = null;
                         }
-                        else
-                        {
-                            next = null;
-                        }
-                        phonemes.Add(words[i]);
-                        continue;
                     }
 
-                    if (i > 1 && words.Count > i + 1 && (words[i - 1] == " " || IsPunctuation(words[i - 1])))
+                    if (i < words.Count - 1)
                     {
                         next = words[i + 1];
-                    }
-                    
-                    phonemes.Add(KoreanPhonemizerUtil.Variate(prev, words[i], next));
-                    prev = words[i];
-
-                    if (words.Count > i + 2 && KoreanPhonemizerUtil.IsHangeul(words[i + 2]))
-                    {
-                        if (words.Count > i + 2 && (words[i + 2] == " " || IsPunctuation(words[i + 2])))
+                        if (next.Trim() == string.Empty || IsPunctuation(next))
                         {
-                            next = words[i + 3];
+                            next = null;
                         }
-                        else
-                        {
-                            next = words[i + 2];
-                        }
-
                     }
                     else
                     {
                         next = null;
                     }
-                    //Log.Debug($"prev: {prev}, curr: {words[i]}, next: {next}");
-                    continue;
+
+                    if (KoreanPhonemizerUtil.IsHangeul(word))
+                    {
+                        string phoneme = KoreanPhonemizerUtil.Variate(prev, word, next);
+                        phonemes.Add(phoneme);
+                    }
+                    else
+                    {
+                        phonemes.Add(word);
+                    }
+
+                   
                 }
+
                 //Log.Debug("Phonemes: {phonemes}", phonemes);
-                
+
                 return string.Join("", phonemes);
             }
             catch (Exception e)

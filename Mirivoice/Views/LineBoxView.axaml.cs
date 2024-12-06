@@ -475,6 +475,15 @@ namespace Mirivoice.Views
                 v.CurrentEdit = new PhonemeEditView();
                 v.OnPropertyChanged(nameof(v.CurrentEdit));
             }
+            switch (v.CurrentEditIndex)
+            {
+                case 1:
+                    v.CurrentEdit = this.ExpressionEditor;
+                    v.OnPropertyChanged(nameof(v.CurrentEdit));
+                    break;
+                default:
+                    break;
+            }
 
             if (!mouseEntered)
             {
