@@ -118,7 +118,7 @@ public class EngineVITS2 : BaseEngine
     private Tensor<long> Intersperse(Tensor<long> sequence, long interspersedValue)
     {
         Tensor<long> interspersed = new DenseTensor<long>((int)sequence.Length * 2);
-        for (int i = 0; i < sequence.Length; i++)
+        for (int i = 0; i < sequence.Length; ++i)
         {
             interspersed[i * 2] = sequence[i];
             interspersed[i * 2 + 1] = interspersedValue;
@@ -138,7 +138,7 @@ public class EngineVITS2 : BaseEngine
 
             // expand dimensions
             long[,] text = new long[1, phonemeIds.Length];
-            for (int i = 0; i < phonemeIds.Length; i++)
+            for (int i = 0; i < phonemeIds.Length; ++i)
             {
                 text[0, i] = phonemeIds[i];
             }
@@ -154,7 +154,7 @@ public class EngineVITS2 : BaseEngine
             Tensor<long> lengthTensor = new DenseTensor<long>(textLengths.Length);
             Tensor<long> sidTensor = new DenseTensor<long>(1);
             sidTensor[0] = spkid;
-            for (int i = 0; i < textLengths.Length; i++)
+            for (int i = 0; i < textLengths.Length; ++i)
             {
                 lengthTensor[i] = textLengths[i];
             }

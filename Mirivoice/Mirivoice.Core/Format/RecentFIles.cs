@@ -50,6 +50,11 @@ namespace Mirivoice.Mirivoice.Core.Managers
 
         public void AddRecentFile(string filePath, MainViewModel v)
         {
+            if (Files.Count == MaxNum + 1)
+            {
+                Files.RemoveAt(0);
+            }
+
             if (!Files.Contains(filePath))
             {
                 Files.Add(filePath);
@@ -60,10 +65,7 @@ namespace Mirivoice.Mirivoice.Core.Managers
                 Files.Add(filePath);
             }
 
-            if (Files.Count == MaxNum + 1)
-            {
-                Files.RemoveAt(10);
-            }
+            
             Files.Reverse();
             Save();
             UpdateUI(v);
