@@ -50,6 +50,7 @@ namespace Mirivoice.Mirivoice.Core
             UpdateDefaultVoicers();
             LoadVoicerManager();
             LoadSetting();
+            LoadRecentFiles();
             
             InitializationTask = Task.Run(() => {
                 Log.Information("MainManager Initialize Start");
@@ -74,6 +75,20 @@ namespace Mirivoice.Mirivoice.Core
                 MainManager.Instance.Setting.Save();
             }
         }
+
+        public void LoadRecentFiles()
+        {
+            if (File.Exists(MainManager.Instance.PathM.RecentFilesPath))
+            {
+                var yamlUtf8Bytes = System.Text.Encoding.UTF8.GetBytes(ReadTxtFile(MainManager.Instance.PathM.RecentFilesPath));
+                MainManager.Instance.Recent = YamlSerializer.Deserialize<RecentFiles>(yamlUtf8Bytes);
+            }
+            else
+            {
+                MainManager.Instance.Recent.Save();
+            }
+        }
+        
         private static void DeleteExtractedZip(string zipFilePath)
         {
             // deletes zip file and split files

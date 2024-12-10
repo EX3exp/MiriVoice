@@ -913,21 +913,9 @@ namespace Mirivoice.ViewModels
 
         public void LoadRecentFIles()
         {
-            if (!File.Exists(MainManager.Instance.PathM.RecentFilesPath))
-            {
-                RecentFiles = new RecentFiles();
-                RecentFiles.Save();
-                RecentFiles.Validate();
-                OnPropertyChanged(nameof(RecentMenuCollection));
 
-            }
-            else
-            {
-                var yamlUtf8Bytes = System.Text.Encoding.UTF8.GetBytes(MainManager.Instance.ReadTxtFile(MainManager.Instance.PathM.RecentFilesPath));
-                RecentFiles = YamlSerializer.Deserialize<RecentFiles>(yamlUtf8Bytes);
-                RecentFiles.Validate();
-                OnPropertyChanged(nameof(RecentMenuCollection));
-            }
+            RecentFiles = MainManager.Instance.Recent;
+            OnPropertyChanged(nameof(RecentMenuCollection));
             RecentFiles.UpdateUI(this); // update UI
         }
 
