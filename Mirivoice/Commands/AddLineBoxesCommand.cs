@@ -1,4 +1,5 @@
-﻿using Mirivoice.Mirivoice.Core;
+﻿using Avalonia.Controls;
+using Mirivoice.Mirivoice.Core;
 using Mirivoice.Mirivoice.Core.Format;
 using Mirivoice.ViewModels;
 using Mirivoice.Views;
@@ -41,6 +42,12 @@ namespace Mirivoice.Commands
 
         public void Execute(bool isRedoing)
         {
+            if (isRedoing)
+            {
+                v.CurrentEdit = lastCurrentEdit;
+                v.CurrentSingleLineEditor = lastSingleLineEditor;
+
+            }
             string pattern = @"\[(?<nickname>[^\]]+)\](?:\s*\((?<style>[^\)]+)\))?";
             var regex = new Regex(pattern);
 
@@ -85,7 +92,8 @@ namespace Mirivoice.Commands
             MainManager.Instance.DefaultVoicerIndex = DefaultVoicerOriginal;
             MainManager.Instance.DefaultMetaIndex = DefaultVoicerMetaOriginal;
         }
-
+        UserControl lastCurrentEdit;
+        SingleLineEditorView lastSingleLineEditor;
         public void SetScript(string newscript) // should be called when script is changed
         {
             script = newscript;
@@ -112,6 +120,8 @@ namespace Mirivoice.Commands
                 }
                 v.OnPropertyChanged(nameof(v.CurrentSingleLineEditor));
                 v.LineBoxCollection.RemoveAt(i);
+                v.CurrentEdit = null;
+                v.CurrentSingleLineEditor = null;
             }
         }
 
