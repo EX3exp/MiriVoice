@@ -16,7 +16,15 @@ namespace Mirivoice.Commands
     {
         int undoMem;
         int redoMem;
-
+        private bool _canUndo = true;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
         readonly ExpressionEditViewModelVITS2 viewModel;
         readonly ExpVITS2 mode;
         public VITS2SetExpCommand(ExpressionEditViewModelVITS2 viewModel, ExpVITS2 mode)

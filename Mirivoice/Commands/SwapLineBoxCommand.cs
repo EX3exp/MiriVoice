@@ -10,7 +10,15 @@ namespace Mirivoice.Commands
         private int i1;
         private int i2;
 
-
+        private bool _canUndo = true;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
         public SwapLineBoxCommand(MainViewModel mainViewModel)
         {
             v = mainViewModel;

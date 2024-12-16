@@ -17,10 +17,16 @@ namespace Mirivoice.Commands
         private ItemsControl control;
         private ObservableCollection<MResult> lastResults;
 
-
-
         private SingleLineEditorView lastEditor;
-
+        private bool _canUndo = true;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
         public DelLineBoxCommand(MainViewModel mainViewModel, LineBoxView l)
         {
             this.l = l;

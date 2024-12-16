@@ -18,8 +18,15 @@ namespace Mirivoice.Commands
         private string script = string.Empty;
         int DefaultVoicerOriginal;
         int DefaultVoicerMetaOriginal;
-        
-
+        private bool _canUndo = true;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
         public AddLineBoxesCommand(MainViewModel mainViewModel)
         {
             v = mainViewModel;

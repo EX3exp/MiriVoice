@@ -77,9 +77,19 @@ namespace Mirivoice.Mirivoice.Core.Managers
         public void Undo()
         {
             //Log.Debug("======== Undo ========");
+
+            
             if (_undoStack.Count > 0)
             {
                 var command = _undoStack.Pop();
+                while (!command.CanUndo)
+                {
+                    command = _undoStack.Pop(); // skip this undo and jump to previous one
+                    if (_undoStack.Count == 0)
+                    {
+                        break;
+                    }
+                }
                 command.UnExecute();
                 _redoStack.Push(command);
                 IsNeedSave = true;

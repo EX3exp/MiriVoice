@@ -6,7 +6,15 @@ namespace Mirivoice.Commands
     public class MCommand : ICommand
     {
         private readonly MReceiver _receiver;
-
+        private bool _canUndo = true;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
         public MCommand (MReceiver receiver)
         {
             _receiver = receiver;

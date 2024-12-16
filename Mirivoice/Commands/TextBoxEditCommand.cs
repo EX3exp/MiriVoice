@@ -10,7 +10,15 @@ namespace Mirivoice.Commands
 
         Memento<string> undoMem = new Memento<string>();
         Memento<string> redoMem = new Memento<string>();
-
+        private bool _canUndo = true;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
 
         bool isFirstExec = true;
         public void Execute(bool isRedoing)

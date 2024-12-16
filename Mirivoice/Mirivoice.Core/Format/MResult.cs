@@ -112,19 +112,23 @@ namespace Mirivoice.Mirivoice.Core.Format
                 {
                     return;
                 }
+                
+                setProsodyCommand = new SetProsodyCommand(this);
+                this.RaiseAndSetIfChanged(ref _prosody, value);
                 if (IsFirstExec)
                 {
-                    
+                    setProsodyCommand.CanUndo = false;
                     IsFirstExec = false;
                 }
 
-                setProsodyCommand = new SetProsodyCommand(this);
-                this.RaiseAndSetIfChanged(ref _prosody, value);
                 if (!DonotExecCommand)
-                    
+                {
                     MainManager.Instance.cmd.ExecuteCommand(setProsodyCommand);
+                }
+                  
+                    
 
-                
+               
                 OnPropertyChanged(nameof(Prosody));
 
                 if (l is not null)
@@ -138,6 +142,7 @@ namespace Mirivoice.Mirivoice.Core.Format
         public bool IsEditable { get; set; } = false;
 
         private readonly LineBoxView l;
+        
         public MResult(string word, string phoneme, bool isEditable, ProsodyType prosodyType, LineBoxView l=null): base(phoneme, false)
         {
             this.Word = word;

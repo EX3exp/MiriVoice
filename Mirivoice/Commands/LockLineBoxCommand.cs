@@ -8,7 +8,15 @@ namespace Mirivoice.Commands
     {
         // Still implementing 
         LineBoxView l;
-
+        private bool _canUndo = true;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
         public LockLineBoxCommand(LineBoxView lineBoxView)
         {
             l = lineBoxView;

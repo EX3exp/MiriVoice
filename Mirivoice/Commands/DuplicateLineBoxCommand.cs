@@ -10,6 +10,15 @@ namespace Mirivoice.Commands
     {
         private LineBoxView l;
         private int LineBoxIndexLastAdded;
+        private bool _canUndo = true;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
         public DuplicateLineBoxCommand(LineBoxView l)
         {
             this.l = l;

@@ -10,32 +10,47 @@ namespace Mirivoice.Commands
 
         int undoMem;
         int redoMem;
+        private bool _canUndo = true ;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
 
         bool isFirstExec = true;
+
+       
         public void Execute(bool isRedoing)
         {
+            
+
             if (isRedoing)
             {
                 Log.Debug($"Redo: {redoMem}");
                 v.DonotExecCommand = true;
                 v.Prosody = redoMem;
                 v.DonotExecCommand = false;
-
             }
             else
             {
+                
+
                 if (!isFirstExec)
                 {
                     undoMem = v.Prosody;
                 }
+
                 isFirstExec = false;
+                
                 Log.Debug($"Execute: undo: {undoMem}, redo: {redoMem}");
             }
         }
 
         public void UnExecute()
         {
-
             redoMem = v.Prosody;
             v.DonotExecCommand = true;
             v.Prosody = undoMem;

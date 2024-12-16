@@ -12,7 +12,15 @@ namespace Mirivoice.Commands
 
         public T changedValue;
         private bool redoBlocked;
-
+        private bool _canUndo = true;
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+            }
+        }
         public MementoCommand(MOriginator<T> originator)
         {
             _originator = originator;
