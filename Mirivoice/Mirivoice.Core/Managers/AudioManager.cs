@@ -268,7 +268,8 @@ namespace Mirivoice.Mirivoice.Core.Managers
                         {
                             sb1.AppendLine((i + 1).ToString());
                             sb2.AppendLine((i + 1).ToString());
-                            TimeSpan currTs = GetAudioDuration(caches[i]);
+                            
+                            TimeSpan currTs = GetAudioDuration(caches[i]) + lastTs;
 
                             string lastTime = lastTs.ToString(@"hh\:mm\:ss\,fff");
                             string currTime = currTs.ToString(@"hh\:mm\:ss\,fff");
