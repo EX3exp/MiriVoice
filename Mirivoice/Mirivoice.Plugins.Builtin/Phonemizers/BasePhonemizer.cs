@@ -327,15 +327,10 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
                         }
                     }
 
-                    if (next is not null && IsPunctuation(next.Phoneme) && endPuncs.Contains(next.Phoneme))
+                    if (i == results.Count - 1 ||  IsPunctuation(results[i].Phoneme) && results[i].Phoneme.Trim() != string.Empty)
                     {
                         //Log.Debug($"Next is punctuation: {next.Phoneme}");
                         //Log.Debug($"Current: {mResultPrototype.Phoneme}");
-                        mResultPrototype.ProsodyType = (int)ProsodyType.Eos;
-                    }
-                    if (i == results.Count - 1 && prev is not null && prev.ProsodyType != (int)ProsodyType.Eos)
-                    {
-
                         mResultPrototype.ProsodyType = (int)ProsodyType.Eos;
                     }
 
