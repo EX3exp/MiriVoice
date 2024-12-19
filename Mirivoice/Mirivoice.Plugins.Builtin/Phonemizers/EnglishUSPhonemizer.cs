@@ -9,7 +9,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers
     public class EnglishUSPhonemizer : BasePhonemizer
     {
         public override BaseIPAConverter IPAConverter { get; set; } = new EnglishUSIPAConverter();
-        public override bool UseWordDivider { get; set; } = false;
+        public override bool UseWordDivider { get; set; } = true;
 
         protected override string[] SplitToWords(string sentence)
         {
