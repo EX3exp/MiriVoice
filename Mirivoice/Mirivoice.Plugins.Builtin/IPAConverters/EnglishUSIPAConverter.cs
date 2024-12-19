@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using R3;
+using Serilog;
 using System;
 using System.Collections.Generic;
 
@@ -69,8 +70,9 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.IPAConverters
                     IPA.Add(phone);
                 }
             }
-            string res = string.Join("\t", IPA);
-            Log.Debug($"Converted {phoneme} to {res}");
+            string result = string.Join("", IPA);
+            string res = string.Join("\t", result.ToCharArray());
+            //Log.Debug($"Converted {phoneme} to {res}");
             return res;
         }
     }
