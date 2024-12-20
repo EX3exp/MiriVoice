@@ -25,7 +25,7 @@ namespace Mirivoice.Commands
         {
             if (isRedoing)
             {
-                Log.Debug($"Redo: {redoMem}");
+                //Log.Debug($"Redo: {redoMem}");
                 if (!redoMem.CanPop) { return; }
 
                 v.mTextBoxEditor.DonotExecCommand = true;
@@ -40,7 +40,7 @@ namespace Mirivoice.Commands
                     undoMem.Push(v.mTextBoxEditor.CurrentScript);
                 }
                 isFirstExec = false;
-                Log.Debug($"Execute: undo: {undoMem}, redo: {redoMem}");
+                //Log.Debug($"Execute: undo: {undoMem}, redo: {redoMem}");
             }
         }
 
@@ -52,7 +52,7 @@ namespace Mirivoice.Commands
             v.mTextBoxEditor.DonotExecCommand = true;
             v.mTextBoxEditor.CurrentScript = undoMem.Pop();
             v.mTextBoxEditor.DonotExecCommand = false;
-            Log.Debug($"Undo: undo: {undoMem} redo: {redoMem}");
+            //Log.Debug($"Undo: undo: {undoMem} redo: {redoMem}");
             
 
         }

@@ -1,4 +1,5 @@
 ﻿using Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers.Utils;
+using Serilog;
 using System.Collections.Generic;
 
 namespace Mirivoice.Mirivoice.Plugins.Builtin.IPAConverters
@@ -94,7 +95,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.IPAConverters
                 string _result = $"{FirstConsonant2IPA[firstConsonant]}{Vowel2IPA[(string)splited[1]]}{LastConsonant2IPA[(string)splited[2]]}";
                 result = string.Join("\t", _result.ToCharArray());
 
-                //Log.Information("ConvertToIPA: {phoneme} -> {result}", phoneme, result);
+                Log.Information("[IPA 변환] {phoneme} -> {result}", phoneme, result);
             }
 
             return result;

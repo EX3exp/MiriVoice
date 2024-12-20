@@ -45,7 +45,7 @@ namespace Mirivoice.Commands
 
                 isFirstExec = false;
                 
-                Log.Debug($"Execute: undo: {undoMem}, redo: {redoMem}");
+                //Log.Debug($"Execute: undo: {undoMem}, redo: {redoMem}");
             }
         }
 
@@ -55,7 +55,7 @@ namespace Mirivoice.Commands
             v.DonotExecCommand = true;
             v.Prosody = undoMem;
             v.DonotExecCommand = false;
-            Log.Debug($"Undo: undo: {undoMem} redo: {redoMem}");
+            //Log.Debug($"Undo: undo: {undoMem} redo: {redoMem}");
 
 
         }

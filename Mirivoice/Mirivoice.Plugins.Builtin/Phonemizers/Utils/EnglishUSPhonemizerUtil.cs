@@ -14,7 +14,7 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers.Utils
         {
             // use the CMU Pronouncing Dictionary to convert words to ARPAbet
             string arpabetRes = cmuDict.CMUDict.TryGetValue(word.ToLower(), out string arpabet) ? arpabet.ToLower() : word;
-            Log.Debug($"WordToArpabet: {word} -> {arpabetRes}");
+            //Log.Debug($"WordToArpabet: {word} -> {arpabetRes}");
             return arpabetRes;
 
         }
