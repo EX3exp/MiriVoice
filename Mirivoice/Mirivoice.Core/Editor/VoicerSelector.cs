@@ -58,6 +58,11 @@ namespace Mirivoice.Mirivoice.Core.Editor
             //Log.Debug("VoicerSelector Constructor");
             this.v = v;
             Voicers = MainManager.Instance.GetVoicersCollectionNew();
+
+            if (Voicers.Count == 0)
+            {
+                Log.Error("No voicers found. Please install a voicer.");
+            }
             this._currentDefaultVoicerIndex = _currentDefaultVoicerIndex;
             this._currentVoicer = Voicers[_currentDefaultVoicerIndex];
             setDefVoicerOriginator = new SetDefVoicerOriginator(v, ref _currentDefaultVoicerIndex);

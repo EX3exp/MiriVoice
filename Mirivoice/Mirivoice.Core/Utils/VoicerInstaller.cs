@@ -99,7 +99,7 @@ namespace Mirivoice.Mirivoice.Core.Utils
                 Overwrite = true,
             };
             string extPath;
-            using (var archive = ArchiveFactory.Open(path, readerOptions))
+            using (var archive = ArchiveFactory.OpenArchive(path, readerOptions))
             {
                 var touches = new List<string>();
                 int total = archive.Entries.Count();

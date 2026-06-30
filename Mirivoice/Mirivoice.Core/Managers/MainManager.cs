@@ -181,7 +181,7 @@ namespace Mirivoice.Mirivoice.Core
 
         public static void ExtractSplitZip(string zipFilePath, string extractPath)
         {
-            using (var archive = ArchiveFactory.Open(zipFilePath))
+            using (var archive = ArchiveFactory.OpenArchive(zipFilePath))
             {
                 foreach (var entry in archive.Entries)
                 {
