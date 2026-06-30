@@ -232,12 +232,6 @@ namespace Mirivoice.Mirivoice.Plugins.Builtin.Phonemizers.Utils
         /// </returns>
         private static Hashtable Variate(Hashtable firstCharSeparated, Hashtable nextCharSeparated, int returnCharIndex = -1)
         {
-            /*bool isLaugh = false; // 하하, 허허, 호호같이 입력된 앞 뒤 글자가 같고, 중성이 같을 경우 초성의 ㅎ탈락은 진행하지 않음
-            if (firstCharSeparated[1].Equals(nextCharSeparated[1]) && (((string)firstCharSeparated[0]).Equals("ㅎ") && firstCharSeparated[0].Equals(nextCharSeparated[0])))
-            {
-                Log.Debug("Laughing detected: " + firstCharSeparated[0] + nextCharSeparated[0]);
-                isLaugh = true;
-            }*/
             string firstLastConsonant = (string)firstCharSeparated[2]; // 문래 에서 ㄴ, 맑다 에서 ㄺ
             string nextFirstConsonant = (string)nextCharSeparated[0]; // 문래 에서 ㄹ, 맑다 에서 ㄷ
 
