@@ -750,6 +750,7 @@ namespace Mirivoice.ViewModels
         {
             if (forceClose)
             {
+                MainManager.Instance.SessionM.ClearSessions(); // release all sessions
                 if (MainManager.Instance.Setting.ClearCacheOnQuit)
                 {
                     MainManager.Instance.AudioM.StopAudio();
@@ -764,6 +765,7 @@ namespace Mirivoice.ViewModels
                     }
                     Log.Information("Cache cleared.");
                 }
+
                 return;
             }
             

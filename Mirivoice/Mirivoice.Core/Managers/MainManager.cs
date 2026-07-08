@@ -23,6 +23,7 @@ namespace Mirivoice.Mirivoice.Core
         public CommandManager cmd = new CommandManager();
 
         public VoicerManager VoicerM = new VoicerManager();
+        
 
         public IconManager IconM;// will be initialized in MainViewModel
 
@@ -34,6 +35,7 @@ namespace Mirivoice.Mirivoice.Core
         public UserSetting Setting = new UserSetting();
         public RecentFiles Recent = new RecentFiles();
 
+        public SessionManager SessionM;
 
         public void Initialize()
         {
@@ -51,7 +53,9 @@ namespace Mirivoice.Mirivoice.Core
             LoadVoicerManager();
             LoadSetting();
             LoadRecentFiles();
-            
+
+            SessionM = new SessionManager();
+
             InitializationTask = Task.Run(() => {
                 Log.Information("MainManager Initialize Start");
             });
@@ -68,7 +72,35 @@ namespace Mirivoice.Mirivoice.Core
             if (File.Exists(MainManager.Instance.PathM.SettingsPath))
             {
                 var yamlUtf8Bytes = System.Text.Encoding.UTF8.GetBytes(ReadTxtFile(MainManager.Instance.PathM.SettingsPath));
-                MainManager.Instance.Setting = YamlSerializer.Deserialize<UserSetting>(yamlUtf8Bytes);
+
+                UserSetting setting = YamlSerializer.Deserialize<UserSetting>(yamlUtf8Bytes);
+                if (setting.Version != MainManager.Instance.Setting.Version)
+                {
+                    Log.Information($"Setting version mismatch. Current: {MainManager.Instance.Setting.Version}, Loaded: {setting.Version}. Adding missing properties, modifying existing ones, and saving.");
+                    foreach (var property in typeof(UserSetting).GetProperties())
+                    {
+                        var loadedProperty = typeof(UserSetting).GetProperty(property.Name);
+                        if (loadedProperty == null)
+                        {
+                            Log.Information($"Property {property.Name} is missing in the loaded setting. Adding it with default value.");
+                            property.SetValue(setting, property.GetValue(MainManager.Instance.Setting));
+                        }
+                        else
+                        {
+                            var loadedValue = loadedProperty.GetValue(setting);
+                            var defaultValue = property.GetValue(MainManager.Instance.Setting);
+                            if (loadedValue == null && defaultValue != null)
+                            {
+                                Log.Information($"Property {property.Name} is null in the loaded setting. Setting it to default value.");
+                                loadedProperty.SetValue(setting, defaultValue);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    MainManager.Instance.Setting = setting;
+                }
             }
             else
             {

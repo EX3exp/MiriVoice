@@ -146,6 +146,10 @@
 	
 	<system:String x:Key="gprefs.clearcacheonquit">나갈 때 캐시 비우기</system:String>
 	<system:String x:Key="gprefs.usebeta">베타 버전 사용</system:String>
+
+	<system:String x:Key="gprefs.maxsessioncount">최대 활성 모델 수</system:String>
+	<system:String x:Key="gprefs.label.maxsessioncount">여러 성우를 사용할 때, 이 값만큼의 성우들을 메모리에 유지해요. 
+값이 높으면 성우 전환 시의 추론 속도가 빨라질 수 있지만, RAM 사용이 늘어납니다. (추천값: 3~5)</system:String>
 	
 	<!-- Voicers -->
 	<system:String x:Key="voicers.title">성우 목록</system:String>

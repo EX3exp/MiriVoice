@@ -72,6 +72,22 @@ namespace Mirivoice.ViewModels
             }
         }
         */
+
+        public int MaxMSC { get; set; } = 10;
+        public int MinMSC{ get; set; } = 1;
+
+        private int _maxSessionCount;
+        public int MaxSessionCount
+        {
+            get => _maxSessionCount;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _maxSessionCount, value);
+                OnPropertyChanged(nameof(MaxSessionCount));
+                MainManager.Instance.Setting.MaxSessionCount = value;
+                MainManager.Instance.Setting.Save();
+            }
+        }
         public GlobalSettingWindowViewModel()
         {
             switch (MainManager.Instance.Setting.Langcode)
@@ -105,6 +121,7 @@ namespace Mirivoice.ViewModels
                 _useBeta = false;
             }
             */
+            _maxSessionCount = MainManager.Instance.Setting.MaxSessionCount;
         }
     }
 }

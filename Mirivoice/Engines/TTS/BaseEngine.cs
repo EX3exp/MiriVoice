@@ -1,4 +1,5 @@
-﻿using Mirivoice.Mirivoice.Core.Format;
+﻿using Microsoft.ML.OnnxRuntime;
+using Mirivoice.Mirivoice.Core.Format;
 using NAudio.Wave;
 using System.IO;
 
@@ -28,6 +29,11 @@ namespace Mirivoice.Engines.TTS
             {
                 return (sr.ReadToEnd());
             }
+        }
+        
+        public virtual void WarmupSession(InferenceSession session)
+        {
+
         }
 
         public virtual void Inference(string ipaText, string cacheFilePath, int spkid, MExpressionsWrapper expression)

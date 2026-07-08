@@ -66,9 +66,9 @@ namespace Mirivoice.Engines
     }
 
     [YamlObject]
-    public partial class ConfigVITS2
+    public partial class ConfigVITS2 : BaseConfig
     {
-        public string ModelPath { get; set; }
+        public override string ModelPath { get; set; }
 
         public string _pad {
             get

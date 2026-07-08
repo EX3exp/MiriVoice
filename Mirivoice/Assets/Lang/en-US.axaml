@@ -144,6 +144,10 @@
 	<system:String x:Key="gprefs.clearcacheonquit">Clear Caches On Quit</system:String>
 	<system:String x:Key="gprefs.usebeta">Use Beta Version</system:String>
 	
+	<system:String x:Key="gprefs.maxsessioncount">Maximum Active Models</system:String>
+	<system:String x:Key="gprefs.label.maxsessioncount">Keeps voice models in memory for faster Voicer switching.
+Higher values can improve switching speed, but increase RAM usage. (Recommended: 3–5)</system:String>
+	
 	<!-- Voicers -->
 	<system:String x:Key="voicers.title">Voicers</system:String>
 	<system:String x:Key="voicers.voicer">Voicer</system:String>
