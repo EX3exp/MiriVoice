@@ -158,6 +158,7 @@ namespace Mirivoice.Commands
             int LineNoToBeAdded = v.LineBoxCollection.Count + 1;
 
             lineBox.viewModel.SetLineNo(LineNoToBeAdded);
+            lineBox.viewModel.OnStyleChanged();
 
             v.LineBoxCollection.Add(lineBox);
             lineBox.ScrollToEnd();
