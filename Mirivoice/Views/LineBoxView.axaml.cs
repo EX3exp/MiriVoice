@@ -139,11 +139,6 @@ namespace Mirivoice.Views
                 {
                     Log.Warning("Skip Phonemizing: phonemizer is not null, but LineText is empty");
                 }
-                
-                else if (lastPhonemizedText.Equals(textChanged))
-                {
-                    Log.Information("Skip Phonemizing: text is not changed");
-                }
                 else if (IsCacheIsVaild)
                 {
                     Log.Information("Skip Phonemizing: Cache is valid");
